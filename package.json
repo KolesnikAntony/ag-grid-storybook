@@ -6,7 +6,9 @@
     "build": "webpack --config webpack/webpack.prod.js",
     "lint:fix": "eslint --ext .js,.jsx,.mdx . --fix",
     "stylelint:fix": "stylelint \"**/*.scss\" --fix",
-    "test": "jest"
+    "test": "jest",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@emotion/core": "^11.0.0",
@@ -27,6 +29,7 @@
     "html-webpack-plugin": "^5.5.0",
     "node-scss": "^7.0.3",
     "prettier": "^2.5.1",
+    "prop-types": "^15.8.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^6.0.2"
@@ -36,6 +39,12 @@
     "@babel/plugin-transform-runtime": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.1",
+    "@storybook/addon-actions": "^6.4.20",
+    "@storybook/addon-essentials": "^6.4.20",
+    "@storybook/addon-interactions": "^6.4.20",
+    "@storybook/addon-links": "^6.4.20",
+    "@storybook/react": "^6.4.20",
+    "@storybook/testing-library": "^0.0.9",
     "@svgr/webpack": "^5.5.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
