@@ -14,7 +14,11 @@ export default {
         type: 'boolean',
       },
     },
-    rowCount: 50,
+    rowCount: {
+      description: 'Count of rows',
+      control: 'select',
+      options: [10, 50, 75, 100, 200],
+    },
     isLoading: false,
     isEmpty: false,
     // isError: null,

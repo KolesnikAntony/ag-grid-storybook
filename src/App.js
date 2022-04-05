@@ -13,7 +13,7 @@ const App = () => {
     isLoading: true,
     isError: null,
     isAuth: true,
-    isEmpty: false,
+    isEmpty: true,
   };
 
   return <Grid {...gridProperties} />;

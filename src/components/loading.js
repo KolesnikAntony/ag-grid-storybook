@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
 import Divider from '@mui/material/Divider';
-import {useTheme} from '@mui/material/styles'
+import { useTheme } from '@mui/material/styles';
 
 const useStyle = () => {
-  const theme = useTheme()
+  const theme = useTheme();
 
   return {
     skeletonBox: {
@@ -30,23 +30,25 @@ const useStyle = () => {
     divider: {
       marginRight: '-1.6rem',
       marginLeft: '-1.6rem',
-    }
-  }
-}
+    },
+  };
+};
 
 const Loading = () => {
-  const sx = useStyle()
+  const sx = useStyle();
   const sk = () => {
-    let arr = []
-    for (let i = 0; i < 20; i++) { arr.push(<><Skeleton sx={sx.skeleton} variant="text" /> <Divider sx={sx.divider} /></>) }
-    return arr
-  }
+    let arr = [];
+    for (let i = 0; i < 20; i++) {
+      arr.push(
+        <Fragment key={i}>
+          <Skeleton sx={sx.skeleton} variant="text" /> <Divider sx={sx.divider} />
+        </Fragment>
+      );
+    }
+    return arr;
+  };
 
-  return (
-    <Box sx={sx.skeletonBox}>
-      { sk() }
-    </Box>
-  );
+  return <Box sx={sx.skeletonBox}>{sk()}</Box>;
 };
 
 export default Loading;

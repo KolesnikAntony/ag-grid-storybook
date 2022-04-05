@@ -20,23 +20,14 @@ const Grid = (props) => {
   const [rowData, setRowData] = useState([]);
   const [gridApi, setGridApi] = useState(null);
 
-  const iAmRef = React.useRef(null)
-
-  // console.log(iAmRef)
-
-  // useEffect(() => {
-  //   if (!isEmpty) {
-  //     setRowData(data);
-  //   }
-  // }, [isEmpty, data]);
+  const iAmRef = React.useRef(null);
 
   useEffect(() => {
     if (gridApi) {
-      // console.log(isLoading);
-      // console.log('gridApi', gridApi)
       isLoading && gridApi.showLoadingOverlay();
+      !isEmpty && setRowData(data);
     }
-  }, [gridApi, isLoading]);
+  }, [gridApi, isLoading, isEmpty, data]);
 
   const defaultColDef = useMemo(() => {
     return {
@@ -54,8 +45,8 @@ const Grid = (props) => {
   }, []);
 
   const loadingOverlayComponent = React.useMemo(() => {
-    return Loading
-  },[]);
+    return Loading;
+  }, []);
 
   return (
     <div style={containerStyle}>
