@@ -1,30 +1,36 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-enterprise';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-import Loading from './loading';
 import PropTypes from 'prop-types';
+import { temp } from '../api';
 
 const Grid = (props) => {
-  const { pagination, rowCount, isLoading, isError, isAuth, isEmpty } = props;
+  const { pagination, rowCount, isLoading, isEmpty } = props;
+  console.log(pagination);
 
-  const containerStyle = useMemo(() => ({ width: '100%', height: '800px' }), []);
+  const containerStyle = useMemo(() => ({ width: '100%', height: '600px' }), []);
   const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
 
-  const columnDefs = [{ field: 'make'}, { field: 'model' }, { field: 'price' }];
+  const columnDefs = [{ field: 'make' }, { field: 'model' }, { field: 'price' }];
 
-  // specify the data
-  // const rowData = [
-  //   { make: 'Toyota', model: 'Celica', price: 35000,},
-  //   { make: 'Ford', model: 'Mondeo', price: 32000 },
-  // ];
+  const data = useMemo(() => temp, []);
+  const [rowData, setRowData] = useState([]);
+  const [gridApi, setGridApi] = useState(null);
 
-  const rowData = [
-    { make: 'Toyota', model: 'Celica', price: 35000,},
-    { make: 'Ford', model: 'Mondeo', price: 32000 },
-  ];
+  useEffect(() => {
+    if (!isEmpty) {
+      setRowData(data);
+    }
+  }, [isEmpty, data]);
 
+  useEffect(() => {
+    if (gridApi) {
+      console.log(gridApi);
+      isLoading && gridApi.showLoadingOverlay();
+    }
+  }, [gridApi, isLoading]);
 
   const defaultColDef = useMemo(() => {
     return {
@@ -37,12 +43,8 @@ const Grid = (props) => {
     };
   }, []);
 
-  const onGridReady = useCallback((params) => {}, []);
-
-
-  const detailCellRenderer = useMemo(() => {
-    // return Loading;
-    return <div>test</div>;
+  const onGridReady = useCallback((params) => {
+    setGridApi(params.api);
   }, []);
 
   return (
@@ -50,17 +52,10 @@ const Grid = (props) => {
       <div style={{ height: '100%', paddingTop: '25px', boxSizing: 'border-box' }}>
         <div style={gridStyle} className="ag-theme-alpine">
           <AgGridReact
-            frameworkComponents={{
-              loading: Loading,
-            }}
             columnDefs={columnDefs}
             defaultColDef={defaultColDef}
             rowData={rowData}
-            detailCellRenderer={detailCellRenderer}
-            suppressLoadingOverlay={true}
-            // overlayLoadingTemplate={<Loading/>}
-            cacheBlockSize={100}
-            maxBlocksInCache={10}
+            // suppressLoadingOverlay={true}
             animateRows={true}
             onGridReady={onGridReady}
             pagination={pagination}
@@ -76,18 +71,18 @@ Grid.propTypes = {
   pagination: PropTypes.bool,
   rowCount: PropTypes.number,
   isLoading: PropTypes.bool,
-  isError: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([null])]),
-  isAuth: PropTypes.bool,
   isEmpty: PropTypes.bool,
+  // isError: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([null])]),
+  // isAuth: PropTypes.bool,
 };
 
-Grid.defaultProps = {
-  pagination: true,
-  rowCount: 10,
-  isLoading: false,
-  isError: null,
-  isAuth: true,
-  isEmpty: false,
-};
+// Grid.defaultProps = {
+//   pagination: true,
+//   rowCount: 10,
+//   isLoading: false,
+//   isError: null,
+//   isAuth: true,
+//   isEmpty: false,
+// };
 
 export default Grid;
