@@ -1,0 +1,16 @@
+@import "~ag-grid-community/src/styles/ag-grid.scss";
+@import "~ag-grid-community/src/styles/ag-theme-alpine/sass/ag-theme-alpine-mixin";
+
+.ag-theme-alpine {
+  @include ag-theme-alpine((
+    alpine-active-color: rgba(0,0,0, 0.1),
+    foreground-color: #0f607e,
+  ));
+  .ag-header {
+    // or write CSS selectors to make customisations beyond what the parameters support
+    color: white;
+  }
+  .ag-root-wrapper {
+    border-radius: 4px;
+  }
+}
