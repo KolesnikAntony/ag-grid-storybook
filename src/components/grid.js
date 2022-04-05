@@ -5,10 +5,11 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import PropTypes from 'prop-types';
 import { temp } from '../api';
+import Loading from './loading';
 
 const Grid = (props) => {
   const { pagination, rowCount, isLoading, isEmpty } = props;
-  console.log(pagination);
+  // console.log(pagination);
 
   const containerStyle = useMemo(() => ({ width: '100%', height: '600px' }), []);
   const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
@@ -19,15 +20,20 @@ const Grid = (props) => {
   const [rowData, setRowData] = useState([]);
   const [gridApi, setGridApi] = useState(null);
 
-  useEffect(() => {
-    if (!isEmpty) {
-      setRowData(data);
-    }
-  }, [isEmpty, data]);
+  const iAmRef = React.useRef(null)
+
+  // console.log(iAmRef)
+
+  // useEffect(() => {
+  //   if (!isEmpty) {
+  //     setRowData(data);
+  //   }
+  // }, [isEmpty, data]);
 
   useEffect(() => {
     if (gridApi) {
-      console.log(gridApi);
+      // console.log(isLoading);
+      // console.log('gridApi', gridApi)
       isLoading && gridApi.showLoadingOverlay();
     }
   }, [gridApi, isLoading]);
@@ -47,6 +53,10 @@ const Grid = (props) => {
     setGridApi(params.api);
   }, []);
 
+  const loadingOverlayComponent = React.useMemo(() => {
+    return Loading
+  },[]);
+
   return (
     <div style={containerStyle}>
       <div style={{ height: '100%', paddingTop: '25px', boxSizing: 'border-box' }}>
@@ -60,6 +70,9 @@ const Grid = (props) => {
             onGridReady={onGridReady}
             pagination={pagination}
             paginationPageSize={rowCount}
+            ref={iAmRef}
+            // loadingOverlayComponent={loadingOverlayComponent}
+            loadingOverlayComponentFramework={loadingOverlayComponent}
           />
         </div>
       </div>
@@ -76,13 +89,13 @@ Grid.propTypes = {
   // isAuth: PropTypes.bool,
 };
 
-// Grid.defaultProps = {
-//   pagination: true,
-//   rowCount: 10,
-//   isLoading: false,
-//   isError: null,
-//   isAuth: true,
-//   isEmpty: false,
-// };
+Grid.defaultProps = {
+  // pagination: true,
+  // rowCount: 10,
+  isLoading: true,
+  // isError: null,
+  // isAuth: true,
+  // isssEmpty: false,
+};
 
 export default Grid;
