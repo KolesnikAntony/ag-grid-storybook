@@ -10,10 +10,10 @@ const App = () => {
   const gridProperties = {
     pagination: true,
     rowCount: 50,
-    isLoading: true,
+    isLoading: false,
     isError: null,
     isAuth: true,
-    isEmpty: true,
+    isEmpty: false,
   };
 
   return <Grid {...gridProperties} />;

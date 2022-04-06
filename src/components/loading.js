@@ -23,7 +23,7 @@ const useStyle = () => {
     },
     skeleton: {
       flexShrink: 0,
-      height: '2.4rem',
+      height: '2.5rem',
       borderRadius: '.8rem',
       transform: 'none',
     },

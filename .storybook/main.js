@@ -6,7 +6,10 @@ module.exports = {
   "addons": [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
-    "@storybook/addon-interactions"
+    "@storybook/addon-interactions",
+    // "@storybook/addon-controls"
   ],
-  "framework": "@storybook/react"
+  "framework": "@storybook/react",
+  features: { emotionAlias: false },
+  previewHead: (head) => (` ${head} <style> html { font-size: 62.5%; } </style> `)
 }

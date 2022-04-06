@@ -26,4 +26,8 @@ export default {
   },
 };
 
-export const Template = (args) => <Grid {...args} />;
+const Template = (args) => <Grid {...args} />;
+
+// 👇 Each story then reuses that template
+export const Primary = Template.bind({});
+Primary.args = { pagination: false, rowCount: 10, isLoading: false, isEmpty: false };

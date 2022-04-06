@@ -11,7 +11,7 @@ const Grid = (props) => {
   const { pagination, rowCount, isLoading, isEmpty } = props;
   // console.log(pagination);
 
-  const containerStyle = useMemo(() => ({ width: '100%', height: '600px' }), []);
+  const containerStyle = useMemo(() => ({ width: '100%', height: '300px' }), []);
   const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
 
   const columnDefs = [{ field: 'make' }, { field: 'model' }, { field: 'price' }];
@@ -20,9 +20,10 @@ const Grid = (props) => {
   const [rowData, setRowData] = useState([]);
   const [gridApi, setGridApi] = useState(null);
 
-  const iAmRef = React.useRef(null);
+  // const iAmRef = React.useRef(null);
 
   useEffect(() => {
+    console.log('gridApi', gridApi)
     if (gridApi) {
       isLoading && gridApi.showLoadingOverlay();
       !isEmpty && setRowData(data);
@@ -50,22 +51,20 @@ const Grid = (props) => {
 
   return (
     <div style={containerStyle}>
-      <div style={{ height: '100%', paddingTop: '25px', boxSizing: 'border-box' }}>
-        <div style={gridStyle} className="ag-theme-alpine">
-          <AgGridReact
-            columnDefs={columnDefs}
-            defaultColDef={defaultColDef}
-            rowData={rowData}
-            // suppressLoadingOverlay={true}
-            animateRows={true}
-            onGridReady={onGridReady}
-            pagination={pagination}
-            paginationPageSize={rowCount}
-            ref={iAmRef}
-            // loadingOverlayComponent={loadingOverlayComponent}
-            loadingOverlayComponentFramework={loadingOverlayComponent}
-          />
-        </div>
+      <div style={gridStyle} className="ag-theme-alpine">
+        <AgGridReact
+          columnDefs={columnDefs}
+          defaultColDef={defaultColDef}
+          rowData={rowData}
+          // suppressLoadingOverlay={true}
+          animateRows={true}
+          onGridReady={onGridReady}
+          pagination={pagination}
+          paginationPageSize={rowCount}
+          // ref={iAmRef}
+          // loadingOverlayComponent={loadingOverlayComponent}
+          loadingOverlayComponentFramework={loadingOverlayComponent}
+        />
       </div>
     </div>
   );
@@ -83,10 +82,10 @@ Grid.propTypes = {
 Grid.defaultProps = {
   // pagination: true,
   // rowCount: 10,
-  isLoading: true,
+  // isLoading: true,
   // isError: null,
   // isAuth: true,
-  // isssEmpty: false,
+  // isEmpty: false,
 };
 
 export default Grid;
