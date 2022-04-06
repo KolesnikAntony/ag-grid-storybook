@@ -4,11 +4,10 @@ import 'ag-grid-enterprise';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import PropTypes from 'prop-types';
-import { temp } from '../api';
 import Loading from './loading';
 
 const Grid = (props) => {
-  const { pagination, rowCount, isLoading, isEmpty } = props;
+  const { pagination, rowCount, isLoading, isEmpty, state } = props;
   // console.log(pagination);
 
   const containerStyle = useMemo(() => ({ width: '100%', height: '300px' }), []);
@@ -16,14 +15,14 @@ const Grid = (props) => {
 
   const columnDefs = [{ field: 'make' }, { field: 'model' }, { field: 'price' }];
 
-  const data = useMemo(() => temp, []);
-  const [rowData, setRowData] = useState([]);
+  const data = useMemo(() => state, [state]);
+
+  const [rowData, setRowData] = useState(data);
   const [gridApi, setGridApi] = useState(null);
 
   // const iAmRef = React.useRef(null);
 
   useEffect(() => {
-    console.log('gridApi', gridApi);
     if (gridApi) {
       !isEmpty && setRowData(data);
       isLoading && gridApi.showLoadingOverlay();
@@ -49,10 +48,24 @@ const Grid = (props) => {
     return Loading;
   }, []);
 
+  const rowStyle = { background: '#eee' };
+
+  const getRowStyle = (params) => {
+    if (params.data.isDeleted) {
+      return { background: 'red', pointerEvents: 'none' };
+    }
+
+    if (params.data.isDisabled) {
+      return { background: 'gray', pointerEvents: 'none' };
+    }
+  };
+
   return (
     <div style={containerStyle}>
       <div style={gridStyle} className="ag-theme-alpine">
         <AgGridReact
+          rowStyle={rowStyle}
+          getRowStyle={getRowStyle}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           rowData={rowData}
@@ -77,6 +90,8 @@ Grid.propTypes = {
   isEmpty: PropTypes.bool,
   // isError: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([null])]),
   // isAuth: PropTypes.bool,
+  deletedIndex: PropTypes.number,
+  disabledIndex: PropTypes.number,
 };
 
 Grid.defaultProps = {
@@ -86,6 +101,8 @@ Grid.defaultProps = {
   // isError: null,
   // isAuth: true,
   // isEmpty: false,
+  deletedIndex: 1,
+  disabledIndex: 2,
 };
 
 export default Grid;

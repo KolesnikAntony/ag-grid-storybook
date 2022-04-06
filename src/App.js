@@ -5,6 +5,7 @@ import './test.scss';
 import 'ag-grid-enterprise';
 
 import Grid from './components/grid';
+import { defaultState } from './api';
 
 const App = () => {
   const gridProperties = {
@@ -16,7 +17,7 @@ const App = () => {
     isEmpty: false,
   };
 
-  return <Grid {...gridProperties} />;
+  return <Grid {...gridProperties} state={defaultState} />;
 };
 
 export default App;
