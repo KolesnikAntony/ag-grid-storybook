@@ -34,7 +34,7 @@ const useStyle = () => {
   };
 };
 
-const Loading = () => {
+const GridLoading = () => {
   const sx = useStyle();
   const sk = () => {
     let arr = [];
@@ -51,4 +51,4 @@ const Loading = () => {
   return <Box sx={sx.skeletonBox}>{sk()}</Box>;
 };
 
-export default Loading;
+export default GridLoading;

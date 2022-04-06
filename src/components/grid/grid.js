@@ -4,10 +4,12 @@ import 'ag-grid-enterprise';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import PropTypes from 'prop-types';
-import Loading from './loading';
+import GridLoading from './gridLoading';
+import GridError from './gridError';
+import GridEmpty from './gridEmpty';
 
 const Grid = (props) => {
-  const { pagination, rowCount, isLoading, isEmpty, state } = props;
+  const { pagination, rowCount, isLoading, isEmpty, isError, state } = props;
   // console.log(pagination);
 
   const containerStyle = useMemo(() => ({ width: '100%', height: '300px' }), []);
@@ -45,8 +47,15 @@ const Grid = (props) => {
   }, []);
 
   const loadingOverlayComponent = React.useMemo(() => {
-    return Loading;
+    return GridLoading;
   }, []);
+
+  const noRowsOverlayComponent = React.useMemo(() => {
+    if (isError) {
+      return GridError;
+    }
+    return GridEmpty;
+  }, [isError]);
 
   const rowStyle = { background: '#eee' };
 
@@ -75,8 +84,10 @@ const Grid = (props) => {
           pagination={pagination}
           paginationPageSize={rowCount}
           // ref={iAmRef}
-          // loadingOverlayComponent={loadingOverlayComponent}
+          noRowsOverlayComponentFramework={noRowsOverlayComponent}
           loadingOverlayComponentFramework={loadingOverlayComponent}
+          serverSideSortingAlwaysResets={true}
+          // serverSideFilteringAlwaysResets={false}
         />
       </div>
     </div>
@@ -88,8 +99,8 @@ Grid.propTypes = {
   rowCount: PropTypes.number,
   isLoading: PropTypes.bool,
   isEmpty: PropTypes.bool,
-  // isError: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([null])]),
-  // isAuth: PropTypes.bool,
+  isError: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([null])]),
+  isAuth: PropTypes.bool,
   deletedIndex: PropTypes.number,
   disabledIndex: PropTypes.number,
 };

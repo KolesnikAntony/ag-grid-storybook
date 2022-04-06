@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { defaultState } from '../../api';
-import Grid from '../../components/grid';
+import Grid from '../../components/grid/grid';
 
-const Table = ({ isDisabled, isDeleted }) => {
+const GridStory = (args) => {
   const [state, setState] = useState(defaultState);
+  const {isDisabled, isDeleted} = args;
 
   const gridProperties = {
     pagination: true,
@@ -39,4 +40,4 @@ const Table = ({ isDisabled, isDeleted }) => {
   return <Grid {...gridProperties} state={state} />;
 };
 
-export default Table;
+export default GridStory;

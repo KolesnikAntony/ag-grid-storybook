@@ -1,38 +1,21 @@
 import React from 'react';
-import Grid from './../components/grid';
+
+import { Page } from './Page';
+import * as HeaderStories from './Header.stories';
 
 export default {
-  title: 'Grid/Table',
-  component: Grid,
-  parameters: {
-    layout: 'fullscreen',
-  },
-  argTypes: {
-    pagination: {
-      description: 'Toggle pagination to infinity scroll',
-      control: {
-        type: 'boolean',
-      },
-    },
-    rowCount: {
-      description: 'Choose count of visible rows',
-      control: 'select',
-      options: [10, 50, 75, 100, 200],
-    },
-    isEmpty: {
-      description: 'When array with data is empty',
-    },
-    isLoading: {
-      description: 'When we waiting for a data',
-    },
-
-    // isError: null,
-    // isAuth: true,
-  },
+  title: 'Example/Page',
+  component: Page,
 };
 
-const Template = (args) => <Grid {...args} />;
+const Template = (args) => <Page {...args} />;
 
-// 👇 Each story then reuses that template
-export const Primary = Template.bind({});
-Primary.args = { pagination: false, rowCount: 10, isEmpty: false, isLoading: false };
+export const LoggedIn = Template.bind({});
+LoggedIn.args = {
+  ...HeaderStories.LoggedIn.args,
+};
+
+export const LoggedOut = Template.bind({});
+LoggedOut.args = {
+  ...HeaderStories.LoggedOut.args,
+};
