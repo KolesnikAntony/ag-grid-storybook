@@ -23,10 +23,10 @@ const Grid = (props) => {
   // const iAmRef = React.useRef(null);
 
   useEffect(() => {
-    console.log('gridApi', gridApi)
+    console.log('gridApi', gridApi);
     if (gridApi) {
-      isLoading && gridApi.showLoadingOverlay();
       !isEmpty && setRowData(data);
+      isLoading && gridApi.showLoadingOverlay();
     }
   }, [gridApi, isLoading, isEmpty, data]);
 

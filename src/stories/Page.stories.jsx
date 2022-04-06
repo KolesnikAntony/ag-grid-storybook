@@ -9,18 +9,23 @@ export default {
   },
   argTypes: {
     pagination: {
-      description: 'Toggle pagination',
+      description: 'Toggle pagination to infinity scroll',
       control: {
         type: 'boolean',
       },
     },
     rowCount: {
-      description: 'Count of rows',
+      description: 'Choose count of visible rows',
       control: 'select',
       options: [10, 50, 75, 100, 200],
     },
-    isLoading: false,
-    isEmpty: false,
+    isEmpty: {
+      description: 'When array with data is empty',
+    },
+    isLoading: {
+      description: 'When we waiting for a data',
+    },
+
     // isError: null,
     // isAuth: true,
   },
@@ -30,4 +35,4 @@ const Template = (args) => <Grid {...args} />;
 
 // 👇 Each story then reuses that template
 export const Primary = Template.bind({});
-Primary.args = { pagination: false, rowCount: 10, isLoading: false, isEmpty: false };
+Primary.args = { pagination: false, rowCount: 10, isEmpty: false, isLoading: false };
