@@ -3,9 +3,8 @@ import { defaultState } from '../../api';
 import Grid from '../../components/grid/grid';
 
 const GridStory = (args) => {
-  console.log(args)
-  const [state, setState] = useState(defaultState);
-  const { isDisabled, isDeleted } = args;
+  const [state, setState] = useState([]);
+  const { isDisabled, isDeleted, isEmpty } = args;
 
   const transformState = (type) => {
     return state.map((el, index) => {
@@ -27,7 +26,10 @@ const GridStory = (args) => {
     if (isDisabled) {
       setState(disabledState);
     }
-  }, [isDisabled, isDeleted, setState, deletedState, disabledState]);
+    if (!isEmpty && !isDeleted && !isDisabled) {
+      setState(defaultState);
+    }
+  }, [isDisabled, isDeleted, setState, deletedState, disabledState, isEmpty]);
 
   return <Grid {...args} state={state} />;
 };
