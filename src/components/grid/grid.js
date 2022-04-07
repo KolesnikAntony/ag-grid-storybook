@@ -50,12 +50,13 @@ const Grid = (props) => {
     return GridLoading;
   }, []);
 
-  const noRowsOverlayComponent = React.useMemo(() => {
+  const noRowsOverlayComponent = React.useEffect(() => {
     if (isError) {
       return GridError;
     }
+
     return GridEmpty;
-  }, [isError]);
+  }, [isError, isEmpty]);
 
   const rowStyle = { background: '#eee' };
 

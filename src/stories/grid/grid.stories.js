@@ -56,6 +56,5 @@ export default {
 
 const Template = (args) => <GridStory {...args} />;
 
-// 👇 Each story then reuses that template
-export const Primary = Template.bind({});
-Primary.args = { pagination: false };
+export const Default = Template.bind({});
+Default.args = { pagination: false };
