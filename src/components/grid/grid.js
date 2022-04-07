@@ -8,8 +8,7 @@ import GridLoading from './gridLoading';
 import GridEmpty from './gridEmpty';
 
 const Grid = (props) => {
-  const { pagination, rowCount, isLoading, error, state, isSortable, isResizable, isFilterMenu, rowSelection } = props;
-  // console.log(pagination);
+  const { state, pagination, rowCount, isLoading, error, isSortable, isResizable, isFilterMenu, rowSelection } = props;
 
   const containerStyle = useMemo(() => ({ width: '100%', height: '300px' }), []);
   const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
@@ -25,6 +24,12 @@ const Grid = (props) => {
       isLoading && gridApi.showLoadingOverlay();
     }
   }, [isLoading, gridApi]);
+
+  // useEffect(() => {
+  //   if (gridApi) {
+  //     gridApi.setRowData(rowData);
+  //   }
+  // });
 
   const defaultColDef = useMemo(() => {
     return {

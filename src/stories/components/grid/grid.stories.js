@@ -1,6 +1,6 @@
 import React from 'react';
-import Grid from '../../components/grid/grid';
-import { STATES } from '../../api';
+import Grid from '../../../components/grid/grid';
+import { STATES } from '../../../api';
 
 export default {
   title: 'Components/Grid',
