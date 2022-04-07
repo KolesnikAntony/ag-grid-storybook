@@ -11,7 +11,7 @@ const App = () => {
     pagination: true,
     rowCount: 50,
     isLoading: false,
-    isError: null,
+    error: null,
     isAuth: true,
     isEmpty: false,
   };

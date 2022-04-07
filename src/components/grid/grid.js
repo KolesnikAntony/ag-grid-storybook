@@ -8,7 +8,7 @@ import GridLoading from './gridLoading';
 import GridEmpty from './gridEmpty';
 
 const Grid = (props) => {
-  const { pagination, rowCount, isLoading, isError, state } = props;
+  const { pagination, rowCount, isLoading, error, state, isSortable, isResizable, isFilterMenu, rowSelection } = props;
   // console.log(pagination);
 
   const containerStyle = useMemo(() => ({ width: '100%', height: '300px' }), []);
@@ -28,14 +28,16 @@ const Grid = (props) => {
 
   const defaultColDef = useMemo(() => {
     return {
-      editable: true,
-      sortable: true,
       flex: 1,
       minWidth: 100,
-      filter: true,
-      resizable: true,
+      cellEditorPopup: false,
+      // editable: false,
+      // filter: true,
+      sortable: isSortable,
+      resizable: isResizable,
+      suppressMenu: !isFilterMenu,
     };
-  }, []);
+  }, [isSortable, isResizable, isFilterMenu]);
 
   const onGridReady = useCallback((params) => {
     setGridApi(params.api);
@@ -51,12 +53,12 @@ const Grid = (props) => {
 
   const noRowsOverlayComponentParams = useMemo(
     () => ({
-      error: isError,
+      error: error,
     }),
-    [isError]
+    [error]
   );
 
-  const rowStyle = { background: '#eee' };
+  const rowStyle = { background: '' };
 
   const getRowStyle = (params) => {
     if (params.data.isDeleted) {
@@ -96,9 +98,12 @@ const Grid = (props) => {
           noRowsOverlayComponentParams={noRowsOverlayComponentParams}
           loadingOverlayComponentFramework={loadingOverlayComponent}
           serverSideSortingAlwaysResets={true}
-          rowSelection={'multiply'}
-          suppressRowClickSelection={false}
+          rowSelection={rowSelection}
+          rowMultiSelectWithClick={true}
+          // suppressRowClickSelection={false}
           // onSelectionChanged={onSelectionChanged}
+          suppressClickEdit={true}
+          suppressCellSelection={true}
         />
       </div>
     </div>
@@ -110,21 +115,20 @@ Grid.propTypes = {
   pagination: PropTypes.bool,
   rowCount: PropTypes.number,
   isLoading: PropTypes.bool,
-  isError: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([null])]),
+  // error: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([null])]),
+  error: PropTypes.string,
   isAuth: PropTypes.bool,
+  isSortable: PropTypes.bool,
+  isResizable: PropTypes.bool,
+  isFilterMenu: PropTypes.bool,
+  rowSelection: PropTypes.string,
   // deletedIndex: PropTypes.number,
   // disabledIndex: PropTypes.number,
 };
 
 Grid.defaultProps = {
-  // pagination: true,
-  // rowCount: 10,
-  // isLoading: true,
-  // isError: null,
-  // isAuth: true,
-  // isEmpty: false,
-  // deletedIndex: 1,
-  // disabledIndex: 2,
+  state: [],
+  rowCount: 10,
 };
 
 export default Grid;
