@@ -1,5 +1,6 @@
 import React from 'react';
 import GridStory from './grid';
+import { STATES } from '../../api';
 
 export default {
   title: 'Components/Grid',
@@ -22,6 +23,14 @@ export default {
       },
       options: [10, 50, 75, 100, 200],
       defaultValue: 10,
+    },
+    arrayVariation: {
+      description: 'Choose kind of state',
+      options: ['Default, Empty, Deleted, Disabled'],
+      control: {
+        type: 'select',
+      },
+      defaultValue: 'Default',
     },
     isEmpty: {
       description: 'When array with data is empty',
@@ -54,7 +63,25 @@ export default {
   },
 };
 
-const Template = (args) => <GridStory {...args} />;
+const getCurrentState = (view) => {
+  switch (view) {
+    case 'Default':
+      return STATES.default;
+    case 'Empty':
+      return [];
+    case 'Deleted':
+      return STATES.deleted;
+    case 'Disabled':
+      return STATES.disabled;
+    default:
+      return [];
+  }
+};
+
+const Template = ({ arrayVariation, ...args }) => {
+  const state = getCurrentState(arrayVariation);
+  return <GridStory {...args} state={state} />;
+};
 
 export const Default = Template.bind({});
-Default.args = { pagination: false };
+Default.args = { pagination: false,  };

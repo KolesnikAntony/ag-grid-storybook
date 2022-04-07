@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import './test.scss';
 import 'ag-grid-enterprise';
 
-import Grid from './components/grid';
-import { defaultState } from './api';
+import Grid from './components/grid/grid';
+import { STATES } from './api';
 
 const App = () => {
   const gridProperties = {
@@ -16,8 +16,9 @@ const App = () => {
     isAuth: true,
     isEmpty: false,
   };
+  const [state, setState] = useState([]);
 
-  return <Grid {...gridProperties} state={defaultState} />;
+  return <Grid {...gridProperties} state={state} />;
 };
 
 export default App;

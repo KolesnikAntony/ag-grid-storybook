@@ -9,7 +9,7 @@ import GridError from './gridError';
 import GridEmpty from './gridEmpty';
 
 const Grid = (props) => {
-  const { pagination, rowCount, isLoading, isEmpty, isError, state } = props;
+  const { pagination, rowCount, isLoading, isError, state } = props;
   // console.log(pagination);
 
   const containerStyle = useMemo(() => ({ width: '100%', height: '300px' }), []);
@@ -17,19 +17,18 @@ const Grid = (props) => {
 
   const columnDefs = [{ field: 'make' }, { field: 'model' }, { field: 'price' }];
 
-  const data = useMemo(() => state, [state]);
+  const rowData = useMemo(() => state, [state]);
 
-  const [rowData, setRowData] = useState(data);
+  // const [rowData, setRowData] = useState(data);
   const [gridApi, setGridApi] = useState(null);
 
   // const iAmRef = React.useRef(null);
 
   useEffect(() => {
     if (gridApi) {
-      !isEmpty && setRowData(data);
       isLoading && gridApi.showLoadingOverlay();
     }
-  }, [gridApi, isLoading, isEmpty, data]);
+  }, [isLoading, gridApi]);
 
   const defaultColDef = useMemo(() => {
     return {
@@ -50,13 +49,13 @@ const Grid = (props) => {
     return GridLoading;
   }, []);
 
-  const noRowsOverlayComponent = React.useEffect(() => {
+  const noRowsOverlayComponent = React.useMemo(() => {
     if (isError) {
       return GridError;
     }
 
     return GridEmpty;
-  }, [isError, isEmpty]);
+  }, [isError]);
 
   const rowStyle = { background: '#eee' };
 
