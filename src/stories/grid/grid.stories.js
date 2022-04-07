@@ -1,14 +1,28 @@
 import React from 'react';
-import GridStory from './grid';
+import Grid from '../../components/grid/grid';
 import { STATES } from '../../api';
 
 export default {
   title: 'Components/Grid',
-  component: GridStory,
+  component: Grid,
   parameters: {
     layout: 'fullscreen',
   },
   argTypes: {
+    state: {
+      description: 'Hello',
+      control: {
+        type: null,
+      },
+    },
+    stateControl: {
+      description: 'Choose kind of state (Storybook only)',
+      options: ['Default', 'Empty', 'Deleted', 'Disabled'],
+      control: {
+        type: 'select',
+      },
+      defaultValue: 'Default',
+    },
     pagination: {
       description: 'Toggle pagination to infinity scroll',
       control: {
@@ -24,21 +38,13 @@ export default {
       options: [10, 50, 75, 100, 200],
       defaultValue: 10,
     },
-    arrayVariation: {
-      description: 'Choose kind of state',
-      options: ['Default, Empty, Deleted, Disabled'],
-      control: {
-        type: 'select',
-      },
-      defaultValue: 'Default',
-    },
-    isEmpty: {
-      description: 'When array with data is empty',
-      control: {
-        type: 'boolean',
-      },
-      defaultValue: false,
-    },
+    // isEmpty: {
+    //   description: 'When array with data is empty',
+    //   control: {
+    //     type: 'boolean',
+    //   },
+    //   defaultValue: false,
+    // },
     isLoading: {
       description: 'When we waiting for a data',
       control: {
@@ -60,6 +66,12 @@ export default {
       },
       defaultValue: true,
     },
+    selectedRow: {
+      description: 'Click to row please',
+      control: {
+        type: null,
+      },
+    }
   },
 };
 
@@ -78,10 +90,10 @@ const getCurrentState = (view) => {
   }
 };
 
-const Template = ({ arrayVariation, ...args }) => {
-  const state = getCurrentState(arrayVariation);
-  return <GridStory {...args} state={state} />;
+const Template = ({ stateControl, ...args }) => {
+  const state = getCurrentState(stateControl);
+  return <Grid {...args} state={state} />;
 };
 
 export const Default = Template.bind({});
-Default.args = { pagination: false,  };
+Default.args = { pagination: false };

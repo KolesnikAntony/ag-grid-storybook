@@ -69,6 +69,13 @@ const Grid = (props) => {
     }
   };
 
+  // const onSelectionChanged = (e) => {
+  //   console.log(e)
+  //   // const selectedRows = gridOptions.api.getSelectedRows();
+  //   // document.querySelector('#selectedRows').innerHTML =
+  //   //   selectedRows.length === 1 ? selectedRows[0].athlete : '';
+  // }
+
   return (
     <div style={containerStyle}>
       <div style={gridStyle} className="ag-theme-alpine">
@@ -88,6 +95,9 @@ const Grid = (props) => {
           loadingOverlayComponentFramework={loadingOverlayComponent}
           serverSideSortingAlwaysResets={true}
           // serverSideFilteringAlwaysResets={false}
+          rowSelection={'multiply'}
+          suppressRowClickSelection={false}
+          // onSelectionChanged={onSelectionChanged}
         />
       </div>
     </div>
@@ -95,14 +105,15 @@ const Grid = (props) => {
 };
 
 Grid.propTypes = {
+  state: PropTypes.arrayOf(PropTypes.object),
   pagination: PropTypes.bool,
   rowCount: PropTypes.number,
   isLoading: PropTypes.bool,
-  isEmpty: PropTypes.bool,
+  // isEmpty: PropTypes.bool,
   isError: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([null])]),
   isAuth: PropTypes.bool,
-  deletedIndex: PropTypes.number,
-  disabledIndex: PropTypes.number,
+  // deletedIndex: PropTypes.number,
+  // disabledIndex: PropTypes.number,
 };
 
 Grid.defaultProps = {
@@ -112,8 +123,8 @@ Grid.defaultProps = {
   // isError: null,
   // isAuth: true,
   // isEmpty: false,
-  deletedIndex: 1,
-  disabledIndex: 2,
+  // deletedIndex: 1,
+  // disabledIndex: 2,
 };
 
 export default Grid;
