@@ -5,7 +5,6 @@ import './test.scss';
 import 'ag-grid-enterprise';
 
 import Grid from './components/grid/grid';
-import { STATES } from './api';
 
 const App = () => {
   const gridProperties = {
@@ -16,7 +15,7 @@ const App = () => {
     isAuth: true,
     isEmpty: false,
   };
-  const [state, setState] = useState([]);
+  const [state] = useState([]);
 
   return <Grid {...gridProperties} state={state} />;
 };

@@ -5,7 +5,6 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import PropTypes from 'prop-types';
 import GridLoading from './gridLoading';
-import GridError from './gridError';
 import GridEmpty from './gridEmpty';
 
 const Grid = (props) => {
@@ -19,10 +18,7 @@ const Grid = (props) => {
 
   const rowData = useMemo(() => state, [state]);
 
-  // const [rowData, setRowData] = useState(data);
   const [gridApi, setGridApi] = useState(null);
-
-  // const iAmRef = React.useRef(null);
 
   useEffect(() => {
     if (gridApi) {
@@ -45,17 +41,20 @@ const Grid = (props) => {
     setGridApi(params.api);
   }, []);
 
-  const loadingOverlayComponent = React.useMemo(() => {
+  const loadingOverlayComponent = useMemo(() => {
     return GridLoading;
   }, []);
 
-  const noRowsOverlayComponent = React.useMemo(() => {
-    if (isError) {
-      return GridError;
-    }
-
+  const noRowsOverlayComponent = useMemo(() => {
     return GridEmpty;
-  }, [isError]);
+  }, []);
+
+  const noRowsOverlayComponentParams = useMemo(
+    () => ({
+      error: isError,
+    }),
+    [isError]
+  );
 
   const rowStyle = { background: '#eee' };
 
@@ -66,6 +65,10 @@ const Grid = (props) => {
 
     if (params.data.isDisabled) {
       return { background: 'gray', pointerEvents: 'none' };
+    }
+
+    if (params.data.isUpdated) {
+      return { background: 'green' };
     }
   };
 
@@ -85,16 +88,14 @@ const Grid = (props) => {
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           rowData={rowData}
-          // suppressLoadingOverlay={true}
           animateRows={true}
           onGridReady={onGridReady}
           pagination={pagination}
           paginationPageSize={rowCount}
-          // ref={iAmRef}
           noRowsOverlayComponentFramework={noRowsOverlayComponent}
+          noRowsOverlayComponentParams={noRowsOverlayComponentParams}
           loadingOverlayComponentFramework={loadingOverlayComponent}
           serverSideSortingAlwaysResets={true}
-          // serverSideFilteringAlwaysResets={false}
           rowSelection={'multiply'}
           suppressRowClickSelection={false}
           // onSelectionChanged={onSelectionChanged}
@@ -109,7 +110,6 @@ Grid.propTypes = {
   pagination: PropTypes.bool,
   rowCount: PropTypes.number,
   isLoading: PropTypes.bool,
-  // isEmpty: PropTypes.bool,
   isError: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([null])]),
   isAuth: PropTypes.bool,
   // deletedIndex: PropTypes.number,

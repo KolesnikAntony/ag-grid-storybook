@@ -2,10 +2,10 @@ import React, { Fragment } from 'react';
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
 import Divider from '@mui/material/Divider';
-import { useTheme } from '@mui/material/styles';
+// import { useTheme } from '@mui/material/styles';
 
 const useStyle = () => {
-  const theme = useTheme();
+  // const theme = useTheme();
 
   return {
     skeletonBox: {
@@ -17,6 +17,7 @@ const useStyle = () => {
       display: 'flex',
       flexDirection: 'column',
       padding: '.8rem 1.6rem',
+      background: 'white',
       '& > *:not(:last-child)': {
         marginBottom: '.8rem',
       },
