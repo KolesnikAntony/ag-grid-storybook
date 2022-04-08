@@ -5,9 +5,10 @@ import './test.scss';
 import 'ag-grid-enterprise';
 
 import Grid from './components/grid/grid';
+import { STATES } from './api';
 
 const App = () => {
-  const [state] = useState([]);
+  const [state] = useState(STATES.default);
 
   const error = null;
 
@@ -26,8 +27,7 @@ const App = () => {
     rowCount: 50,
     isLoading: false,
     error: getErrorText(error),
-    isAuth: true,
-    isEmpty: false,
+    rowSelection: 'multiply',
   };
 
   return <Grid {...gridProperties} state={state} />;
