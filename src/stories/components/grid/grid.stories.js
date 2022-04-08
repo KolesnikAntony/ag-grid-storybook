@@ -17,7 +17,7 @@ export default {
     },
     stateControl: {
       description: 'Choose kind of state (Storybook only)',
-      options: ['Default', 'Empty', 'Deleted', 'Disabled', 'Updated'],
+      options: ['Default', 'Empty', 'Deleted', 'Disabled', 'Updated', 'Error'],
       control: {
         type: 'select',
       },
@@ -62,9 +62,10 @@ export default {
     error: {
       description: 'When there is some error. Before you have to choose state control = <b>Empty</b>',
       control: {
-        type: 'text',
+        type: 'select',
       },
-      defaultValue: '',
+      options: [200, 400, 403, 404, 500, 501, 502, 503],
+      defaultValue: 200,
     },
     isSortable: {
       description: 'Ascending and descending table rows',
@@ -109,18 +110,30 @@ const getCurrentState = (view) => {
       return STATES.disabled;
     case 'Updated':
       return STATES.updated;
+    case 'Error':
+      return STATES.error;
     default:
       return [];
   }
 };
 
-const Template = ({ stateControl, ...args }) => {
+const getErrorText = (error) => {
+  if (error === 200) return null;
+  if (error === 400) return 'Bad request, please check payload data';
+  if (error === 403) return 'User not was authorise';
+  if (error === 404) return 'This page is not found';
+  if (error >= 500) return 'Some problem from server';
+};
+
+const Template = ({ stateControl, error, ...args }) => {
   const state = getCurrentState(stateControl);
-  return <Grid {...args} state={state} />;
+  const errorText = getErrorText(error);
+
+  return <Grid {...args} error={errorText} state={state} />;
 };
 
 export const Default = Template.bind({});
-Default.args = { stateControl: 'Default', error: '' };
+Default.args = { stateControl: 'Default' };
 
 export const WithPagination = Template.bind({});
 WithPagination.args = { ...Default.args, pagination: true };
@@ -132,12 +145,16 @@ export const EmptyState = Template.bind({});
 EmptyState.args = { ...WithPagination.args, stateControl: 'Empty' };
 
 export const ErrorState = Template.bind({});
-ErrorState.args = { ...EmptyState.args, error: 'Hmm you got some error from server' };
+ErrorState.args = { ...EmptyState.args, error: 404 };
 
 export const WithDeletedRowState = Template.bind({});
 WithDeletedRowState.args = { ...WithPagination.args, stateControl: 'Deleted' };
 
 export const WithDisabledRowState = Template.bind({});
 WithDisabledRowState.args = { ...WithPagination.args, stateControl: 'Disabled' };
+
 export const WithUpdatedRowState = Template.bind({});
 WithUpdatedRowState.args = { ...WithPagination.args, stateControl: 'Updated' };
+
+export const WithErrorRowState = Template.bind({});
+WithErrorRowState.args = { ...WithPagination.args, stateControl: 'Error' };

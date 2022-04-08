@@ -25,19 +25,11 @@ const Grid = (props) => {
     }
   }, [isLoading, gridApi]);
 
-  // useEffect(() => {
-  //   if (gridApi) {
-  //     gridApi.setRowData(rowData);
-  //   }
-  // });
-
   const defaultColDef = useMemo(() => {
     return {
       flex: 1,
       minWidth: 100,
       cellEditorPopup: false,
-      // editable: false,
-      // filter: true,
       sortable: isSortable,
       resizable: isResizable,
       suppressMenu: !isFilterMenu,
@@ -67,24 +59,20 @@ const Grid = (props) => {
 
   const getRowStyle = (params) => {
     if (params.data.isDeleted) {
-      return { background: 'red', pointerEvents: 'none' };
+      return { background: 'rgba(112,3,16,0.4)', pointerEvents: 'none' };
     }
 
     if (params.data.isDisabled) {
-      return { background: 'gray', pointerEvents: 'none' };
+      return { background: 'rgba(87,94,86,0.4)', pointerEvents: 'none' };
     }
 
     if (params.data.isUpdated) {
-      return { background: 'green' };
+      return { background: 'rgba(46,173,31,0.4)' };
+    }
+    if (params.data.isError) {
+      return { background: 'rgba(252, 69, 3, 0.4)', color: 'red' };
     }
   };
-
-  // const onSelectionChanged = (e) => {
-  //   console.log(e)
-  //   // const selectedRows = gridOptions.api.getSelectedRows();
-  //   // document.querySelector('#selectedRows').innerHTML =
-  //   //   selectedRows.length === 1 ? selectedRows[0].athlete : '';
-  // }
 
   return (
     <div style={containerStyle}>
