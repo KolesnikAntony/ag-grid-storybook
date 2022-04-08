@@ -88,13 +88,6 @@ export default {
       },
       defaultValue: false,
     },
-    isAuth: {
-      description: 'Authorization indicator',
-      control: {
-        type: 'boolean',
-      },
-      defaultValue: true,
-    },
   },
 };
 
@@ -118,7 +111,7 @@ const getCurrentState = (view) => {
 };
 
 const getErrorText = (error) => {
-  if (error === 200) return null;
+  if (error === 200) return '';
   if (error === 400) return 'Bad request, please check payload data';
   if (error === 403) return 'User not was authorise';
   if (error === 404) return 'This page is not found';

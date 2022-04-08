@@ -8,7 +8,8 @@
     "stylelint:fix": "stylelint \"**/*.scss\" --fix",
     "test": "jest",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "chromatic": "npx chromatic --project-token=dacf25283d1b"
   },
   "dependencies": {
     "@emotion/core": "^11.0.0",
@@ -44,12 +45,14 @@
     "@storybook/addon-interactions": "^6.4.20",
     "@storybook/addon-links": "^6.4.20",
     "@storybook/addons": "^6.4.20",
+    "@storybook/manager-webpack5": "^6.4.20",
     "@storybook/react": "^6.4.20",
     "@storybook/testing-library": "^0.0.9",
     "@storybook/theming": "^6.4.20",
     "@svgr/webpack": "^5.5.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
+    "chromatic": "^6.5.3",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^5.2.7",
     "eslint": "^7.8.1",
