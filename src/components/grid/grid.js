@@ -122,18 +122,21 @@ const Grid = (props) => {
   const [past, setPast] = useState(null);
   const [price, setPrice] = useState(null);
   const handleCopy = () => {
-    if (gridApi) {
-      const selectedRow = gridApi.getSelectedRows();
+    const selectedRow = gridApi?.getSelectedRows();
+    if (selectedRow.length) {
       const copiedState = selectedRow.map((el) => ({ ...el, isUpdated: true, id: Math.ceil(Math.random() * 1001) }));
       setPast(copiedState);
     } else {
       setPast(null);
+      alert('No selected rows');
     }
   };
   const handlePast = () => {
     if (past) {
       const newState = [...past, ...rowData];
       setRowData(newState);
+    } else {
+      alert('Buffer is empty');
     }
     setPast(null);
   };
@@ -169,16 +172,16 @@ const Grid = (props) => {
     <div style={containerStyle}>
       <Stack direction="row" spacing={2} alignItems="center">
         <Button startIcon={<ContentCopyIcon />} onClick={handleCopy}>
-          Copy
+          Copy row
         </Button>
         <Button startIcon={<ContentPasteIcon />} onClick={handlePast}>
-          Past
+          Past row
         </Button>
         <Button startIcon={<DeleteIcon />} onClick={handleDelete}>
-          Delete
+          Delete row
         </Button>
         <Button startIcon={<CalculateIcon />} onClick={handleCalc}>
-          Calc
+          Calc price
         </Button>
         {price && (
           <>
