@@ -35,7 +35,7 @@ export default {
       control: {
         type: 'select',
       },
-      defaultValue: 'single',
+      defaultValue: 'multiple',
     },
     pagination: {
       description: 'Toggle pagination to infinity scroll',
