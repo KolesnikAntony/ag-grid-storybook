@@ -29,6 +29,7 @@ const Grid = (props) => {
     return {
       flex: 1,
       minWidth: 100,
+      filter: true,
       cellEditorPopup: false,
       sortable: isSortable,
       resizable: isResizable,
