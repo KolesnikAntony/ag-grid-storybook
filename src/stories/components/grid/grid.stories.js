@@ -10,7 +10,7 @@ export default {
   },
   argTypes: {
     state: {
-      description: 'Hello',
+      description: 'State which you can change',
       control: {
         type: null,
       },
@@ -86,7 +86,7 @@ export default {
       control: {
         type: 'boolean',
       },
-      defaultValue: false,
+      defaultValue: true,
     },
   },
 };

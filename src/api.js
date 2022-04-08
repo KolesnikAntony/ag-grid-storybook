@@ -6,6 +6,7 @@ const defaultState = () => {
       make: 'Toyota',
       model: 'Celica',
       price: 35000,
+      date: `${i < 10 ? '0' + i : i}/08/1994`,
       isDeleted: false,
       isDisabled: false,
       isUpdated: false,
