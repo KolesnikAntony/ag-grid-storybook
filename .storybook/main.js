@@ -13,6 +13,8 @@ module.exports = {
     // "@storybook/addon-controls"
   ],
   "framework": "@storybook/react",
-  features: { emotionAlias: false },
+  features: {
+    emotionAlias: false
+  },
   previewHead: (head) => (` ${head} <style> html { font-size: 62.5%; } </style> `)
 }

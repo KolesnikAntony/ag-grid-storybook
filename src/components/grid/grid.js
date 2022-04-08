@@ -74,6 +74,7 @@ const Grid = (props) => {
       flex: 1,
       minWidth: 100,
       filter: true,
+      editable: true,
       cellEditorPopup: false,
       sortable: isSortable,
       resizable: isResizable,
@@ -208,11 +209,18 @@ const Grid = (props) => {
           loadingOverlayComponentFramework={loadingOverlayComponent}
           serverSideSortingAlwaysResets={true}
           rowSelection={rowSelection}
-          rowMultiSelectWithClick={true}
+          // rowMultiSelectWithClick={true}
           // suppressRowClickSelection={false}
           // onSelectionChanged={onSelectionChanged}
-          suppressClickEdit={true}
-          suppressCellSelection={true}
+          // suppressClickEdit={true}
+          // suppressCellSelection={true}
+          rowDragManaged={true}
+          rowDragEntireRow={true}
+          rowDragMultiRow={true}
+          suppressMovableColumns={false}
+          suppressMoveWhenRowDragging={true}
+          // suppressColumnMoveAnimation={true}
+          enableGroupEdit={true}
         />
       </div>
     </div>
