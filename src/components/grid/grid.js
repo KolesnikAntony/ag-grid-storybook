@@ -5,68 +5,72 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import PropTypes from 'prop-types';
 import GridLoading from './gridLoading';
-import GridError from './gridError';
 import GridEmpty from './gridEmpty';
 
 const Grid = (props) => {
-  const { pagination, rowCount, isLoading, isEmpty, isError, state } = props;
-  // console.log(pagination);
+  const { state, pagination, rowCount, isLoading, error, isSortable, isResizable, isFilterMenu, rowSelection } = props;
 
   const containerStyle = useMemo(() => ({ width: '100%', height: '300px' }), []);
   const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
 
-  const columnDefs = [{ field: 'make' }, { field: 'model' }, { field: 'price' }];
+  const columnDefs = [{ field: 'id' }, { field: 'make' }, { field: 'model' }, { field: 'price' }];
 
-  const data = useMemo(() => state, [state]);
+  const rowData = useMemo(() => state, [state]);
 
-  const [rowData, setRowData] = useState(data);
   const [gridApi, setGridApi] = useState(null);
-
-  // const iAmRef = React.useRef(null);
 
   useEffect(() => {
     if (gridApi) {
-      !isEmpty && setRowData(data);
       isLoading && gridApi.showLoadingOverlay();
     }
-  }, [gridApi, isLoading, isEmpty, data]);
+  }, [isLoading, gridApi]);
 
   const defaultColDef = useMemo(() => {
     return {
-      editable: true,
-      sortable: true,
       flex: 1,
       minWidth: 100,
-      filter: true,
-      resizable: true,
+      cellEditorPopup: false,
+      sortable: isSortable,
+      resizable: isResizable,
+      suppressMenu: !isFilterMenu,
     };
-  }, []);
+  }, [isSortable, isResizable, isFilterMenu]);
 
   const onGridReady = useCallback((params) => {
     setGridApi(params.api);
   }, []);
 
-  const loadingOverlayComponent = React.useMemo(() => {
+  const loadingOverlayComponent = useMemo(() => {
     return GridLoading;
   }, []);
 
-  const noRowsOverlayComponent = React.useEffect(() => {
-    if (isError) {
-      return GridError;
-    }
-
+  const noRowsOverlayComponent = useMemo(() => {
     return GridEmpty;
-  }, [isError, isEmpty]);
+  }, []);
 
-  const rowStyle = { background: '#eee' };
+  const noRowsOverlayComponentParams = useMemo(
+    () => ({
+      error: error,
+    }),
+    [error]
+  );
+
+  const rowStyle = { background: '' };
 
   const getRowStyle = (params) => {
     if (params.data.isDeleted) {
-      return { background: 'red', pointerEvents: 'none' };
+      return { background: 'rgba(112,3,16,0.4)', pointerEvents: 'none' };
     }
 
     if (params.data.isDisabled) {
-      return { background: 'gray', pointerEvents: 'none' };
+      return { background: 'rgba(87,94,86,0.4)', pointerEvents: 'none' };
+    }
+
+    if (params.data.isUpdated) {
+      return { background: 'rgba(46,173,31,0.4)' };
+    }
+    if (params.data.isError) {
+      return { background: 'rgba(252, 69, 3, 0.4)', color: 'red' };
     }
   };
 
@@ -79,16 +83,20 @@ const Grid = (props) => {
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           rowData={rowData}
-          // suppressLoadingOverlay={true}
           animateRows={true}
           onGridReady={onGridReady}
           pagination={pagination}
           paginationPageSize={rowCount}
-          // ref={iAmRef}
           noRowsOverlayComponentFramework={noRowsOverlayComponent}
+          noRowsOverlayComponentParams={noRowsOverlayComponentParams}
           loadingOverlayComponentFramework={loadingOverlayComponent}
           serverSideSortingAlwaysResets={true}
-          // serverSideFilteringAlwaysResets={false}
+          rowSelection={rowSelection}
+          rowMultiSelectWithClick={true}
+          // suppressRowClickSelection={false}
+          // onSelectionChanged={onSelectionChanged}
+          suppressClickEdit={true}
+          suppressCellSelection={true}
         />
       </div>
     </div>
@@ -96,25 +104,22 @@ const Grid = (props) => {
 };
 
 Grid.propTypes = {
+  state: PropTypes.arrayOf(PropTypes.object),
   pagination: PropTypes.bool,
   rowCount: PropTypes.number,
   isLoading: PropTypes.bool,
-  isEmpty: PropTypes.bool,
-  isError: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([null])]),
-  isAuth: PropTypes.bool,
-  deletedIndex: PropTypes.number,
-  disabledIndex: PropTypes.number,
+  error: PropTypes.string,
+  isSortable: PropTypes.bool,
+  isResizable: PropTypes.bool,
+  isFilterMenu: PropTypes.bool,
+  rowSelection: PropTypes.string,
+  // deletedIndex: PropTypes.number,
+  // disabledIndex: PropTypes.number,
 };
 
 Grid.defaultProps = {
-  // pagination: true,
-  // rowCount: 10,
-  // isLoading: true,
-  // isError: null,
-  // isAuth: true,
-  // isEmpty: false,
-  deletedIndex: 1,
-  disabledIndex: 2,
+  state: [],
+  rowCount: 10,
 };
 
 export default Grid;

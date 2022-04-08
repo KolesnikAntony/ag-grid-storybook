@@ -1,10 +1,10 @@
 import React from 'react';
-import { useTheme } from '@mui/material/styles';
+// import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-const useStyle = () => {
-  const theme = useTheme();
+const useStyle = (error) => {
+  // const theme = useTheme();
 
   return {
     emptyBox: {
@@ -16,14 +16,19 @@ const useStyle = () => {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
+      color: error ? 'red' : 'unset',
     },
   };
 };
 
-const GridEmpty = () => {
-  const sx = useStyle();
+const GridEmpty = ({ error }) => {
+  const sx = useStyle(!!error);
 
-  return <Box sx={sx.emptyBox}><Typography children="I'm empty ! :(" /></Box>;
+  return (
+    <Box sx={sx.emptyBox}>
+      <Typography>{error || "I'm empty ! :("}</Typography>
+    </Box>
+  );
 };
 
 export default GridEmpty;
