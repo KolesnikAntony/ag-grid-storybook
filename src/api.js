@@ -2,6 +2,7 @@ const defaultState = () => {
   let arr = [];
   for (let i = 0; i < 12; i++) {
     arr.push({
+      id: i,
       make: 'Toyota',
       model: 'Celica',
       price: 35000,

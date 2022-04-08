@@ -13,7 +13,7 @@ const Grid = (props) => {
   const containerStyle = useMemo(() => ({ width: '100%', height: '300px' }), []);
   const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
 
-  const columnDefs = [{ field: 'make' }, { field: 'model' }, { field: 'price' }];
+  const columnDefs = [{ field: 'id' }, { field: 'make' }, { field: 'model' }, { field: 'price' }];
 
   const rowData = useMemo(() => state, [state]);
 
