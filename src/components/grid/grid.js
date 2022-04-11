@@ -14,6 +14,8 @@ import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ClearIcon from '@mui/icons-material/Clear';
 import CalculateIcon from '@mui/icons-material/Calculate';
+import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 
 const Grid = (props) => {
   const { state, pagination, rowCount, isLoading, error, isSortable, isResizable, isFilterMenu, rowSelection } = props;
@@ -65,7 +67,7 @@ const Grid = (props) => {
 
   useEffect(() => {
     if (gridApi) {
-      isLoading && gridApi.showLoadingOverlay();
+      isLoading && setTimeout(() => gridApi.showLoadingOverlay())
     }
   }, [isLoading, gridApi]);
 
@@ -74,6 +76,7 @@ const Grid = (props) => {
       flex: 1,
       minWidth: 100,
       filter: true,
+      editable: true,
       cellEditorPopup: false,
       sortable: isSortable,
       resizable: isResizable,
@@ -168,9 +171,52 @@ const Grid = (props) => {
     setPrice(null);
   };
 
+  // const [filterState, setFilterState] = useState(true);
+  // useEffect(() => {}, [filterState]);
+
+  let savedFilterModel = null;
+
+  const resetFilters = () => {
+    gridApi.setFilterModel(null);
+    savedFilterModel = null;
+  }
+
+  const toggleFilters = () => {
+    if (Object.keys(gridApi.getFilterModel()).length !== 0) {
+      savedFilterModel = gridApi.getFilterModel();
+      // setFilterState(false);
+      gridApi.setFilterModel(null);
+    } else {
+      gridApi.setFilterModel(savedFilterModel);
+    }
+  }
+
+  // const getFilters = () => {
+  //   gridApi.getFilterModel();
+  // }
+
+  // gridApi?.onFilterChanged(() => {
+  //   console.log('I')
+  // });
+
   return (
     <div style={containerStyle}>
       <Stack direction="row" spacing={2} alignItems="center">
+        <Button
+          startIcon={<FilterAltOffIcon />}
+          onClick={resetFilters}
+          // disabled={filterState}
+        >
+          Reset filters
+        </Button>
+
+        <Button
+          startIcon={<FilterAltIcon />}
+          onClick={toggleFilters}
+          // disabled={filterState}
+        >
+          Toggle filters
+        </Button>
         <Button startIcon={<ContentCopyIcon />} onClick={handleCopy}>
           Copy row
         </Button>
@@ -208,11 +254,18 @@ const Grid = (props) => {
           loadingOverlayComponentFramework={loadingOverlayComponent}
           serverSideSortingAlwaysResets={true}
           rowSelection={rowSelection}
-          rowMultiSelectWithClick={true}
+          // rowMultiSelectWithClick={true}
           // suppressRowClickSelection={false}
           // onSelectionChanged={onSelectionChanged}
-          suppressClickEdit={true}
-          suppressCellSelection={true}
+          // suppressClickEdit={true}
+          // suppressCellSelection={true}
+          rowDragManaged={true}
+          rowDragEntireRow={true}
+          rowDragMultiRow={true}
+          suppressMovableColumns={false}
+          suppressMoveWhenRowDragging={true}
+          // suppressColumnMoveAnimation={true}
+          enableGroupEdit={true}
         />
       </div>
     </div>
