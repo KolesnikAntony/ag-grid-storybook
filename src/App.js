@@ -1,19 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import './test.scss';
 import 'ag-grid-enterprise';
-
-import Grid from './components/grid/grid';
-import { STATES } from './api';
 import { MemoryRouter, NavLink, Route, Routes } from 'react-router-dom';
-import GridWrapper from './components/grid - billing/grid-wrapper';
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import GeneralGrid from './components/general-grid/general-grid';
+import { GRID_TYPES } from './constants/grid-types';
+import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 
 const App = () => {
-  const [state] = useState(STATES.default);
+  // const [state] = useState(STATES.default);
 
   const error = null;
 
@@ -46,14 +44,17 @@ const App = () => {
             <Button variant={'outlined'} component={NavLink} to="/billing">
               Billing
             </Button>
+            <Button variant={'outlined'} component={NavLink} to="/agenda">
+              Billing
+            </Button>
           </Stack>
         </Box>
         <Routes>
-          <Route path="/" element={<Grid {...gridProperties} state={state} />} />
-          <Route path="/billing" element={<GridWrapper />} />
+          <Route path="/" element={<GeneralGrid type={GRID_TYPES.def} {...gridProperties} />} />
+          <Route path="/billing" element={<GeneralGrid type={GRID_TYPES.billing} {...gridProperties} />} />
+          <Route path="/agenda" element={<GeneralGrid type={GRID_TYPES.agenda} {...gridProperties} />} />
         </Routes>
       </MemoryRouter>
-      ;
     </Box>
   );
 };

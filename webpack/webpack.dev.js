@@ -15,16 +15,21 @@ const devConfig = {
         },
     },
     target: 'web',
-    plugins: [
+    plugins: [  
         new ModuleFederationPlugin({
             name: 'medical',
             filename: 'remoteEntry.js',
             exposes: {
                 './MedicalApp': './src/bootstrap'
             },
-            shared:packageJson.dependencies
+            shared: {
+                ...packageJson.dependencies,
+                react: { singleton: true, eager: true, requiredVersion: packageJson.dependencies.react },
+                "react-dom": { singleton: true, eager: true, requiredVersion: packageJson.dependencies["react-dom"] }
+
+            }
         }),
-        
+
     ]
 };
 
