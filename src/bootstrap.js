@@ -1,54 +1,42 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import App from './App';
 
 class Communicator {
   constructor() {
     this.externalProps = undefined;
-    this.refreshListAction = () => console.log('refreshListAction is not set');
+    this.root = (container) => createRoot(container);
   }
 
   setProps(props) {
     this.externalProps = props;
   }
 
-  setRefreshListAction(action) {
-    this.refreshListAction = action;
-  }
-
-  refreshList() {
-    this.refreshListAction();
-  }
-
   renderDev() {
-    const devRoot = document.querySelector('#root');
-    console.log('dev render');
-
-    if (devRoot) {
+    const container = document.getElementById('root');
+    if (container) {
       this.externalProps = {
         idPatient: 23246,
         idMedicalEstablishment: 1,
         language: 'fr',
         idConsultations: 999,
       };
-      this.render(devRoot);
+      this.render(container);
     }
   }
 
-  // renderProd() {
-  //   console.log('prod render');
-  //   if (this.rendered === true) return
-  //   this.rendered = true
-
-  //   if (window.TreatmentCommunicatorParent) {
-  //     window.TreatmentCommunicatorParent.setCommunicator(this);
-  //   }
-  // }
+  renderProd() {
+    if (window.TreatmentCommunicatorParent) {
+      window.TreatmentCommunicatorParent.setCommunicator(this);
+    } else {
+      this.renderDev();
+    }
+  }
 
   render(container) {
-    ReactDOM.render(<App {...this.externalProps} communicator={this} />, container);
+    this.root(container).render(<App {...this.externalProps} communicator={this} />);
   }
 }
 
 const communicator = new Communicator();
-communicator.renderDev();
+communicator.renderProd();
