@@ -44,15 +44,15 @@ const App = () => {
             <Button variant={'outlined'} component={NavLink} to="/billing">
               Billing
             </Button>
-            <Button variant={'outlined'} component={NavLink} to="/agenda">
+            <Button variant={'outlined'} component={NavLink} to="/transactions">
               Billing
             </Button>
           </Stack>
         </Box>
         <Routes>
-          <Route path="/" element={<GeneralGrid type={GRID_TYPES.def} {...gridProperties} />} />
+          <Route path="/" element={<GeneralGrid type={GRID_TYPES.casesToInvoice} {...gridProperties} />} />
           <Route path="/billing" element={<GeneralGrid type={GRID_TYPES.billing} {...gridProperties} />} />
-          <Route path="/agenda" element={<GeneralGrid type={GRID_TYPES.agenda} {...gridProperties} />} />
+          <Route path="/transactions" element={<GeneralGrid type={GRID_TYPES.transactions} {...gridProperties} />} />
         </Routes>
       </MemoryRouter>
     </Box>

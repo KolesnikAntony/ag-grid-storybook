@@ -67,7 +67,7 @@ const Grid = (props) => {
 
   useEffect(() => {
     if (gridApi) {
-      isLoading && setTimeout(() => gridApi.showLoadingOverlay())
+      isLoading && setTimeout(() => gridApi.showLoadingOverlay());
     }
   }, [isLoading, gridApi]);
 
@@ -124,6 +124,7 @@ const Grid = (props) => {
 
   const [past, setPast] = useState(null);
   const [price, setPrice] = useState(null);
+
   const handleCopy = () => {
     const selectedRow = gridApi?.getSelectedRows();
     if (selectedRow.length) {
@@ -179,7 +180,7 @@ const Grid = (props) => {
   const resetFilters = () => {
     gridApi.setFilterModel(null);
     savedFilterModel = null;
-  }
+  };
 
   const toggleFilters = () => {
     if (Object.keys(gridApi.getFilterModel()).length !== 0) {
@@ -189,7 +190,7 @@ const Grid = (props) => {
     } else {
       gridApi.setFilterModel(savedFilterModel);
     }
-  }
+  };
 
   // const getFilters = () => {
   //   gridApi.getFilterModel();
@@ -282,8 +283,6 @@ Grid.propTypes = {
   isResizable: PropTypes.bool,
   isFilterMenu: PropTypes.bool,
   rowSelection: PropTypes.string,
-  // deletedIndex: PropTypes.number,
-  // disabledIndex: PropTypes.number,
 };
 
 Grid.defaultProps = {
