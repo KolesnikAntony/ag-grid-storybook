@@ -9,6 +9,7 @@ import GeneralGrid from './components/general-grid/general-grid';
 import { GRID_TYPES } from './constants/grid-types';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+// import { STATES } from './api';
 
 const App = () => {
   // const [state] = useState(STATES.default);
@@ -39,19 +40,19 @@ const App = () => {
         <Box sx={{ width: '100%', p: 5, display: 'flex', justifyContent: 'center' }}>
           <Stack direction="row" spacing={2}>
             <Button variant={'outlined'} component={NavLink} to="/">
-              Base
-            </Button>
-            <Button variant={'outlined'} component={NavLink} to="/billing">
               Billing
+            </Button>
+            <Button variant={'outlined'} component={NavLink} to="/case">
+              Case
             </Button>
             <Button variant={'outlined'} component={NavLink} to="/transactions">
-              Billing
+              Trans
             </Button>
           </Stack>
         </Box>
         <Routes>
-          <Route path="/" element={<GeneralGrid type={GRID_TYPES.casesToInvoice} {...gridProperties} />} />
-          <Route path="/billing" element={<GeneralGrid type={GRID_TYPES.billing} {...gridProperties} />} />
+          <Route path="/" element={<GeneralGrid type={GRID_TYPES.billing} {...gridProperties} />} />
+          <Route path="/case" element={<GeneralGrid type={GRID_TYPES.casesToInvoice} {...gridProperties} />} />
           <Route path="/transactions" element={<GeneralGrid type={GRID_TYPES.transactions} {...gridProperties} />} />
         </Routes>
       </MemoryRouter>

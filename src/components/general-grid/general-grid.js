@@ -8,6 +8,7 @@ import { useGridStyle } from '../../hooks/useGridStyle';
 import { useDefaultColDef } from '../../hooks/useDefaultColDef';
 import { useLoadingView } from '../../hooks/useLoadingView';
 import { useEmptyErrorView } from '../../hooks/useEmptyErrorView';
+import HeaderControls from '../header-controls/header-controls';
 
 const GeneralGrid = ({ type, state, colDef, pagination, rowCount, error, isLoading, rowSelection }) => {
   //GRID API
@@ -41,6 +42,7 @@ const GeneralGrid = ({ type, state, colDef, pagination, rowCount, error, isLoadi
 
   return (
     <div style={containerStyle}>
+      <HeaderControls />
       <div style={gridStyle} className="ag-theme-alpine">
         <AgGridReact
           rowStyle={rowStyle}
