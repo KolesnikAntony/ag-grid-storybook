@@ -1,2 +1,2 @@
-import './index.module.scss';
+import './index.scss';
 import('./bootstrap');

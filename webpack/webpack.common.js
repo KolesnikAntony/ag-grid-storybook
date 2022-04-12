@@ -42,8 +42,32 @@ module.exports = {
                 type: 'asset/resource',
             },
             {
-                test: /\.svg$/,
-                use: ['@svgr/webpack'],
+                test: /\.svg$/i,
+                oneOf: [
+                    {
+                        type: 'asset',
+                        resourceQuery: /url/, // *.svg?url
+                    },
+                    {
+                        // test: /\.svg$/i,
+                        issuer: /\.[jt]sx?$/,
+                        use: [{
+                            loader: '@svgr/webpack',
+                            options: {
+                                svgo: {
+                                    plugins: [
+                                        { removeViewBox: false },
+                                        {
+                                            removeAttrs: {
+                                                attrs: '(fill|stroke)',
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }]
+                    },
+                ],
             },
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/i,
