@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './App';
+import AppContainer from './AppContainer';
 
 class Communicator {
   constructor() {
@@ -34,7 +34,7 @@ class Communicator {
   }
 
   render(container) {
-    this.root(container).render(<App {...this.externalProps} communicator={this} />);
+    this.root(container).render(<AppContainer {...this.externalProps} />);
   }
 }
 
