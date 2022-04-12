@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import ButtonView from '../buttons/button-view';
+import ButtonView from '../../buttons/button-view';
 
 const style = {
   position: 'absolute',
@@ -22,7 +22,6 @@ export default function PopupInvoice(props) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { data } = props;
-  console.log(data);
   return (
     <>
       <ButtonView {...props} handleOpen={handleOpen} />

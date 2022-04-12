@@ -4,7 +4,7 @@ import { AgGridColumn, AgGridReact } from 'ag-grid-react';
 import ButtonPrint from '../buttons/button-print';
 import SendIconComponent from './SendIcon';
 import ButtonDispatch from '../buttons/button-dispatсh';
-import PopupInvoice from '../popups/popup-invoice';
+import PopupInvoice from '../general-grid/popups/popup-invoice';
 
 const Grid = ({ filteredData, column, setGridApi, onSelectionChanged }) => {
   const onGridReady = (params) => {

@@ -8,16 +8,18 @@ import { useGridStyle } from '../../hooks/useGridStyle';
 import { useDefaultColDef } from '../../hooks/useDefaultColDef';
 import { useLoadingView } from '../../hooks/useLoadingView';
 import { useEmptyErrorView } from '../../hooks/useEmptyErrorView';
-import HeaderControls from '../header-controls/header-controls';
+import HeaderControls from './header-controls/header-controls';
+import { GridApiContext } from '../../context/GridApiContext';
 
 const GeneralGrid = ({ type, state, colDef, pagination, rowCount, error, isLoading, rowSelection }) => {
   //GRID API
   const [gridApi, setGridApi] = useState(null);
-
   //DEFAULT COLUMNS OF GRID
   const columnDefs = useColumnDefs(type);
 
   //DATA OF GRID
+  // const location = useLocation();
+  // const rowData = useGetData(location.pathname);
   const rowData = useMemo(() => state, [state]);
 
   //GLOBAL STYLE OF GRID AND GRID WRAPPER
@@ -41,33 +43,35 @@ const GeneralGrid = ({ type, state, colDef, pagination, rowCount, error, isLoadi
   const { noRowsOverlayComponent, noRowsOverlayComponentParams } = useEmptyErrorView(error);
 
   return (
-    <div style={containerStyle}>
-      <HeaderControls />
-      <div style={gridStyle} className="ag-theme-alpine">
-        <AgGridReact
-          rowStyle={rowStyle}
-          getRowStyle={getRowStyle}
-          columnDefs={columnDefs}
-          defaultColDef={defaultColDef}
-          rowData={rowData}
-          onGridReady={onGridReady}
-          pagination={pagination}
-          paginationPageSize={rowCount}
-          noRowsOverlayComponentFramework={noRowsOverlayComponent}
-          noRowsOverlayComponentParams={noRowsOverlayComponentParams}
-          loadingOverlayComponentFramework={loadingOverlayComponent}
-          rowSelection={rowSelection}
-          animateRows={true}
-          serverSideSortingAlwaysResets={true}
-          rowDragManaged={true}
-          rowDragEntireRow={true}
-          rowDragMultiRow={true}
-          suppressMovableColumns={false}
-          suppressMoveWhenRowDragging={true}
-          enableGroupEdit={true}
-        />
+    <GridApiContext value={gridApi}>
+      <div style={containerStyle}>
+        <HeaderControls type={type} />
+        <div style={gridStyle} className="ag-theme-alpine">
+          <AgGridReact
+            rowStyle={rowStyle}
+            getRowStyle={getRowStyle}
+            columnDefs={columnDefs}
+            defaultColDef={defaultColDef}
+            rowData={rowData}
+            onGridReady={onGridReady}
+            pagination={pagination}
+            paginationPageSize={rowCount}
+            noRowsOverlayComponentFramework={noRowsOverlayComponent}
+            noRowsOverlayComponentParams={noRowsOverlayComponentParams}
+            loadingOverlayComponentFramework={loadingOverlayComponent}
+            rowSelection={rowSelection}
+            animateRows={true}
+            serverSideSortingAlwaysResets={true}
+            rowDragManaged={true}
+            rowDragEntireRow={true}
+            rowDragMultiRow={true}
+            suppressMovableColumns={false}
+            suppressMoveWhenRowDragging={true}
+            enableGroupEdit={true}
+          />
+        </div>
       </div>
-    </div>
+    </GridApiContext>
   );
 };
 
