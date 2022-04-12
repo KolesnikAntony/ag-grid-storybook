@@ -1,8 +1,10 @@
+import Button from '@mui/material/Button';
+
 const defaultState = () => {
   let arr = [];
   for (let i = 1; i < 205; i++) {
     arr.push({
-      id: i,
+
       make: 'Toyota',
       model: 'Celica',
       price: 35000,
@@ -38,7 +40,6 @@ const transformState = (type) => {
 
 export const billingState = [
   {
-    id: 1,
     uid: 617,
     number: '1437',
     client: 'Anthony ',
@@ -52,7 +53,6 @@ export const billingState = [
     dispatch: 'not sent',
   },
   {
-    id: 2,
     uid: 617,
     number: '1438',
     client: 'Max',
@@ -66,7 +66,6 @@ export const billingState = [
     dispatch: 'not sent',
   },
   {
-    id: 3,
     uid: 617,
     number: '1439',
     client: 'Petro',
@@ -80,7 +79,6 @@ export const billingState = [
     dispatch: 'sent',
   },
   {
-    id: 4,
     uid: 617,
     number: '1440',
     client: 'Vlad',
@@ -94,7 +92,6 @@ export const billingState = [
     dispatch: 'sent',
   },
   {
-    id: 5,
     uid: 617,
     number: '1441',
     client: 'Misha',
@@ -108,7 +105,6 @@ export const billingState = [
     dispatch: 'not sent',
   },
   {
-    id: 6,
     uid: 617,
     number: '1442',
     client: 'Katya',
@@ -122,7 +118,6 @@ export const billingState = [
     dispatch: 'not sent',
   },
   {
-    id: 7,
     uid: 617,
     number: '1443',
     client: 'Olena',
@@ -136,7 +131,6 @@ export const billingState = [
     dispatch: 'not sent',
   },
   {
-    id: 8,
     uid: 617,
     number: '1444',
     client: 'Vasia',
@@ -150,7 +144,6 @@ export const billingState = [
     dispatch: 'sent',
   },
   {
-    id: 9,
     uid: 617,
     number: '1445',
     client: 'Kiril',
@@ -164,7 +157,6 @@ export const billingState = [
     dispatch: 'sent',
   },
   {
-    id: 10,
     uid: 617,
     number: '1446',
     client: 'Anthony',
@@ -178,7 +170,6 @@ export const billingState = [
     dispatch: 'sent',
   },
   {
-    id: 11,
     uid: 617,
     number: '1447',
     client: 'Anthony Fasano',
