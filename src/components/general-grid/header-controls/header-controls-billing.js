@@ -7,7 +7,7 @@ import ExportBtn from '../buttons-grid-control/export-btn';
 const links = [
   { name: 'View all', to: '' },
   { name: 'Invoices to send', to: 'send' },
-  { name: 'Invoices to sent', to: 'sent' },
+  { name: 'Invoices sent', to: 'sent' },
   { name: 'Invoices with remainders', to: 'remainders' },
   { name: 'Invoices with errors', to: 'errors' },
 ];

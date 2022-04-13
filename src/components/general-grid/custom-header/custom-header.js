@@ -21,11 +21,7 @@ export default (props) => {
   const onSortChanged = () => {
     setAscSort(props.column.isSortAscending() ? 'active' : 'inactive');
     setDescSort(props.column.isSortDescending() ? 'active' : 'inactive');
-    setNoSort(
-      !props.column.isSortAscending() && !props.column.isSortDescending()
-        ? 'active'
-        : 'inactive'
-    );
+    setNoSort(!props.column.isSortAscending() && !props.column.isSortDescending() ? 'active' : 'inactive');
   };
 
   const onSortRequested = (order, event) => {
@@ -40,11 +36,7 @@ export default (props) => {
   let menu = null;
   if (props.enableMenu) {
     menu = (
-      <div
-        ref={refButton}
-        className="customHeaderMenuButton"
-        onClick={() => onMenuClicked()}
-      >
+      <div ref={refButton} className="customHeaderMenuButton" onClick={() => onMenuClicked()}>
         <i className={`fa ${props.menuIcon}`}></i>
       </div>
     );
@@ -57,50 +49,53 @@ export default (props) => {
         <div
           onClick={(event) => onSortRequested('asc', event)}
           onTouchEnd={(event) => onSortRequested('asc', event)}
-          className={`customSortDownLabel ${ascSort}`}
-        >
+          className={`customSortDownLabel ${ascSort}`}>
           <i class="fa fa-long-arrow-alt-down"></i>
         </div>
         <div
           onClick={(event) => onSortRequested('desc', event)}
           onTouchEnd={(event) => onSortRequested('desc', event)}
-          className={`customSortUpLabel ${descSort}`}
-        >
+          className={`customSortUpLabel ${descSort}`}>
           <i class="fa fa-long-arrow-alt-up"></i>
         </div>
         <div
           onClick={(event) => onSortRequested('', event)}
           onTouchEnd={(event) => onSortRequested('', event)}
-          className={`customSortRemoveLabel ${noSort}`}
-        >
+          className={`customSortRemoveLabel ${noSort}`}>
           <i class="fa fa-times"></i>
         </div>
       </div>
     );
   }
 
-//   console.log(props)
+    console.log(props.api.getRenderedNodes())
+    console.log(props.columnApi.getValueColumns())
 
-  const { column } = props
+  const { column } = props;
 
   return (
     <div>
       {menu}
       <Choose>
-          <When condition={column.colId === 'btn-view'}><Box /></When>
-          <When condition={column.colId === 'btn-send'}>
-            <IconButton onClick={() => {}} aria-label="send">
-                <SendIcon fontSize={'small'} color={'#bcbccb'} />
-            </IconButton>
-          </When>
-          <When condition={column.colId === 'btn-print'}>
-            <IconButton onClick={() => {}} aria-label="print">
-                <PrintIcon fontSize={'small'} color={'#bcbccb'} />
-            </IconButton>
-          </When>
-          <Otherwise>
-            <div className="customHeaderLabel">{props.displayName}</div>
-          </Otherwise>
+        <When condition={column.colId === 'dispatch'}>
+          D
+        </When>
+        <When condition={column.colId === 'btn-view'}>
+          <Box />
+        </When>
+        <When condition={column.colId === 'btn-send'}>
+          <IconButton onClick={() => {}} aria-label="send">
+            <SendIcon fontSize={'small'} color={'#bcbccb'} />
+          </IconButton>
+        </When>
+        <When condition={column.colId === 'btn-print'}>
+          <IconButton onClick={() => {}} aria-label="print">
+            <PrintIcon fontSize={'small'} color={'#bcbccb'} />
+          </IconButton>
+        </When>
+        <Otherwise>
+          <div className="customHeaderLabel">{props.displayName}</div>
+        </Otherwise>
       </Choose>
       {sort}
     </div>

@@ -35,7 +35,112 @@ const transformState = (type) => {
   });
 };
 
-export const billingState = [
+export let billingState = (() => {
+  let billingDataArray = [];
+
+  for (let i = 0; i < 10; i++) {
+    billingDataArray.push(
+      {
+        uid: 617,
+        number: '1438',
+        client: {
+          name: 'Max',
+          attachment: 1,
+        },
+        guarantor: {
+          name: 'Office de l\'assurance...',
+          type: 'TP', // TG
+        },
+        provider: 'Dr. Tardieu',
+        total: 29.4,
+        open: 29.4,
+        creation: '29.11.2021',
+        due: '29.11.2021',
+        expiration: 2,
+        status: {
+          name: 'paid', // unpaid, cancelled
+          date: '13.04.22',
+        },
+        dispatch: 'sent', // not sent, error
+      },
+      {
+        uid: 618,
+        number: '1439',
+        client: {
+          name: 'Max',
+          attachment: 0,
+        },
+        guarantor: {
+          name: 'Office de l\'assurance...',
+          type: 'TG',
+        },
+        provider: 'Dr. Tardieu',
+        total: 29.4,
+        open: 29.4,
+        creation: '29.11.2021',
+        due: '29.11.2021',
+        expiration: 0,
+        status: {
+          name: 'unpaid',
+          date: '13.04.22',
+        },
+        dispatch: 'not sent',
+      },
+      {
+        uid: 619,
+        number: '1440',
+        client: {
+          name: 'Max',
+          attachment: 3,
+        },
+        guarantor: {
+          name: 'Office de l\'assurance...',
+          type: 'TG',
+        },
+        provider: 'Dr. Tardieu',
+        total: 129.4,
+        open: 129.4,
+        creation: '29.11.2021',
+        due: '29.11.2021',
+        expiration: 3,
+        status: {
+          name: 'cancelled',
+          date: '13.04.22',
+        },
+        dispatch: 'error',
+      },
+      {
+        uid: 620,
+        number: '1438',
+        client: {
+          name: 'Max',
+          attachment: 1,
+        },
+        guarantor: {
+          name: 'Office de l\'assurance...',
+          type: 'TP', // TG
+        },
+        provider: 'Dr. Tardieu',
+        total: 29.4,
+        open: 29.4,
+        creation: '29.11.2021',
+        due: '29.11.2021',
+        expiration: 0,
+        status: {
+          name: 'paid', // unpaid, cancelled
+          date: null,
+        },
+        dispatch: 'sent', // not sent, error
+      },
+    )
+  }
+
+  return billingDataArray;
+})();
+
+// console.log(billingState);
+
+export const billingTest = [
   {
     uid: 617,
     number: '1437',
@@ -51,8 +156,8 @@ export const billingState = [
   },
   {
     uid: 617,
-    number: '1438',
-    client: 'Max',
+    number: '1439',
+    client: 'Petro',
     guarantor: "Office de l'assurance...",
     provider: 'Dr. Tardieu',
     total: 29.4,
@@ -60,9 +165,18 @@ export const billingState = [
     creation: '29.11.2021',
     due: '29.11.2021',
     status: 'unpaid',
-    dispatch: 'not sent',
-  },
-  {
+    dispatch: 'sent',
+    uid: 617,
+    number: '1439',
+    client: 'Petro',
+    guarantor: "Office de l'assurance...",
+    provider: 'Dr. Tardieu',
+    total: 29.4,
+    open: 29.4,
+    creation: '29.11.2021',
+    due: '29.11.2021',
+    status: 'unpaid',
+    dispatch: 'sent',
     uid: 617,
     number: '1439',
     client: 'Petro',
