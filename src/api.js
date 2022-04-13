@@ -1,10 +1,7 @@
-import Button from '@mui/material/Button';
-
 const defaultState = () => {
   let arr = [];
   for (let i = 1; i < 205; i++) {
     arr.push({
-
       make: 'Toyota',
       model: 'Celica',
       price: 35000,
