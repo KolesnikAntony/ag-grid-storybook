@@ -12,24 +12,63 @@ import cellRendererCopy from '../../components/renderer/cellRendererCopy';
 
 const buttonColumnWidth = HELPERS.convertRemToPx(4.8);
 
+const FILTER_TYPES = {
+  filterNumber: (field) => ({
+    field,
+    cellRendererFramework: cellRenderer,
+    filter: 'agNumberColumnFilter',
+    filterParams: {
+      buttons: ['reset', 'apply'],
+      suppressAndOrCondition: true,
+    },
+  }),
+  filterText: (field, cellRender, isKeyCreator = false) => ({
+    field,
+    cellRendererFramework: cellRender,
+    keyCreator: (params) => {
+      return isKeyCreator ? params.value.name : params.value;
+    },
+  }),
+  filterDate: (field, cellRenderer, separator = '.') => ({
+    field,
+    cellRendererFramework: cellRenderer,
+    filter: 'agDateColumnFilter',
+    filterParams: {
+      buttons: ['reset', 'apply'],
+      suppressAndOrCondition: true,
+      comparator: function (filterLocalDateAtMidnight, cellValue) {
+        var dateAsString = cellValue;
+        if (dateAsString == null) return -1;
+        var dateParts = dateAsString.split(separator);
+        var cellDate = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]));
+
+        if (filterLocalDateAtMidnight.getTime() === cellDate.getTime()) {
+          return 0;
+        }
+
+        if (cellDate < filterLocalDateAtMidnight) {
+          return -1;
+        }
+
+        if (cellDate > filterLocalDateAtMidnight) {
+          return 1;
+        }
+      },
+      browserDatePicker: true,
+    },
+  }),
+};
+
 export const billingColumns = [
-  { field: 'uid', cellRendererFramework: cellRenderer },
-  { field: 'number', cellRendererFramework: cellRenderer },
-  {
-    field: 'client',
-    cellRendererFramework: cellRendererClient,
-    filter: false,
-  },
-  {
-    field: 'guarantor',
-    cellRendererFramework: cellRendererGuarantor,
-    filter: false,
-  },
-  { field: 'provider', cellRendererFramework: cellRenderer },
-  { field: 'total', cellRendererFramework: cellRenderer },
-  { field: 'open', cellRendererFramework: cellRenderer },
-  { field: 'creation', cellRendererFramework: cellRenderer },
-  { field: 'due', cellRendererFramework: cellRendererDue },
+  { ...FILTER_TYPES.filterNumber('uid') },
+  { ...FILTER_TYPES.filterNumber('number') },
+  { ...FILTER_TYPES.filterText('client', cellRendererClient, true) },
+  { ...FILTER_TYPES.filterText('guarantor', cellRendererGuarantor, true) },
+  { ...FILTER_TYPES.filterText('provider', cellRenderer) },
+  { ...FILTER_TYPES.filterNumber('total') },
+  { ...FILTER_TYPES.filterNumber('open') },
+  { ...FILTER_TYPES.filterDate('creation', cellRenderer) },
+  { ...FILTER_TYPES.filterDate('due', cellRendererDue) },
   {
     field: 'status',
     cellRendererFramework: cellRendererStatus,
@@ -38,10 +77,13 @@ export const billingColumns = [
       return params.value.name;
     },
     filterParams: {
-      values: ['paid', 'unpaid', 'cancelled'],
+      values: ['paid', 'unpaid', 'cancelled', 'error', 'not-flagged', 'flagged'],
     },
   },
-  { field: 'dispatch', cellRendererFramework: cellRendererDispatch },
+  {
+    field: 'dispatch',
+    cellRendererFramework: cellRendererDispatch,
+  },
   {
     field: 'copy',
     cellRendererFramework: cellRendererCopy,
@@ -50,7 +92,7 @@ export const billingColumns = [
       return params.value.name;
     },
     filterParams: {
-      values: ['sent', 'not-sent', 'error'],
+      values: ['not-sent', 'sent'],
     },
   },
   {
