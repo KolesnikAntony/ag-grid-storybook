@@ -35,7 +35,7 @@ export default (props) => {
   }, []);
 
   let menu = null;
-  console.log(props.enableMenu)
+  // console.log(props.enableMenu)
   if (props.enableMenu) {
     menu = (
       <div ref={refButton} className="customHeaderMenuButton" onClick={() => onMenuClicked()}>
@@ -45,8 +45,10 @@ export default (props) => {
     );
   }
 
+  // console.log(props)
+
   let sort = null;
-  console.log(props.enableSorting)
+  // console.log(props.enableSorting)
   if (props.enableSorting) {
     sort = (
       <div style={{ display: 'inline-block' }}>

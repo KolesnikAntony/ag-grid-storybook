@@ -23,12 +23,7 @@ const GeneralGrid = ({ type, state, colDef, pagination, rowCount, error, isLoadi
 
   //DATA OF GRID
   const location = useLocation();
-  // const {path} = location;
-  // useEffect(() => {
-  //   if (gridApi && type === GRID_TYPES.billing) {
-  //     gridApi.setQuickFilter(path);
-  //   }
-  // }, [path, gridApi, type]);
+  const {pathname} = location;
   // const rowData = useGetData(location.pathname);
   // const rowData = useMemo(() => state, [state]);
   const rowData = useMemo(() => billingState, []);
@@ -58,6 +53,68 @@ const GeneralGrid = ({ type, state, colDef, pagination, rowCount, error, isLoadi
       agColumnHeader: CustomHeader,
     };
   }, []);
+
+  useEffect(() => {
+    console.log(pathname)
+    if (pathname === '/billing') {
+      resetFilters();
+    } else if (pathname === '/billing/send') {
+      handleSendFilter(getFilterModel('dispatch-not-sent'));
+    } else if (pathname === '/billing/sent') {
+      handleSendFilter(getFilterModel('dispatch-sent'));
+    } else if (pathname === '/billing/send') {
+      handleSendFilter(toSendObj);
+    } else if (pathname === '/billing/send') {
+      handleSendFilter(toSendObj);
+    } else if (pathname === '/billing/send') {
+      handleSendFilter(toSendObj);
+    }
+  }, [pathname]);
+
+  let getFilterModel = (model) => {
+    if (model === 'dispatch-sent') {
+      return {
+        dispatch: {
+          values: ['sent'],
+        }
+      }
+    } else if (model ==='dispatch-not-sent') {
+      return {
+        dispatch: {
+          values: ['not-sent'],
+        }
+      }
+    }
+    return {}
+  }
+
+  const handleSendFilter = (model) => {
+    if (gridApi) {
+      console.log(gridApi.getFilterModel());
+      gridApi.setFilterModel(model);
+      // savedFilterModel = null;
+    }
+  }
+
+  // let savedFilterModel = null;
+
+  const resetFilters = () => {
+    if (gridApi) {
+      // console.log(gridApi.getFilterModel());
+      gridApi.setFilterModel(null);
+      // savedFilterModel = null;
+    }
+  };
+
+  // const toggleFilters = () => {
+  //   if (Object.keys(gridApi.getFilterModel()).length !== 0) {
+  //     savedFilterModel = gridApi.getFilterModel();
+  //     // setFilterState(false);
+  //     gridApi.setFilterModel(null);
+  //   } else {
+  //     gridApi.setFilterModel(savedFilterModel);
+  //   }
+  // };
 
   return (
     <GridApiContext value={gridApi}>

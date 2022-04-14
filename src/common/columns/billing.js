@@ -9,8 +9,11 @@ import cellRendererDue from '../../components/renderer/cellRendererDue';
 import cellRendererStatus from '../../components/renderer/cellRendererStatus';
 import cellRendererDispatch from '../../components/renderer/cellRendererDispatch';
 import cellRendererCopy from '../../components/renderer/cellRendererCopy';
+import filterCellRerenderCopy from '../../components/renderer/filterCellRerenderCopy';
 
 const buttonColumnWidth = HELPERS.convertRemToPx(4.8);
+
+const countryValueFormatter = (params) => params.value.name;
 
 export const billingColumns = [
   { field: 'uid', cellRendererFramework: cellRenderer },
@@ -24,7 +27,17 @@ export const billingColumns = [
   { field: 'due', cellRendererFramework: cellRendererDue },
   { field: 'status', cellRendererFramework: cellRendererStatus },
   { field: 'dispatch', cellRendererFramework: cellRendererDispatch },
-  { field: 'copy', cellRendererFramework: cellRendererCopy },
+  {
+    field: 'copy',
+    cellRendererFramework: cellRendererCopy,
+    // valueFormatter: countryValueFormatter,
+    filter: 'agSetColumnFilter',
+    values: ['sent', 'not-sent', 'error'],
+    // filterParams: {
+    //   valueFormatter: countryValueFormatter,
+    //   cellRenderer: filterCellRerenderCopy,
+    // },
+  },
   {
     field: 'btn-view',
     maxWidth: buttonColumnWidth,
