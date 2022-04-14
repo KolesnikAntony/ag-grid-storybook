@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { GRID_TYPES } from '../../constants/grid-types';
 import { useColumnDefs } from '../../hooks/useColumnDefs';
@@ -12,18 +12,16 @@ import HeaderControls from './header-controls/header-controls';
 import { GridApiContext } from '../../context/GridApiContext';
 import CustomHeader from './custom-header/custom-header';
 import { billingState } from '../../api';
-import { grid } from '@mui/system';
-import { useLocation } from 'react-router-dom';
+import { useFilterModel } from '../../hooks/useFilterModel';
 
-const GeneralGrid = ({ type, state, colDef, pagination, rowCount, error, isLoading, rowSelection }) => {
+const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, rowSelection }) => {
   //GRID API
   const [gridApi, setGridApi] = useState(null);
   //DEFAULT COLUMNS OF GRID
   const columnDefs = useColumnDefs(type);
 
-  //DATA OF GRID
-  const location = useLocation();
-  const { pathname } = location;
+  //FILTERING
+  useFilterModel(gridApi);
   // const rowData = useGetData(location.pathname);
   // const rowData = useMemo(() => state, [state]);
   const rowData = useMemo(() => billingState, []);
@@ -54,74 +52,6 @@ const GeneralGrid = ({ type, state, colDef, pagination, rowCount, error, isLoadi
     };
   }, []);
 
-  useEffect(() => {
-    console.log(pathname);
-    if (pathname === '/billing') {
-      resetFilters();
-    } else if (pathname === '/billing/send') {
-      handleSendFilter(getFilterModel('dispatch-not-sent'));
-    } else if (pathname === '/billing/sent') {
-      handleSendFilter(getFilterModel('dispatch-sent'));
-    } else if (pathname === '/billing/send') {
-      handleSendFilter(toSendObj);
-    } else if (pathname === '/billing/send') {
-      handleSendFilter(toSendObj);
-    } else if (pathname === '/billing/send') {
-      handleSendFilter(toSendObj);
-    }
-  }, [pathname]);
-
-  let getFilterModel = (model) => {
-    if (model === 'dispatch-sent') {
-      return {
-        dispatch: {
-          values: ['sent'],
-        },
-      };
-    } else if (model === 'dispatch-not-sent') {
-      return {
-        dispatch: {
-          values: ['not-sent'],
-        },
-      };
-    }
-    return {};
-  };
-
-  const handleSendFilter = (model) => {
-    if (gridApi) {
-      console.log(gridApi.getFilterModel());
-      gridApi.setFilterModel(model);
-      // savedFilterModel = null;
-    }
-  };
-
-  // let savedFilterModel = null;
-
-  const resetFilters = () => {
-    if (gridApi) {
-      // console.log(gridApi.getFilterModel());
-      gridApi.setFilterModel(null);
-      // savedFilterModel = null;
-    }
-  };
-
-  // const onCellValueChanged = params => {
-  //   // trigger filtering on cell edits
-  //   console.log(params)
-  //   params.api.onFilterChanged();
-  // };
-
-  // const toggleFilters = () => {
-  //   if (Object.keys(gridApi.getFilterModel()).length !== 0) {
-  //     savedFilterModel = gridApi.getFilterModel();
-  //     // setFilterState(false);
-  //     gridApi.setFilterModel(null);
-  //   } else {
-  //     gridApi.setFilterModel(savedFilterModel);
-  //   }
-  // };
-
   return (
     <GridApiContext value={gridApi}>
       <div style={containerStyle}>
@@ -150,7 +80,6 @@ const GeneralGrid = ({ type, state, colDef, pagination, rowCount, error, isLoadi
             enableGroupEdit={true}
             frameworkComponents={components}
             suppressRowDeselection={true}
-            // onCellValueChanged={onCellValueChanged}
             // fullWidthCellRendererFramework={CustomHeader}
           />
         </div>

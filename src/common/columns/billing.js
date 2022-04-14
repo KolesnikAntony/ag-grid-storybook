@@ -9,7 +9,6 @@ import cellRendererDue from '../../components/renderer/cellRendererDue';
 import cellRendererStatus from '../../components/renderer/cellRendererStatus';
 import cellRendererDispatch from '../../components/renderer/cellRendererDispatch';
 import cellRendererCopy from '../../components/renderer/cellRendererCopy';
-import filterCellRerenderCopy from '../../components/renderer/filterCellRerenderCopy';
 
 const buttonColumnWidth = HELPERS.convertRemToPx(4.8);
 
@@ -19,22 +18,12 @@ export const billingColumns = [
   {
     field: 'client',
     cellRendererFramework: cellRendererClient,
-    filter: 'agSetColumnFilter',
-    filterParams: {
-      valueGetter: (params) => {
-        return params.data.client.name;
-      },
-    },
+    filter: false,
   },
   {
     field: 'guarantor',
     cellRendererFramework: cellRendererGuarantor,
-    filter: 'agSetColumnFilter',
-    filterParams: {
-      valueGetter: (params) => {
-        return params.data.guarantor.name;
-      },
-    },
+    filter: false,
   },
   { field: 'provider', cellRendererFramework: cellRenderer },
   { field: 'total', cellRendererFramework: cellRenderer },
@@ -45,10 +34,11 @@ export const billingColumns = [
     field: 'status',
     cellRendererFramework: cellRendererStatus,
     filter: 'agSetColumnFilter',
+    keyCreator: (params) => {
+      return params.value.name;
+    },
     filterParams: {
-      valueGetter: (params) => {
-        return params.data.status.name;
-      },
+      values: ['paid', 'unpaid', 'cancelled'],
     },
   },
   { field: 'dispatch', cellRendererFramework: cellRendererDispatch },
@@ -56,11 +46,11 @@ export const billingColumns = [
     field: 'copy',
     cellRendererFramework: cellRendererCopy,
     filter: 'agSetColumnFilter',
+    keyCreator: (params) => {
+      return params.value.name;
+    },
     filterParams: {
       values: ['sent', 'not-sent', 'error'],
-      // valueGetter: (params) => {
-      //   return params.data.copy.name;
-      // },
     },
   },
   {
