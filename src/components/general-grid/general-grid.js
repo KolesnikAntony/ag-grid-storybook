@@ -1,15 +1,19 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { GRID_TYPES } from '../../constants/grid-types';
 import { useColumnDefs } from '../../hooks/useColumnDefs';
 import { AgGridReact } from 'ag-grid-react';
-import { getRowStyle } from '../../helpers/getRowStyle';
+import { HELPERS } from '../../helpers/helpers';
 import { useGridStyle } from '../../hooks/useGridStyle';
 import { useDefaultColDef } from '../../hooks/useDefaultColDef';
 import { useLoadingView } from '../../hooks/useLoadingView';
 import { useEmptyErrorView } from '../../hooks/useEmptyErrorView';
 import HeaderControls from './header-controls/header-controls';
 import { GridApiContext } from '../../context/GridApiContext';
+import CustomHeader from './custom-header/custom-header';
+import { billingState } from '../../api';
+import { grid } from '@mui/system';
+import { useLocation } from 'react-router-dom';
 
 const GeneralGrid = ({ type, state, colDef, pagination, rowCount, error, isLoading, rowSelection }) => {
   //GRID API
@@ -18,9 +22,16 @@ const GeneralGrid = ({ type, state, colDef, pagination, rowCount, error, isLoadi
   const columnDefs = useColumnDefs(type);
 
   //DATA OF GRID
-  // const location = useLocation();
+  const location = useLocation();
+  // const {path} = location;
+  // useEffect(() => {
+  //   if (gridApi && type === GRID_TYPES.billing) {
+  //     gridApi.setQuickFilter(path);
+  //   }
+  // }, [path, gridApi, type]);
   // const rowData = useGetData(location.pathname);
-  const rowData = useMemo(() => state, [state]);
+  // const rowData = useMemo(() => state, [state]);
+  const rowData = useMemo(() => billingState, []);
 
   //GLOBAL STYLE OF GRID AND GRID WRAPPER
   const { containerStyle, gridStyle } = useGridStyle();
@@ -42,6 +53,12 @@ const GeneralGrid = ({ type, state, colDef, pagination, rowCount, error, isLoadi
   //SET EMPTY OR ERROR VIEW
   const { noRowsOverlayComponent, noRowsOverlayComponentParams } = useEmptyErrorView(error);
 
+  const components = useMemo(() => {
+    return {
+      agColumnHeader: CustomHeader,
+    };
+  }, []);
+
   return (
     <GridApiContext value={gridApi}>
       <div style={containerStyle}>
@@ -49,7 +66,7 @@ const GeneralGrid = ({ type, state, colDef, pagination, rowCount, error, isLoadi
         <div style={gridStyle} className="ag-theme-alpine">
           <AgGridReact
             rowStyle={rowStyle}
-            getRowStyle={getRowStyle}
+            getRowStyle={HELPERS.getRowStyle}
             columnDefs={columnDefs}
             defaultColDef={defaultColDef}
             rowData={rowData}
@@ -68,6 +85,9 @@ const GeneralGrid = ({ type, state, colDef, pagination, rowCount, error, isLoadi
             suppressMovableColumns={false}
             suppressMoveWhenRowDragging={true}
             enableGroupEdit={true}
+            frameworkComponents={components}
+            suppressRowDeselection={true}
+            // fullWidthCellRendererFramework={CustomHeader}
           />
         </div>
       </div>
@@ -98,7 +118,7 @@ GeneralGrid.defaultProps = {
   colDef: {
     sortable: false,
     resizable: true,
-    suppressMenu: true,
+    suppressMenu: false,
   },
 };
 

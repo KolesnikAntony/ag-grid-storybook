@@ -8,7 +8,7 @@ export const useDefaultColDef = (params) => {
       filter: true,
       editable: true,
       cellEditorPopup: false,
-      ...params,
+      ...params
     };
   }, [params]);
 };

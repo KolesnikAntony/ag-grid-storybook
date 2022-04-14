@@ -16,6 +16,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import cellRenderer from '../renderers/cellRenderer';
 
 const Grid = (props) => {
   const { state, pagination, rowCount, isLoading, error, isSortable, isResizable, isFilterMenu, rowSelection } = props;
@@ -28,6 +29,7 @@ const Grid = (props) => {
       field: 'id',
       filter: 'agNumberColumnFilter',
       filterParams: { buttons: ['reset', 'apply'], suppressAndOrCondition: true },
+      cellRendererFramework: cellRenderer,
     },
     { field: 'make' },
     { field: 'model' },

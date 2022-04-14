@@ -2,12 +2,12 @@ import React, { useMemo } from 'react';
 import IconButton from '@mui/material/IconButton';
 import SendIcon from '@mui/icons-material/Send';
 
-const ButtonDispatch = ({ data, ...rest }) => {
+const ButtonSend = ({ data, ...rest }) => {
   const isPaid = useMemo(() => data.dispatch === 'not sent', [data]);
   const color = useMemo(() => (isPaid ? 'primary' : 'disabled'), [isPaid]);
   const btnClickedHandler = (e) => {
     e.stopPropagation();
-    console.log(rest);
+    // console.log(rest);
   };
   return (
     <IconButton onClick={btnClickedHandler} aria-label="dispatch">
@@ -16,4 +16,4 @@ const ButtonDispatch = ({ data, ...rest }) => {
   );
 };
 
-export default ButtonDispatch;
+export default ButtonSend;

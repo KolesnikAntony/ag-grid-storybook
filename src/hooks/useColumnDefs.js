@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { GRID_TYPES } from '../constants/grid-types';
-import { billingColumns } from '../common/column-defs/billing';
-import { transactionsColumns } from '../common/column-defs/transactions';
-import { casesToInvoiceColumns } from '../common/column-defs/cases-to-invoice';
+import { billingColumns } from '../common/columns/billing';
+import { transactionsColumns } from '../common/columns/transactions';
+import { casesToInvoiceColumns } from '../common/columns/cases-to-invoice';
 
 export const useColumnDefs = (type) => {
   return useMemo(() => {
