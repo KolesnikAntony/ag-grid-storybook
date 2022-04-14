@@ -23,7 +23,7 @@ const GeneralGrid = ({ type, state, colDef, pagination, rowCount, error, isLoadi
 
   //DATA OF GRID
   const location = useLocation();
-  const {pathname} = location;
+  const { pathname } = location;
   // const rowData = useGetData(location.pathname);
   // const rowData = useMemo(() => state, [state]);
   const rowData = useMemo(() => billingState, []);
@@ -55,7 +55,7 @@ const GeneralGrid = ({ type, state, colDef, pagination, rowCount, error, isLoadi
   }, []);
 
   useEffect(() => {
-    console.log(pathname)
+    console.log(pathname);
     if (pathname === '/billing') {
       resetFilters();
     } else if (pathname === '/billing/send') {
@@ -76,17 +76,17 @@ const GeneralGrid = ({ type, state, colDef, pagination, rowCount, error, isLoadi
       return {
         dispatch: {
           values: ['sent'],
-        }
-      }
-    } else if (model ==='dispatch-not-sent') {
+        },
+      };
+    } else if (model === 'dispatch-not-sent') {
       return {
         dispatch: {
           values: ['not-sent'],
-        }
-      }
+        },
+      };
     }
-    return {}
-  }
+    return {};
+  };
 
   const handleSendFilter = (model) => {
     if (gridApi) {
@@ -94,7 +94,7 @@ const GeneralGrid = ({ type, state, colDef, pagination, rowCount, error, isLoadi
       gridApi.setFilterModel(model);
       // savedFilterModel = null;
     }
-  }
+  };
 
   // let savedFilterModel = null;
 
@@ -105,6 +105,12 @@ const GeneralGrid = ({ type, state, colDef, pagination, rowCount, error, isLoadi
       // savedFilterModel = null;
     }
   };
+
+  // const onCellValueChanged = params => {
+  //   // trigger filtering on cell edits
+  //   console.log(params)
+  //   params.api.onFilterChanged();
+  // };
 
   // const toggleFilters = () => {
   //   if (Object.keys(gridApi.getFilterModel()).length !== 0) {
@@ -144,6 +150,7 @@ const GeneralGrid = ({ type, state, colDef, pagination, rowCount, error, isLoadi
             enableGroupEdit={true}
             frameworkComponents={components}
             suppressRowDeselection={true}
+            // onCellValueChanged={onCellValueChanged}
             // fullWidthCellRendererFramework={CustomHeader}
           />
         </div>

@@ -17,14 +17,14 @@ export default (props) => {
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Choose>
           <When condition={value.name === 'sent'}>
-            <SendIcon sx={{ color: "blue" }} />
+            <SendIcon sx={{ color: 'blue' }} />
             <Typography>{value.date}</Typography>
           </When>
           <When condition={value.name === 'not-sent'}>
-            <SendIcon sx={{ color: "black" }} />
+            <SendIcon sx={{ color: 'black' }} />
           </When>
           <When condition={value.name === 'error'}>
-            <ErrorIcon sx={{ color: "red" }} />
+            <ErrorIcon sx={{ color: 'red' }} />
           </When>
         </Choose>
       </Box>

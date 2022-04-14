@@ -48,7 +48,7 @@ export let billingState = (() => {
           attachment: 1,
         },
         guarantor: {
-          name: 'Office de l\'assurance...',
+          name: "Office de l'assurance...",
           type: 'TP', // TG
         },
         provider: 'Dr. Tardieu',
@@ -75,7 +75,7 @@ export let billingState = (() => {
           attachment: 0,
         },
         guarantor: {
-          name: 'Office de l\'assurance...',
+          name: "Office de l'assurance...",
           type: 'TG',
         },
         provider: 'Dr. Tardieu',
@@ -102,7 +102,7 @@ export let billingState = (() => {
           attachment: 3,
         },
         guarantor: {
-          name: 'Office de l\'assurance...',
+          name: "Office de l'assurance...",
           type: 'TG',
         },
         provider: 'Dr. Tardieu',
@@ -129,7 +129,7 @@ export let billingState = (() => {
           attachment: 1,
         },
         guarantor: {
-          name: 'Office de l\'assurance...',
+          name: "Office de l'assurance...",
           type: 'TP', // TG
         },
         provider: 'Dr. Tardieu',
@@ -147,8 +147,8 @@ export let billingState = (() => {
           name: 'sent',
           date: '14.04.20222',
         },
-      },
-    )
+      }
+    );
   }
 
   return billingDataArray;
