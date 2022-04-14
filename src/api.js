@@ -61,7 +61,11 @@ export let billingState = (() => {
           name: 'paid', // unpaid, cancelled
           date: '13.04.22',
         },
-        dispatch: 'sent', // not sent, error
+        dispatch: 'sent', // not-sent, error
+        copy: {
+          name: 'sent', // not-sent, error
+          date: '13.04.22',
+        },
       },
       {
         uid: 618,
@@ -84,7 +88,11 @@ export let billingState = (() => {
           name: 'unpaid',
           date: '13.04.22',
         },
-        dispatch: 'not sent',
+        dispatch: 'not-sent',
+        copy: {
+          name: 'not-sent',
+          date: '',
+        },
       },
       {
         uid: 619,
@@ -108,6 +116,10 @@ export let billingState = (() => {
           date: '13.04.22',
         },
         dispatch: 'error',
+        copy: {
+          name: 'error',
+          date: '',
+        },
       },
       {
         uid: 620,
@@ -130,7 +142,11 @@ export let billingState = (() => {
           name: 'paid', // unpaid, cancelled
           date: null,
         },
-        dispatch: 'sent', // not sent, error
+        dispatch: 'sent', // not-sent, error
+        copy: {
+          name: 'sent',
+          date: '14.04.20222',
+        },
       },
     )
   }
@@ -152,7 +168,7 @@ export const billingTest = [
     creation: '29.11.2021',
     due: '29.11.2021',
     status: 'paid',
-    dispatch: 'not sent',
+    dispatch: 'not-sent',
   },
   {
     uid: 617,
@@ -213,7 +229,7 @@ export const billingTest = [
     creation: '29.11.2021',
     due: '29.11.2021',
     status: 'paid',
-    dispatch: 'not sent',
+    dispatch: 'not-sent',
   },
   {
     uid: 617,
@@ -226,7 +242,7 @@ export const billingTest = [
     creation: '29.11.2021',
     due: '29.11.2021',
     status: 'paid',
-    dispatch: 'not sent',
+    dispatch: 'not-sent',
   },
   {
     uid: 617,
@@ -239,7 +255,7 @@ export const billingTest = [
     creation: '29.11.2021',
     due: '29.11.2021',
     status: 'paid',
-    dispatch: 'not sent',
+    dispatch: 'not-sent',
   },
   {
     uid: 617,
@@ -291,7 +307,7 @@ export const billingTest = [
     creation: '29.11.2021',
     due: '29.11.2021',
     status: 'canceled',
-    dispatch: 'not sent',
+    dispatch: 'not-sent',
   },
 ];
 

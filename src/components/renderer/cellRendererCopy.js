@@ -1,10 +1,9 @@
 import React, { Fragment } from 'react';
 import useStyle from './cellRendererStyle';
 import Box from '@mui/material/Box';
-import Chip from '@mui/material/Chip';
-import CheckIcon from '@mui/icons-material/Check';
-import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
-import DeleteIcon from '@mui/icons-material/Delete';
+import SendIcon from '@mui/icons-material/Send';
+import ErrorIcon from '@mui/icons-material/Error';
+import { Typography } from '@mui/material';
 
 export default (props) => {
   const sx = useStyle();
@@ -15,17 +14,20 @@ export default (props) => {
 
   return (
     <Fragment>
-      <Choose>
-        <When condition={value.name === 'sent'}>
-          <Chip icon={<CheckIcon />} label={`${paid}`} />
-        </When>
-        <When condition={value.name === 'not-sent'}>
-          <Chip icon={<CircleOutlinedIcon />} label={value.name} />
-        </When>
-        <When condition={value.name === 'error'}>
-          <Chip icon={<DeleteIcon />} label={value.name} />
-        </When>
-      </Choose>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Choose>
+          <When condition={value.name === 'sent'}>
+            <SendIcon sx={{ color: "blue" }} />
+            <Typography>{value.date}</Typography>
+          </When>
+          <When condition={value.name === 'not-sent'}>
+            <SendIcon sx={{ color: "black" }} />
+          </When>
+          <When condition={value.name === 'error'}>
+            <ErrorIcon sx={{ color: "red" }} />
+          </When>
+        </Choose>
+      </Box>
     </Fragment>
   );
 };

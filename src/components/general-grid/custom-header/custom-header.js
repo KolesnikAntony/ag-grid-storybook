@@ -7,6 +7,7 @@ import SendIcon from '@mui/icons-material/Send';
 import PrintIcon from '@mui/icons-material/Print';
 import { IconButton } from '@mui/material';
 // import SendIcon from '@mui/icons-material/Send';
+import MenuIcon from '@mui/icons-material/Menu';
 
 export default (props) => {
   const [ascSort, setAscSort] = useState('inactive');
@@ -34,15 +35,18 @@ export default (props) => {
   }, []);
 
   let menu = null;
+  console.log(props.enableMenu)
   if (props.enableMenu) {
     menu = (
       <div ref={refButton} className="customHeaderMenuButton" onClick={() => onMenuClicked()}>
-        <i className={`fa ${props.menuIcon}`}></i>
+        {/* <i className={`fa ${props.menuIcon}`}></i> */}
+        <MenuIcon fontSize={'small'} color={'#bcbccb'} />
       </div>
     );
   }
 
   let sort = null;
+  console.log(props.enableSorting)
   if (props.enableSorting) {
     sort = (
       <div style={{ display: 'inline-block' }}>
@@ -68,18 +72,42 @@ export default (props) => {
     );
   }
 
-    console.log(props.api.getRenderedNodes())
-    console.log(props.columnApi.getValueColumns())
-
-  const { column } = props;
+    // console.log(props.api.getRenderedNodes())
+    // console.log(props.columnApi.getValueColumns())
+    
+    const { column, api } = props;
+    // const [ dispatch, setDispatch ] = useState('');
+    // useEffect(() => {
+    //   // const arrayUslovno = props.api.getRowNode(10);
+    //   let pustoyMassiv = [];
+    //   const fnTamTipa = (rowNode, index) => {
+    //     pustoyMassiv.push(rowNode.data.dispatch);
+    //   }
+    //   api.forEachNode(fnTamTipa)
+    //   if (pustoyMassiv.every(el => el === 'sent')) {
+    //     console.log('sent')
+    //   } else if (pustoyMassiv.every(el => el === 'not-sent')) {
+    //     console.log('not-sent')
+    //   } else if (pustoyMassiv.every(el => el === 'error')) {
+    //     console.log('error')
+    //   } else {
+    //     console.log('pusto')
+    //   }
+    // }, [api])
+    // gridApi.forEachNode(node => {
+    //   if (node.data.make === 'Ford') {
+    //    node.setSelected(true)
+    //   }
+    //  })
+    // console.log('arrayUslovno', arrayUslovno)
+    // console.log(column.userProvidedColDef.getQuickFilterText)
+    // console.log((() => column.userProvidedColDef.getQuickFilterText = (params) => params.value.name)())
 
   return (
     <div>
       {menu}
       <Choose>
-        <When condition={column.colId === 'dispatch'}>
-          D
-        </When>
+        {/* <When condition={column.colId === 'dispatch'}></When> */}
         <When condition={column.colId === 'btn-view'}>
           <Box />
         </When>
