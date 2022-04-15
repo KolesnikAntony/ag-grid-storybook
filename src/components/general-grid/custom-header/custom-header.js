@@ -1,5 +1,5 @@
 import { Box } from '@mui/system';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 // import ButtonView from '../../buttons/button-view';
 // import ButtonSend from '../../buttons/button-send';
 // import ButtonPrint from '../../buttons/button-print';
@@ -19,11 +19,11 @@ export default (props) => {
     props.showColumnMenu(refButton.current);
   };
 
-  const onSortChanged = () => {
+  const onSortChanged = useCallback(() => {
     setAscSort(props.column.isSortAscending() ? 'active' : 'inactive');
     setDescSort(props.column.isSortDescending() ? 'active' : 'inactive');
     setNoSort(!props.column.isSortAscending() && !props.column.isSortDescending() ? 'active' : 'inactive');
-  };
+  }, [props]);
 
   const onSortRequested = (order, event) => {
     props.setSort(order, event.shiftKey);
@@ -32,7 +32,7 @@ export default (props) => {
   useEffect(() => {
     props.column.addEventListener('sortChanged', onSortChanged);
     onSortChanged();
-  }, []);
+  }, [onSortChanged, props]);
 
   let menu = null;
   // console.log(props.enableMenu)

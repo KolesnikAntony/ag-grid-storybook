@@ -7,11 +7,25 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  argTypes: {},
+  argTypes: {
+    table: {
+      description: 'Choose table',
+      options: ['billing', 'case', 'transactions'],
+      value: 'billing',
+      control: {
+        type: 'select',
+      },
+    },
+  },
 };
 
 const Template = (args) => {
   return <GridWrapper {...args} />;
 };
 
-export const Default = Template.bind({});
+export const Billing = Template.bind({});
+Billing.args = { table: 'billing' };
+export const CaseOfInvoices = Template.bind({});
+CaseOfInvoices.args = { table: 'case' };
+export const Transactions = Template.bind({});
+Transactions.args = { table: 'transactions' };

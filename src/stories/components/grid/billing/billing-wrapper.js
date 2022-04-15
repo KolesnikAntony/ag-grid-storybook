@@ -1,10 +1,10 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import GeneralGrid from '../../../../components/general-grid/general-grid';
 import { GRID_TYPES } from '../../../../constants/grid-types';
 import Redirect from '../../../../hoks/redirect';
 
-const BillingWrapper = () => {
+const BillingWrapper = ({ table }) => {
   const gridProperties = {
     pagination: true,
     rowCount: 50,
@@ -14,7 +14,7 @@ const BillingWrapper = () => {
   };
   return (
     <MemoryRouter>
-      <Redirect>
+      <Redirect table={table}>
         <Routes>
           <Route path="/billing/*" element={<GeneralGrid type={GRID_TYPES.billing} {...gridProperties} />} />
           <Route path="/case" element={<GeneralGrid type={GRID_TYPES.casesToInvoice} {...gridProperties} />} />
