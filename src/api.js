@@ -75,7 +75,7 @@ export let billingState = (() => {
           attachment: 0,
         },
         guarantor: {
-          name: "Office de Katarina...",
+          name: 'Office de Katarina...',
           type: 'TG',
         },
         provider: 'Dr. Tardieu',
@@ -102,7 +102,7 @@ export let billingState = (() => {
           attachment: 3,
         },
         guarantor: {
-          name: "Office de population...",
+          name: 'Office de population...',
           type: 'TG',
         },
         provider: 'Dr. Tardieu',
@@ -129,7 +129,7 @@ export let billingState = (() => {
           attachment: 1,
         },
         guarantor: {
-          name: "Office de Anton...",
+          name: 'Office de Anton...',
           type: 'TP',
         },
         provider: 'Dr. Tardieu',
@@ -183,7 +183,7 @@ export let billingState = (() => {
           attachment: 0,
         },
         guarantor: {
-          name: "Office de Katarina...",
+          name: 'Office de Katarina...',
           type: 'TG',
         },
         provider: 'Dr. Tardieu',
@@ -210,7 +210,7 @@ export let billingState = (() => {
           attachment: 3,
         },
         guarantor: {
-          name: "Office de population...",
+          name: 'Office de population...',
           type: 'TG',
         },
         provider: 'Dr. Tardieu',
@@ -237,7 +237,7 @@ export let billingState = (() => {
           attachment: 1,
         },
         guarantor: {
-          name: "Office de Anton...",
+          name: 'Office de Anton...',
           type: 'TP',
         },
         provider: 'Dr. Tardieu',
@@ -291,7 +291,7 @@ export let billingState = (() => {
           attachment: 0,
         },
         guarantor: {
-          name: "Office de Katarina...",
+          name: 'Office de Katarina...',
           type: 'TG',
         },
         provider: 'Dr. Tardieu',
@@ -318,7 +318,7 @@ export let billingState = (() => {
           attachment: 3,
         },
         guarantor: {
-          name: "Office de population...",
+          name: 'Office de population...',
           type: 'TG',
         },
         provider: 'Dr. Tardieu',
@@ -345,7 +345,7 @@ export let billingState = (() => {
           attachment: 1,
         },
         guarantor: {
-          name: "Office de Anton...",
+          name: 'Office de Anton...',
           type: 'TP',
         },
         provider: 'Dr. Tardieu',

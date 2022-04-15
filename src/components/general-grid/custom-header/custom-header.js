@@ -74,36 +74,36 @@ export default (props) => {
     );
   }
 
-    // console.log(props.api.getRenderedNodes())
-    // console.log(props.columnApi.getValueColumns())
-    
-    const { column, api } = props;
-    // const [ dispatch, setDispatch ] = useState('');
-    // useEffect(() => {
-    //   // const arrayUslovno = props.api.getRowNode(10);
-    //   let pustoyMassiv = [];
-    //   const fnTamTipa = (rowNode, index) => {
-    //     pustoyMassiv.push(rowNode.data.dispatch);
-    //   }
-    //   api.forEachNode(fnTamTipa)
-    //   if (pustoyMassiv.every(el => el === 'sent')) {
-    //     console.log('sent')
-    //   } else if (pustoyMassiv.every(el => el === 'not-sent')) {
-    //     console.log('not-sent')
-    //   } else if (pustoyMassiv.every(el => el === 'error')) {
-    //     console.log('error')
-    //   } else {
-    //     console.log('pusto')
-    //   }
-    // }, [api])
-    // gridApi.forEachNode(node => {
-    //   if (node.data.make === 'Ford') {
-    //    node.setSelected(true)
-    //   }
-    //  })
-    // console.log('arrayUslovno', arrayUslovno)
-    // console.log(column.userProvidedColDef.getQuickFilterText)
-    // console.log((() => column.userProvidedColDef.getQuickFilterText = (params) => params.value.name)())
+  // console.log(props.api.getRenderedNodes())
+  // console.log(props.columnApi.getValueColumns())
+
+  const { column, api } = props;
+  // const [ dispatch, setDispatch ] = useState('');
+  // useEffect(() => {
+  //   // const arrayUslovno = props.api.getRowNode(10);
+  //   let pustoyMassiv = [];
+  //   const fnTamTipa = (rowNode, index) => {
+  //     pustoyMassiv.push(rowNode.data.dispatch);
+  //   }
+  //   api.forEachNode(fnTamTipa)
+  //   if (pustoyMassiv.every(el => el === 'sent')) {
+  //     console.log('sent')
+  //   } else if (pustoyMassiv.every(el => el === 'not-sent')) {
+  //     console.log('not-sent')
+  //   } else if (pustoyMassiv.every(el => el === 'error')) {
+  //     console.log('error')
+  //   } else {
+  //     console.log('pusto')
+  //   }
+  // }, [api])
+  // gridApi.forEachNode(node => {
+  //   if (node.data.make === 'Ford') {
+  //    node.setSelected(true)
+  //   }
+  //  })
+  // console.log('arrayUslovno', arrayUslovno)
+  // console.log(column.userProvidedColDef.getQuickFilterText)
+  // console.log((() => column.userProvidedColDef.getQuickFilterText = (params) => params.value.name)())
 
   return (
     <div>

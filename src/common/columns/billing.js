@@ -62,13 +62,13 @@ const FILTER_TYPES = {
 export const billingColumns = [
   { ...FILTER_TYPES.filterNumber('uid'), maxWidth: 60 },
   { ...FILTER_TYPES.filterNumber('number') },
-  { ...FILTER_TYPES.filterText('client', cellRendererClient, true) ,},
-  { ...FILTER_TYPES.filterText('guarantor', cellRendererGuarantor, true) ,  minWidth: 180 },
+  { ...FILTER_TYPES.filterText('client', cellRendererClient, true) },
+  { ...FILTER_TYPES.filterText('guarantor', cellRendererGuarantor, true), minWidth: 180 },
   { ...FILTER_TYPES.filterText('provider', cellRenderer) },
   { ...FILTER_TYPES.filterNumber('total'), maxWidth: 80 },
-  { ...FILTER_TYPES.filterNumber('open') ,  maxWidth: 80},
+  { ...FILTER_TYPES.filterNumber('open'), maxWidth: 80 },
   { ...FILTER_TYPES.filterDate('creation', cellRenderer) },
-  { ...FILTER_TYPES.filterDate('due', cellRendererDue) ,  minWidth: 130},
+  { ...FILTER_TYPES.filterDate('due', cellRendererDue), minWidth: 130 },
   {
     field: 'status',
     cellRendererFramework: cellRendererStatus,
@@ -91,7 +91,7 @@ export const billingColumns = [
         'pursuit',
       ],
     },
-    minWidth: 130
+    minWidth: 130,
   },
   {
     field: 'dispatch',
@@ -99,7 +99,7 @@ export const billingColumns = [
     filterParams: {
       values: ['sent', 'not-sent', 'error', 'flagged', 'not-flagged'],
     },
-    maxWidth: 80
+    maxWidth: 80,
   },
   {
     field: 'copy',

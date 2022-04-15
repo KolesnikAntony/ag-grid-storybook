@@ -35,22 +35,22 @@ export default (props) => {
         </When>
         {/*  */}
         <When condition={value.name === 'normal-status'}>
-          <Chip sx={{ backgroundColor: '#e9e9e9'}} label={value.name} />
+          <Chip sx={{ backgroundColor: '#e9e9e9' }} label={value.name} />
         </When>
         <When condition={value.name === '1st-reminder'}>
-          <Chip sx={{ backgroundColor: '#fff263'}} label={value.name} />
+          <Chip sx={{ backgroundColor: '#fff263' }} label={value.name} />
         </When>
         <When condition={value.name === '2nd-reminder'}>
-          <Chip sx={{ backgroundColor: '#fdd835'}} label={value.name} />
+          <Chip sx={{ backgroundColor: '#fdd835' }} label={value.name} />
         </When>
         <When condition={value.name === '3rd-reminder'}>
-          <Chip sx={{ backgroundColor: '#fbc02d'}} label={value.name} />
+          <Chip sx={{ backgroundColor: '#fbc02d' }} label={value.name} />
         </When>
         <When condition={value.name === 'formal-notice'}>
-          <Chip sx={{ backgroundColor: '#f57f17'}} label={value.name} />
+          <Chip sx={{ backgroundColor: '#f57f17' }} label={value.name} />
         </When>
         <When condition={value.name === 'pursuit'}>
-          <Chip sx={{ backgroundColor: '#ff5722'}} label={value.name} />
+          <Chip sx={{ backgroundColor: '#ff5722' }} label={value.name} />
         </When>
       </Choose>
     </Fragment>
