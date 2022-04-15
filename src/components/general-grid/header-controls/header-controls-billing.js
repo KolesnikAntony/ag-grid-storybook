@@ -1,8 +1,10 @@
-import React from 'react';
-import { Stack } from '@mui/material';
+import React, { useCallback, useContext, useState } from 'react';
+import { Stack, Tab, Tabs } from '@mui/material';
 import NavigationButton from '../buttons-grid-control/navigation-button';
 import { NavLink } from 'react-router-dom';
 import ExportBtn from '../buttons-grid-control/export-btn';
+import { GridContext } from '../../../context/GridApiContext';
+import { HELPERS } from '../../../helpers/helpers';
 
 const links = [
   { name: 'View all', to: '' },
@@ -12,13 +14,30 @@ const links = [
   { name: 'Invoices with errors', to: 'errors' },
 ];
 const HeaderControlsBilling = () => {
+  const [value, setValue] = useState(0);
+  const gridApi = useContext(GridContext);
+
+  const handleChange = (_, newValue) => {
+    setValue(newValue);
+    handleSendFilter(newValue);
+  };
+
+  const handleSendFilter = useCallback(
+    (tab) => {
+      const model = HELPERS.getFilterModel(tab);
+      if (gridApi) {
+        gridApi.setFilterModel(model);
+      }
+    },
+    [gridApi]
+  );
   return (
     <Stack direction="row">
-      <For each="link" of={links}>
-        <NavigationButton key={link.to} component={NavLink} to={link.to}>
-          {link.name}
-        </NavigationButton>
-      </For>
+      <Tabs value={value} onChange={handleChange} centered>
+        <For each="link" of={links}>
+          <Tab key={link.to} label={link.name} />
+        </For>
+      </Tabs>
       <ExportBtn />
     </Stack>
   );
