@@ -12,7 +12,26 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 // import { STATES } from './api';
 
+const useStyle = () => {
+  return {
+    page: {
+      display: 'flex',
+      flexDirection: 'column',
+      padding: '2.5rem',
+      height: '100vh',
+      backgroundImage: 'linear-gradient(0deg,#e3e3e3,#f8f8f8)',
+      overflow: 'auto',
+    },
+    pageTabs: {
+      display: 'flex',
+      justifyContent: 'center',
+      paddingBottom: '2.5rem',
+    },
+  };
+};
+
 const App = () => {
+  const sx = useStyle();
   // const [state] = useState(STATES.default);
 
   const location = useLocation();
@@ -47,8 +66,8 @@ const App = () => {
   };
 
   return (
-    <Box>
-      <Box sx={{ width: '100%', p: 5, boxSizing: 'border-box', display: 'flex', justifyContent: 'center' }}>
+    <Box sx={sx.page}>
+      <Box sx={sx.pageTabs}>
         <Stack direction="row" spacing={2}>
           <Button variant={'outlined'} component={NavLink} to="/">
             Billing
