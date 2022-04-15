@@ -79,7 +79,9 @@ const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, row
             suppressMoveWhenRowDragging={true}
             enableGroupEdit={true}
             frameworkComponents={components}
-            suppressRowDeselection={true}
+            suppressRowClickSelection={true}
+            // suppressCellFocus={true}
+            // suppressRowDeselection={true}
             // fullWidthCellRendererFramework={CustomHeader}
           />
         </div>
@@ -107,7 +109,7 @@ GeneralGrid.propTypes = {
 GeneralGrid.defaultProps = {
   state: [],
   rowCount: 10,
-  rowSelection: 'multiply',
+  rowSelection: 'multiple',
   colDef: {
     sortable: false,
     resizable: true,

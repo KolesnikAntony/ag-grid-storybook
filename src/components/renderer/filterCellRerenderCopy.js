@@ -4,5 +4,5 @@ import Box from '@mui/material/Box';
 export default (props) => {
   console.log(props.value);
 
-  return <div >{props.value}</div>;
+  return <div>{props.value}</div>;
 };

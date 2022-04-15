@@ -6,10 +6,10 @@ export const parameters = {
       date: /Date$/,
     },
   },
-  viewMode: 'docs',
+  viewMode: 'canvas',
   previewTabs: {
     canvas: {
-      hidden: true,
+      hidden: false,
     },
   },
 }

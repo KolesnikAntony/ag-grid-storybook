@@ -16,19 +16,19 @@ export default (props) => {
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Choose>
           <When condition={value === 'not-sent'}>
-            <SendIcon sx={{ color: "black" }} />
+            <SendIcon sx={{ color: 'black' }} />
           </When>
           <When condition={value === 'sent'}>
-            <SendIcon sx={{ color: "blue" }} />
+            <SendIcon sx={{ color: 'blue' }} />
           </When>
           <When condition={value === 'error'}>
-            <ErrorIcon sx={{ color: "red" }} />
+            <ErrorIcon sx={{ color: 'red' }} />
           </When>
           <When condition={value === 'flagged'}>
-            <FlagIcon sx={{ color: "red" }} />
+            <FlagIcon sx={{ color: 'red' }} />
           </When>
           <When condition={value === 'not-flagged'}>
-            <FlagIcon sx={{ color: "black" }} />
+            <FlagIcon sx={{ color: 'black' }} />
           </When>
         </Choose>
       </Box>

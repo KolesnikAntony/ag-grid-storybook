@@ -15,9 +15,7 @@ export default (props) => {
       <Box component="span" sx={sx.value}>
         {value + ' '}
 
-        <If condition={props.data.expiration}>
-          (+{props.data.expiration})
-        </If>
+        <If condition={props.data.expiration}>(+{props.data.expiration})</If>
       </Box>
     </Fragment>
   );

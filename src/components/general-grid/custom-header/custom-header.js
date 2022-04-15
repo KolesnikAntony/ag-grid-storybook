@@ -1,5 +1,5 @@
 import { Box } from '@mui/system';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 // import ButtonView from '../../buttons/button-view';
 // import ButtonSend from '../../buttons/button-send';
 // import ButtonPrint from '../../buttons/button-print';
@@ -19,11 +19,11 @@ export default (props) => {
     props.showColumnMenu(refButton.current);
   };
 
-  const onSortChanged = () => {
+  const onSortChanged = useCallback(() => {
     setAscSort(props.column.isSortAscending() ? 'active' : 'inactive');
     setDescSort(props.column.isSortDescending() ? 'active' : 'inactive');
     setNoSort(!props.column.isSortAscending() && !props.column.isSortDescending() ? 'active' : 'inactive');
-  };
+  }, [props]);
 
   const onSortRequested = (order, event) => {
     props.setSort(order, event.shiftKey);
@@ -32,7 +32,7 @@ export default (props) => {
   useEffect(() => {
     props.column.addEventListener('sortChanged', onSortChanged);
     onSortChanged();
-  }, []);
+  }, [onSortChanged, props]);
 
   let menu = null;
   // console.log(props.enableMenu)
@@ -74,36 +74,36 @@ export default (props) => {
     );
   }
 
-    // console.log(props.api.getRenderedNodes())
-    // console.log(props.columnApi.getValueColumns())
-    
-    const { column, api } = props;
-    // const [ dispatch, setDispatch ] = useState('');
-    // useEffect(() => {
-    //   // const arrayUslovno = props.api.getRowNode(10);
-    //   let pustoyMassiv = [];
-    //   const fnTamTipa = (rowNode, index) => {
-    //     pustoyMassiv.push(rowNode.data.dispatch);
-    //   }
-    //   api.forEachNode(fnTamTipa)
-    //   if (pustoyMassiv.every(el => el === 'sent')) {
-    //     console.log('sent')
-    //   } else if (pustoyMassiv.every(el => el === 'not-sent')) {
-    //     console.log('not-sent')
-    //   } else if (pustoyMassiv.every(el => el === 'error')) {
-    //     console.log('error')
-    //   } else {
-    //     console.log('pusto')
-    //   }
-    // }, [api])
-    // gridApi.forEachNode(node => {
-    //   if (node.data.make === 'Ford') {
-    //    node.setSelected(true)
-    //   }
-    //  })
-    // console.log('arrayUslovno', arrayUslovno)
-    // console.log(column.userProvidedColDef.getQuickFilterText)
-    // console.log((() => column.userProvidedColDef.getQuickFilterText = (params) => params.value.name)())
+  // console.log(props.api.getRenderedNodes())
+  // console.log(props.columnApi.getValueColumns())
+
+  const { column, api } = props;
+  // const [ dispatch, setDispatch ] = useState('');
+  // useEffect(() => {
+  //   // const arrayUslovno = props.api.getRowNode(10);
+  //   let pustoyMassiv = [];
+  //   const fnTamTipa = (rowNode, index) => {
+  //     pustoyMassiv.push(rowNode.data.dispatch);
+  //   }
+  //   api.forEachNode(fnTamTipa)
+  //   if (pustoyMassiv.every(el => el === 'sent')) {
+  //     console.log('sent')
+  //   } else if (pustoyMassiv.every(el => el === 'not-sent')) {
+  //     console.log('not-sent')
+  //   } else if (pustoyMassiv.every(el => el === 'error')) {
+  //     console.log('error')
+  //   } else {
+  //     console.log('pusto')
+  //   }
+  // }, [api])
+  // gridApi.forEachNode(node => {
+  //   if (node.data.make === 'Ford') {
+  //    node.setSelected(true)
+  //   }
+  //  })
+  // console.log('arrayUslovno', arrayUslovno)
+  // console.log(column.userProvidedColDef.getQuickFilterText)
+  // console.log((() => column.userProvidedColDef.getQuickFilterText = (params) => params.value.name)())
 
   return (
     <div>

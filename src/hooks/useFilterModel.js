@@ -25,8 +25,7 @@ export const useFilterModel = (gridApi) => {
           values: ['1st-reminder', '2nd-reminder', '3rd-reminder', 'formal-notice', 'pursuit'],
         },
       };
-    }
-    else if (model === 'dispatch-error') {
+    } else if (model === 'dispatch-error') {
       return {
         dispatch: {
           values: ['error'],
@@ -52,8 +51,7 @@ export const useFilterModel = (gridApi) => {
       handleSendFilter('dispatch-not-sent');
     } else if (pathname === '/billing/sent') {
       handleSendFilter('dispatch-sent');
-    }
-    else if (pathname === '/billing/reminders') {
+    } else if (pathname === '/billing/reminders') {
       handleSendFilter('status-reminders');
     } else if (pathname === '/billing/errors') {
       handleSendFilter('dispatch-error');
