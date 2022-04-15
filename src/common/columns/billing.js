@@ -77,12 +77,15 @@ export const billingColumns = [
       return params.value.name;
     },
     filterParams: {
-      values: ['paid', 'unpaid', 'cancelled', 'error', 'not-flagged', 'flagged'],
+      values: ['paid', 'unpaid', 'partially-paid', 'cancelled', 'draft', 'normal-status', '1st-reminder', '2nd-reminder', '3rd-reminder', 'formal-notice', 'pursuit'],
     },
   },
   {
     field: 'dispatch',
     cellRendererFramework: cellRendererDispatch,
+    filterParams: {
+      values: ['sent', 'not-sent', 'error', 'flagged', 'not-flagged'],
+    },
   },
   {
     field: 'copy',
@@ -92,7 +95,7 @@ export const billingColumns = [
       return params.value.name;
     },
     filterParams: {
-      values: ['not-sent', 'sent'],
+      values: ['sent', 'not-sent'],
     },
   },
   {

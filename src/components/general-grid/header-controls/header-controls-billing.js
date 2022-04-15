@@ -8,7 +8,7 @@ const links = [
   { name: 'View all', to: '' },
   { name: 'Invoices to send', to: 'send' },
   { name: 'Invoices sent', to: 'sent' },
-  { name: 'Invoices with remainders', to: 'remainders' },
+  { name: 'Invoices with reminders', to: 'reminders' },
   { name: 'Invoices with errors', to: 'errors' },
 ];
 const HeaderControlsBilling = () => {

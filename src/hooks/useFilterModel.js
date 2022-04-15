@@ -19,6 +19,19 @@ export const useFilterModel = (gridApi) => {
           values: ['not-sent'],
         },
       };
+    } else if (model === 'status-reminders') {
+      return {
+        status: {
+          values: ['1st-reminder', '2nd-reminder', '3rd-reminder', 'formal-notice', 'pursuit'],
+        },
+      };
+    }
+    else if (model === 'dispatch-error') {
+      return {
+        dispatch: {
+          values: ['error'],
+        },
+      };
     }
     return {};
   };
@@ -40,12 +53,10 @@ export const useFilterModel = (gridApi) => {
     } else if (pathname === '/billing/sent') {
       handleSendFilter('dispatch-sent');
     }
-    // else if (pathname === '/billing/send') {
-    //   // handleSendFilter(toSendObj);
-    // } else if (pathname === '/billing/send') {
-    //   // handleSendFilter(toSendObj);
-    // } else if (pathname === '/billing/send') {
-    //   handleSendFilter(toSendObj);
-    // }
+    else if (pathname === '/billing/reminders') {
+      handleSendFilter('status-reminders');
+    } else if (pathname === '/billing/errors') {
+      handleSendFilter('dispatch-error');
+    }
   }, [pathname, handleSendFilter]);
 };

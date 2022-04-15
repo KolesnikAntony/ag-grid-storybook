@@ -49,7 +49,7 @@ export let billingState = (() => {
         },
         guarantor: {
           name: "Office de l'assurance...",
-          type: 'TP', // TG
+          type: 'TP', // TP, TG
         },
         provider: 'Dr. Tardieu',
         total: 30,
@@ -58,12 +58,12 @@ export let billingState = (() => {
         due: '28.11.2021',
         expiration: 2,
         status: {
-          name: 'paid', // unpaid, cancelled
+          name: 'paid', // paid, unpaid, partially-paid, cancelled, draft; normal status, 1st-reminder, 2nd-reminder, 3rd-reminder, formal-notice, pursuit
           date: '13.04.22',
         },
-        dispatch: 'sent', // not-sent, error
+        dispatch: 'not-sent', // sent, not-sent, error, flagged, not-flagged
         copy: {
-          name: 'sent', // not-sent, error
+          name: 'sent', // sent, not-sent
           date: '13.04.22',
         },
       },
@@ -86,6 +86,114 @@ export let billingState = (() => {
         expiration: 0,
         status: {
           name: 'unpaid',
+          date: '13.04.22',
+        },
+        dispatch: 'sent',
+        copy: {
+          name: 'not-sent',
+          date: '',
+        },
+      },
+      {
+        uid: 619,
+        number: 1440,
+        client: {
+          name: 'Tax',
+          attachment: 3,
+        },
+        guarantor: {
+          name: "Office de population...",
+          type: 'TG',
+        },
+        provider: 'Dr. Tardieu',
+        total: 129.4,
+        open: 129.4,
+        creation: '29.11.2021',
+        due: '29.11.2021',
+        expiration: 3,
+        status: {
+          name: 'partially-paid',
+          date: '13.04.22',
+        },
+        dispatch: 'error',
+        copy: {
+          name: 'sent',
+          date: '',
+        },
+      },
+      {
+        uid: 620,
+        number: 1438,
+        client: {
+          name: 'Poc',
+          attachment: 1,
+        },
+        guarantor: {
+          name: "Office de Anton...",
+          type: 'TP',
+        },
+        provider: 'Dr. Tardieu',
+        total: 29.4,
+        open: 29.4,
+        creation: '12.11.2021',
+        due: '25.11.2021',
+        expiration: 0,
+        status: {
+          name: 'cancelled',
+          date: null,
+        },
+        dispatch: 'flagged',
+        copy: {
+          name: 'sent',
+          date: '14.04.20222',
+        },
+      },
+      {
+        uid: 617,
+        number: 1438,
+        client: {
+          name: 'Max',
+          attachment: 1,
+        },
+        guarantor: {
+          name: "Office de l'assurance...",
+          type: 'TP', // TP, TG
+        },
+        provider: 'Dr. Tardieu',
+        total: 30,
+        open: 30,
+        creation: '28.11.2021',
+        due: '28.11.2021',
+        expiration: 2,
+        status: {
+          name: 'draft', // paid, unpaid, partially-paid, cancelled, draft; normal status, 1st-reminder, 2nd-reminder, 3rd-reminder, formal-notice, pursuit
+          date: '13.04.22',
+        },
+        dispatch: 'sent', // sent, not-sent, error, flagged, not-flagged
+        copy: {
+          name: 'sent', // sent, not-sent
+          date: '13.04.22',
+        },
+      },
+      {
+        uid: 618,
+        number: 1439,
+        client: {
+          name: 'Mix',
+          attachment: 0,
+        },
+        guarantor: {
+          name: "Office de Katarina...",
+          type: 'TG',
+        },
+        provider: 'Dr. Tardieu',
+        total: 29.4,
+        open: 29.4,
+        creation: '30.11.2021',
+        due: '30.11.2021',
+        expiration: 0,
+        status: {
+          name: 'normal-status',
           date: '13.04.22',
         },
         dispatch: 'not-sent',
@@ -112,12 +220,12 @@ export let billingState = (() => {
         due: '29.11.2021',
         expiration: 3,
         status: {
-          name: 'cancelled',
+          name: '1st-reminder',
           date: '13.04.22',
         },
         dispatch: 'error',
         copy: {
-          name: 'error',
+          name: 'sent',
           date: '',
         },
       },
@@ -130,7 +238,7 @@ export let billingState = (() => {
         },
         guarantor: {
           name: "Office de Anton...",
-          type: 'TP', // TG
+          type: 'TP',
         },
         provider: 'Dr. Tardieu',
         total: 29.4,
@@ -139,10 +247,118 @@ export let billingState = (() => {
         due: '25.11.2021',
         expiration: 0,
         status: {
-          name: 'paid', // unpaid, cancelled, partially paid, draft; normal status, 1st reminder, 2nd reminder, 3rd reminder, formal notice, pursuit
+          name: '2nd-reminder',
           date: null,
         },
-        dispatch: 'sent', // not-sent, error
+        dispatch: 'sent',
+        copy: {
+          name: 'sent',
+          date: '14.04.20222',
+        },
+      },
+      {
+        uid: 617,
+        number: 1438,
+        client: {
+          name: 'Max',
+          attachment: 1,
+        },
+        guarantor: {
+          name: "Office de l'assurance...",
+          type: 'TP', // TP, TG
+        },
+        provider: 'Dr. Tardieu',
+        total: 30,
+        open: 30,
+        creation: '28.11.2021',
+        due: '28.11.2021',
+        expiration: 2,
+        status: {
+          name: '3rd-reminder', // paid, unpaid, partially-paid, cancelled, draft; normal status, 1st-reminder, 2nd-reminder, 3rd-reminder, formal-notice, pursuit
+          date: '13.04.22',
+        },
+        dispatch: 'sent', // sent, not-sent, error, flagged, not-flagged
+        copy: {
+          name: 'sent', // sent, not-sent
+          date: '13.04.22',
+        },
+      },
+      {
+        uid: 618,
+        number: 1439,
+        client: {
+          name: 'Mix',
+          attachment: 0,
+        },
+        guarantor: {
+          name: "Office de Katarina...",
+          type: 'TG',
+        },
+        provider: 'Dr. Tardieu',
+        total: 29.4,
+        open: 29.4,
+        creation: '30.11.2021',
+        due: '30.11.2021',
+        expiration: 0,
+        status: {
+          name: 'formal-notice',
+          date: '13.04.22',
+        },
+        dispatch: 'not-sent',
+        copy: {
+          name: 'not-sent',
+          date: '',
+        },
+      },
+      {
+        uid: 619,
+        number: 1440,
+        client: {
+          name: 'Tax',
+          attachment: 3,
+        },
+        guarantor: {
+          name: "Office de population...",
+          type: 'TG',
+        },
+        provider: 'Dr. Tardieu',
+        total: 129.4,
+        open: 129.4,
+        creation: '29.11.2021',
+        due: '29.11.2021',
+        expiration: 3,
+        status: {
+          name: 'pursuit',
+          date: '13.04.22',
+        },
+        dispatch: 'error',
+        copy: {
+          name: 'sent',
+          date: '',
+        },
+      },
+      {
+        uid: 620,
+        number: 1438,
+        client: {
+          name: 'Poc',
+          attachment: 1,
+        },
+        guarantor: {
+          name: "Office de Anton...",
+          type: 'TP',
+        },
+        provider: 'Dr. Tardieu',
+        total: 29.4,
+        open: 29.4,
+        creation: '12.11.2021',
+        due: '25.11.2021',
+        expiration: 0,
+        status: {
+          name: '2nd-reminder',
+          date: null,
+        },
+        dispatch: 'sent',
         copy: {
           name: 'sent',
           date: '14.04.20222',

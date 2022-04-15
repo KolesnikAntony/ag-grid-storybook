@@ -3,7 +3,7 @@ import useStyle from './cellRendererStyle';
 import Box from '@mui/material/Box';
 import SendIcon from '@mui/icons-material/Send';
 import ErrorIcon from '@mui/icons-material/Error';
-import { Typography } from '@mui/material';
+import FlagIcon from '@mui/icons-material/Flag';
 
 export default (props) => {
   const sx = useStyle();
@@ -15,15 +15,20 @@ export default (props) => {
     <Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Choose>
-          <When condition={value === 'sent'}>
-            <SendIcon sx={{ color: "blue" }} />
-            {/* <Typography>{value.date}</Typography> */}
-          </When>
           <When condition={value === 'not-sent'}>
             <SendIcon sx={{ color: "black" }} />
           </When>
+          <When condition={value === 'sent'}>
+            <SendIcon sx={{ color: "blue" }} />
+          </When>
           <When condition={value === 'error'}>
             <ErrorIcon sx={{ color: "red" }} />
+          </When>
+          <When condition={value === 'flagged'}>
+            <FlagIcon sx={{ color: "red" }} />
+          </When>
+          <When condition={value === 'not-flagged'}>
+            <FlagIcon sx={{ color: "black" }} />
           </When>
         </Choose>
       </Box>
