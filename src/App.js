@@ -5,6 +5,7 @@ import './test.scss';
 import 'ag-grid-enterprise';
 import { NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
+// import GeneralGrid from './components/grid/grid';
 import GeneralGrid from './components/general-grid/general-grid';
 import { GRID_TYPES } from './constants/grid-types';
 import Button from '@mui/material/Button';
@@ -23,7 +24,7 @@ const App = () => {
     }
   }, [location, navigate]);
 
-  console.log(location);
+  // console.log(location);
 
   const error = null;
 

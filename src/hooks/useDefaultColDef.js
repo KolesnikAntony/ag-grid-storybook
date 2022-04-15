@@ -6,9 +6,10 @@ export const useDefaultColDef = (params) => {
       flex: 1,
       minWidth: 100,
       filter: true,
-      editable: true,
-      cellEditorPopup: false,
-      ...params
+      // editable: true,
+      // cellEditorPopup: false,
+      menuTabs: ['filterMenuTab'],
+      ...params,
     };
   }, [params]);
 };
