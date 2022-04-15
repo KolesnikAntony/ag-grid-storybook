@@ -1,15 +1,15 @@
-import { Box } from '@mui/system';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import Box from '@mui/system/Box';
+import IconButton from '@mui/material/IconButton';
 // import ButtonView from '../../buttons/button-view';
 // import ButtonSend from '../../buttons/button-send';
 // import ButtonPrint from '../../buttons/button-print';
 import SendIcon from '@mui/icons-material/Send';
 import PrintIcon from '@mui/icons-material/Print';
-import { IconButton } from '@mui/material';
-// import SendIcon from '@mui/icons-material/Send';
-import MenuIcon from '@mui/icons-material/Menu';
+import useStyle from './custom-header-style';
 
 export default (props) => {
+  const sx = useStyle();
   const [ascSort, setAscSort] = useState('inactive');
   const [descSort, setDescSort] = useState('inactive');
   const [noSort, setNoSort] = useState('inactive');
@@ -38,10 +38,10 @@ export default (props) => {
   // console.log(props.enableMenu)
   if (props.enableMenu) {
     menu = (
-      <div ref={refButton} className="customHeaderMenuButton" onClick={() => onMenuClicked()}>
-        {/* <i className={`fa ${props.menuIcon}`}></i> */}
-        <MenuIcon fontSize={'small'} color={'#bcbccb'} />
-      </div>
+      <Box sx={sx.menu} ref={refButton} className="customHeaderMenuButton" onClick={() => onMenuClicked()}>
+        {/* <i className={`fa ${props.menuIcon}`}></i> 
+        <MenuIcon fontSize={'small'} color={'#bcbccb'} /> */}
+      </Box>
     );
   }
 
@@ -106,7 +106,7 @@ export default (props) => {
   // console.log((() => column.userProvidedColDef.getQuickFilterText = (params) => params.value.name)())
 
   return (
-    <div>
+    <Fragment>
       {menu}
       <Choose>
         {/* <When condition={column.colId === 'dispatch'}></When> */}
@@ -128,6 +128,6 @@ export default (props) => {
         </Otherwise>
       </Choose>
       {sort}
-    </div>
+    </Fragment>
   );
 };

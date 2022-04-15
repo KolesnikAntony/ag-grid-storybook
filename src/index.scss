@@ -1,12 +1,16 @@
+* {
+  box-sizing: border-box;
+}
+
 html {
   font-size: 62.5%;
 }
 
 body {
   margin: 0;
-  background: #d5d1d1;
+  // background: #d5d1d1;
   font-family: sans-serif;
-  overflow-y: scroll;
+  // overflow-y: scroll;
 }
 
 .header {
