@@ -10,7 +10,7 @@ const BillingWrapper = () => {
     rowCount: 50,
     isLoading: false,
     error: null,
-    rowSelection: 'multiply',
+    rowSelection: 'multiple',
   };
   return (
     <MemoryRouter>

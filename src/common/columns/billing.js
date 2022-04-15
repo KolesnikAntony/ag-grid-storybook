@@ -60,15 +60,15 @@ const FILTER_TYPES = {
 };
 
 export const billingColumns = [
-  { ...FILTER_TYPES.filterNumber('uid') },
+  { ...FILTER_TYPES.filterNumber('uid'), maxWidth: 60 },
   { ...FILTER_TYPES.filterNumber('number') },
-  { ...FILTER_TYPES.filterText('client', cellRendererClient, true) },
-  { ...FILTER_TYPES.filterText('guarantor', cellRendererGuarantor, true) },
+  { ...FILTER_TYPES.filterText('client', cellRendererClient, true) ,},
+  { ...FILTER_TYPES.filterText('guarantor', cellRendererGuarantor, true) ,  minWidth: 180 },
   { ...FILTER_TYPES.filterText('provider', cellRenderer) },
-  { ...FILTER_TYPES.filterNumber('total') },
-  { ...FILTER_TYPES.filterNumber('open') },
+  { ...FILTER_TYPES.filterNumber('total'), maxWidth: 80 },
+  { ...FILTER_TYPES.filterNumber('open') ,  maxWidth: 80},
   { ...FILTER_TYPES.filterDate('creation', cellRenderer) },
-  { ...FILTER_TYPES.filterDate('due', cellRendererDue) },
+  { ...FILTER_TYPES.filterDate('due', cellRendererDue) ,  minWidth: 130},
   {
     field: 'status',
     cellRendererFramework: cellRendererStatus,
@@ -77,8 +77,21 @@ export const billingColumns = [
       return params.value.name;
     },
     filterParams: {
-      values: ['paid', 'unpaid', 'partially-paid', 'cancelled', 'draft', 'normal-status', '1st-reminder', '2nd-reminder', '3rd-reminder', 'formal-notice', 'pursuit'],
+      values: [
+        'paid',
+        'unpaid',
+        'partially-paid',
+        'cancelled',
+        'draft',
+        'normal-status',
+        '1st-reminder',
+        '2nd-reminder',
+        '3rd-reminder',
+        'formal-notice',
+        'pursuit',
+      ],
     },
+    minWidth: 130
   },
   {
     field: 'dispatch',
@@ -86,6 +99,7 @@ export const billingColumns = [
     filterParams: {
       values: ['sent', 'not-sent', 'error', 'flagged', 'not-flagged'],
     },
+    maxWidth: 80
   },
   {
     field: 'copy',
@@ -121,7 +135,11 @@ export const billingColumns = [
   },
   {
     field: 'checkbox',
+    headerCheckboxSelection: true,
+    headerCheckboxSelectionFilteredOnly: true,
     checkboxSelection: true,
     suppressMenu: true,
+    resizable: false,
+    maxWidth: 48,
   },
 ];

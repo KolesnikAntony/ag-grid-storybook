@@ -43,7 +43,7 @@ const App = () => {
     rowCount: 50,
     isLoading: false,
     error: getErrorText(error),
-    rowSelection: 'multiply',
+    rowSelection: 'multiple',
   };
 
   return (
