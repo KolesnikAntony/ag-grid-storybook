@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-import './test.scss';
+import './ag-grid.scss';
 import 'ag-grid-enterprise';
 import { NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
@@ -11,24 +11,7 @@ import { GRID_TYPES } from './constants/grid-types';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 // import { STATES } from './api';
-
-const useStyle = () => {
-  return {
-    page: {
-      display: 'flex',
-      flexDirection: 'column',
-      padding: '2.5rem',
-      height: '100vh',
-      backgroundImage: 'linear-gradient(0deg,#e3e3e3,#f8f8f8)',
-      overflow: 'auto',
-    },
-    pageTabs: {
-      display: 'flex',
-      justifyContent: 'center',
-      paddingBottom: '2.5rem',
-    },
-  };
-};
+import useStyle from './AppStyle';
 
 const App = () => {
   const sx = useStyle();

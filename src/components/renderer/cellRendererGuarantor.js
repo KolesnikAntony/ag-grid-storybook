@@ -1,8 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import useStyle from './cellRendererStyle';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
-import AttachFileIcon from '@mui/icons-material/AttachFile';
 
 export default (props) => {
   const sx = useStyle();
@@ -10,13 +9,20 @@ export default (props) => {
   const value = props?.valueFormatted || props.value;
   // console.log('col', col)
 
+  let chipColor;
+  if (value.type === 'TP') {
+    chipColor = 'rgba(80, 152, 68, .15)'
+  } else if (value.type === 'TG') {
+    chipColor = 'rgba(255, 176, 19, .15)';
+  }
+
   return (
-    <Fragment>
-      <Chip label={value.type} />
+    <Box component="div" sx={sx.cell}>
+      <Chip sx={sx.chipGuarantor} style={{backgroundColor: chipColor}} label={value.type} />
 
       <Box component="span" sx={sx.value}>
         {value.name}
       </Box>
-    </Fragment>
+    </Box>
   );
 };

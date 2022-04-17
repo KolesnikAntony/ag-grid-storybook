@@ -19,38 +19,38 @@ export default (props) => {
     <Fragment>
       <Choose>
         <When condition={value.name === 'paid'}>
-          <Chip icon={<CheckIcon />} label={`${paid}`} />
+          <Chip sx={sx.chipStatus} style={{ backgroundColor: '#C9FF78' }} icon={<CheckIcon />} label={`${paid}`} />
         </When>
         <When condition={value.name === 'unpaid'}>
-          <Chip icon={<CircleOutlinedIcon />} label={value.name} />
+          <Chip sx={sx.chipStatus} style={{ backgroundColor: '#F5F5F7' }} icon={<CircleOutlinedIcon />} label={value.name} />
         </When>
         <When condition={value.name === 'partially-paid'}>
-          <Chip icon={<CheckCircleOutlineIcon />} label={value.name} />
+          <Chip sx={sx.chipStatus} style={{ backgroundColor: '#F5F5F7' }} icon={<CheckCircleOutlineIcon />} label={value.name} />
         </When>
         <When condition={value.name === 'cancelled'}>
-          <Chip icon={<DeleteIcon />} label={value.name} />
+          <Chip sx={sx.chipStatus} style={{ backgroundColor: '#e74c3c' }} icon={<DeleteIcon />} label={value.name} />
         </When>
         <When condition={value.name === 'draft'}>
-          <Chip icon={<SaveIcon />} label={value.name} />
+          <Chip sx={sx.chipStatus} style={{ backgroundColor: '#F5F5F7' }} icon={<SaveIcon />} label={value.name} />
         </When>
         {/*  */}
         <When condition={value.name === 'normal-status'}>
-          <Chip sx={{ backgroundColor: '#e9e9e9' }} label={value.name} />
+          <Chip sx={sx.chipStatus} style={{ backgroundColor: '#e9e9e9' }} label={value.name} />
         </When>
         <When condition={value.name === '1st-reminder'}>
-          <Chip sx={{ backgroundColor: '#fff263' }} label={value.name} />
+          <Chip sx={sx.chipStatus} style={{ backgroundColor: '#fff263' }} label={value.name} />
         </When>
         <When condition={value.name === '2nd-reminder'}>
-          <Chip sx={{ backgroundColor: '#fdd835' }} label={value.name} />
+          <Chip sx={sx.chipStatus} style={{ backgroundColor: '#fdd835' }} label={value.name} />
         </When>
         <When condition={value.name === '3rd-reminder'}>
-          <Chip sx={{ backgroundColor: '#fbc02d' }} label={value.name} />
+          <Chip sx={sx.chipStatus} style={{ backgroundColor: '#fbc02d' }} label={value.name} />
         </When>
         <When condition={value.name === 'formal-notice'}>
-          <Chip sx={{ backgroundColor: '#f57f17' }} label={value.name} />
+          <Chip sx={sx.chipStatus} style={{ backgroundColor: '#f57f17' }} label={value.name} />
         </When>
         <When condition={value.name === 'pursuit'}>
-          <Chip sx={{ backgroundColor: '#ff5722' }} label={value.name} />
+          <Chip sx={sx.chipStatus} style={{ backgroundColor: '#ff5722' }} label={value.name} />
         </When>
       </Choose>
     </Fragment>
