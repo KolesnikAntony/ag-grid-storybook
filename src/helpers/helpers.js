@@ -16,4 +16,34 @@ export const HELPERS = {
       return { background: 'rgba(252, 69, 3, 0.4)', color: 'red' };
     }
   },
+  getFilterModel: (tab) => {
+    switch (tab) {
+      case 1:
+        return {
+          dispatch: {
+            values: ['sent'],
+          },
+        };
+      case 2:
+        return {
+          dispatch: {
+            values: ['not-sent'],
+          },
+        };
+      case 3:
+        return {
+          status: {
+            values: ['1st-reminder', '2nd-reminder', '3rd-reminder', 'formal-notice', 'pursuit'],
+          },
+        };
+      case 4:
+        return {
+          dispatch: {
+            values: ['error'],
+          },
+        };
+      default:
+        return {};
+    }
+  },
 };

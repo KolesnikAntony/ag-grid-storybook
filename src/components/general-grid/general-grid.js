@@ -12,7 +12,6 @@ import HeaderControls from './header-controls/header-controls';
 import { GridApiContext } from '../../context/GridApiContext';
 import CustomHeader from './custom-header/custom-header';
 import { billingState } from '../../api';
-import { useFilterModel } from '../../hooks/useFilterModel';
 
 const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, rowSelection }) => {
   //GRID API
@@ -21,7 +20,6 @@ const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, row
   const columnDefs = useColumnDefs(type);
 
   //FILTERING
-  useFilterModel(gridApi);
   // const rowData = useGetData(location.pathname);
   // const rowData = useMemo(() => state, [state]);
   const rowData = useMemo(() => billingState, []);
