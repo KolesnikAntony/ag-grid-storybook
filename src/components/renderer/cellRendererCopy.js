@@ -14,17 +14,14 @@ export default (props) => {
 
   return (
     <Fragment>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Choose>
           <When condition={value.name === 'sent'}>
-            <SendIcon sx={{ color: 'blue' }} />
+            <SendIcon sx={{ color: '#2399F1', marginRight: '.8rem' }} />
             <Typography>{value.date}</Typography>
           </When>
           <When condition={value.name === 'not-sent'}>
-            <SendIcon sx={{ color: 'black' }} />
-          </When>
-          <When condition={value.name === 'error'}>
-            <ErrorIcon sx={{ color: 'red' }} />
+            <SendIcon sx={{ color: '#DEE5ED' }} />
           </When>
         </Choose>
       </Box>

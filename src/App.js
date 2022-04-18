@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-import './test.scss';
+import './ag-grid.scss';
 import 'ag-grid-enterprise';
 import { NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
@@ -11,8 +11,10 @@ import { GRID_TYPES } from './constants/grid-types';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 // import { STATES } from './api';
+import useStyle from './AppStyle';
 
 const App = () => {
+  const sx = useStyle();
   // const [state] = useState(STATES.default);
 
   const location = useLocation();
@@ -47,8 +49,8 @@ const App = () => {
   };
 
   return (
-    <Box>
-      <Box sx={{ width: '100%', p: 5, boxSizing: 'border-box', display: 'flex', justifyContent: 'center' }}>
+    <Box sx={sx.page}>
+      <Box sx={sx.pageTabs}>
         <Stack direction="row" spacing={2}>
           <Button variant={'outlined'} component={NavLink} to="/">
             Billing

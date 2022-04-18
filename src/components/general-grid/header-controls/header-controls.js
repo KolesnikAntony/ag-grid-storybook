@@ -14,25 +14,30 @@ const useStyle = () => {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      padding: '12px 24px',
-      borderTopRightRadius: '1.6rem',
-      borderTopLeftRadius: '1.6rem',
-      backgroundColor: 'white',
+      padding: '1.5rem 3rem',
     },
     titleBox: {
       display: 'flex',
       alignItems: 'center',
     },
+    icon: {
+      width: '2.7rem',
+      height: '2.7rem',
+      '&:not(:last-child)': {
+        marginRight: '1.2rem',
+      },
+    },
     title: {
       fontSize: '1.8rem',
-      ml: 1,
+      fontWeight: 600,
+      color: '#424242',
     },
   };
 };
 
 const HeaderControls = ({ type }) => {
-  const title = useHeaderTitle(type);
   const sx = useStyle();
+  const title = useHeaderTitle(type);
   const handleNewInvoice = useCallback(() => {
     alert('Create new Invoice');
   }, []);
@@ -40,7 +45,7 @@ const HeaderControls = ({ type }) => {
   return (
     <Box sx={sx.wrapper}>
       <Box sx={sx.titleBox}>
-        <Box component="img" src={logo} alt={'logo'} />
+        <Box component="img" sx={sx.icon} src={logo} alt={'logo'} />
         <Typography component="h1" sx={sx.title}>
           {title}
         </Typography>

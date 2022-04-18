@@ -1,15 +1,17 @@
-import { Box } from '@mui/system';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import Box from '@mui/system/Box';
+import Button from '@mui/material/Button';
 // import ButtonView from '../../buttons/button-view';
 // import ButtonSend from '../../buttons/button-send';
 // import ButtonPrint from '../../buttons/button-print';
 import SendIcon from '@mui/icons-material/Send';
 import PrintIcon from '@mui/icons-material/Print';
-import { IconButton } from '@mui/material';
-// import SendIcon from '@mui/icons-material/Send';
-import MenuIcon from '@mui/icons-material/Menu';
+import useStyle from './custom-header-style';
+import useStyle2 from '../../renderer/cellRendererStyle';
 
 export default (props) => {
+  const sx = useStyle();
+  const sx2 = useStyle2();
   const [ascSort, setAscSort] = useState('inactive');
   const [descSort, setDescSort] = useState('inactive');
   const [noSort, setNoSort] = useState('inactive');
@@ -38,10 +40,10 @@ export default (props) => {
   // console.log(props.enableMenu)
   if (props.enableMenu) {
     menu = (
-      <div ref={refButton} className="customHeaderMenuButton" onClick={() => onMenuClicked()}>
-        {/* <i className={`fa ${props.menuIcon}`}></i> */}
-        <MenuIcon fontSize={'small'} color={'#bcbccb'} />
-      </div>
+      <Box sx={sx.menu} ref={refButton} className="customHeaderMenuButton" onClick={() => onMenuClicked()}>
+        {/* <i className={`fa ${props.menuIcon}`}></i> 
+        <MenuIcon fontSize={'small'} color={'#bcbccb'} /> */}
+      </Box>
     );
   }
 
@@ -106,7 +108,7 @@ export default (props) => {
   // console.log((() => column.userProvidedColDef.getQuickFilterText = (params) => params.value.name)())
 
   return (
-    <div>
+    <Fragment>
       {menu}
       <Choose>
         {/* <When condition={column.colId === 'dispatch'}></When> */}
@@ -114,20 +116,20 @@ export default (props) => {
           <Box />
         </When>
         <When condition={column.colId === 'btn-send'}>
-          <IconButton onClick={() => {}} aria-label="send">
-            <SendIcon fontSize={'small'} color={'#bcbccb'} />
-          </IconButton>
+          <Button variant="contained" sx={sx2.cellButton} onClick={() => {}} aria-label="Send selected invoices">
+            <SendIcon sx={sx2.cellButtonIcon} />
+          </Button>
         </When>
         <When condition={column.colId === 'btn-print'}>
-          <IconButton onClick={() => {}} aria-label="print">
-            <PrintIcon fontSize={'small'} color={'#bcbccb'} />
-          </IconButton>
+          <Button variant="contained" sx={sx2.cellButton} onClick={() => {}} aria-label="Print selected invoices">
+            <PrintIcon sx={sx2.cellButtonIcon} />
+          </Button>
         </When>
         <Otherwise>
           <div className="customHeaderLabel">{props.displayName}</div>
         </Otherwise>
       </Choose>
       {sort}
-    </div>
+    </Fragment>
   );
 };
