@@ -1,13 +1,19 @@
 import React from 'react';
-import IconButton from '@mui/material/IconButton';
-import PreviewIcon from '@mui/icons-material/Preview';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import useStyle from '../renderer/cellRendererStyle';
 
-function ButtonView({ handleOpen }) {
+const ButtonView = ({ handleOpen }) => {
+  const sx = useStyle();
+
   return (
-    <IconButton onClick={handleOpen} color="primary" aria-label="add to shopping cart">
-      <PreviewIcon fontSize={'small'} />
-    </IconButton>
+    <Tooltip title="View invoice" placement="top" sx={{ marginBottom: '1rem' }}>
+      <Button variant="contained" sx={sx.cellButton} onClick={handleOpen} aria-label="View invoice">
+        <VisibilityIcon sx={sx.cellButtonIcon} />
+      </Button>
+    </Tooltip>
   );
-}
+};
 
 export default ButtonView;

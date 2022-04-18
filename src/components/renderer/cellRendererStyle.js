@@ -46,8 +46,30 @@ const useStyle = () => {
         paddingLeft: '.5rem',
       },
       '.MuiChip-icon': {
-        marginRight: '.3rem',
+        marginRight: '.1rem',
       },
+    },
+
+    cellButton: {
+      minWidth: '2.4rem',
+      width: '2.4rem',
+      height: '2.4rem',
+      padding: 0,
+      borderRadius: '.5rem',
+      backgroundColor: 'white',
+      boxShadow: '0 0.4rem 0.8rem 0 hsl(0deg 0% 61% / 15%)',
+      '&:hover': {
+        backgroundColor: '#424242',
+        boxShadow: 'none',
+        '.MuiSvgIcon-root': {
+          color: 'white',
+        },
+      },
+    },
+    cellButtonIcon: {
+      width: '1.5rem',
+      height: '1.5rem',
+      color: '#bcbccb',
     },
   };
 };
