@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import useStyle from './cellRendererStyle';
 import Box from '@mui/material/Box';
 import SendIcon from '@mui/icons-material/Send';
@@ -12,26 +12,24 @@ export default (props) => {
   // console.log('col', col)
 
   return (
-    <Fragment>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Choose>
-          <When condition={value === 'not-sent'}>
-            <SendIcon sx={{ color: 'black' }} />
-          </When>
-          <When condition={value === 'sent'}>
-            <SendIcon sx={{ color: 'blue' }} />
-          </When>
-          <When condition={value === 'error'}>
-            <ErrorIcon sx={{ color: 'red' }} />
-          </When>
-          <When condition={value === 'flagged'}>
-            <FlagIcon sx={{ color: 'red' }} />
-          </When>
-          <When condition={value === 'not-flagged'}>
-            <FlagIcon sx={{ color: 'black' }} />
-          </When>
-        </Choose>
-      </Box>
-    </Fragment>
+    <Box sx={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <Choose>
+        <When condition={value === 'not-sent'}>
+          <SendIcon sx={{ color: '#DEE5ED' }} />
+        </When>
+        <When condition={value === 'sent'}>
+          <SendIcon sx={{ color: '#2399F1' }} />
+        </When>
+        <When condition={value === 'error'}>
+          <ErrorIcon sx={{ color: '#fdd835' }} />
+        </When>
+        <When condition={value === 'flagged'}>
+          <FlagIcon sx={{ color: 'rgb(241, 35, 97)' }} />
+        </When>
+        <When condition={value === 'not-flagged'}>
+          <FlagIcon sx={{ color: '#DEE5ED' }} />
+        </When>
+      </Choose>
+    </Box>
   );
 };

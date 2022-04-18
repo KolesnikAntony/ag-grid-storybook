@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import useStyle from './cellRendererStyle';
 import Box from '@mui/material/Box';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
@@ -10,17 +10,17 @@ export default (props) => {
   // console.log('col', col)
 
   return (
-    <Fragment>
+    <Box sx={sx.cell}>
       <Box component="span" sx={sx.value}>
         {value.name}
       </Box>
 
       <If condition={value?.attachment}>
-        <Box component="span" sx={sx.value}>
+        <Box component="span" sx={sx.iconClientWrapper}>
           <AttachFileIcon />
           {value.attachment}
         </Box>
       </If>
-    </Fragment>
+    </Box>
   );
 };

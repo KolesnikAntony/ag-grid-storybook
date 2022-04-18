@@ -1,15 +1,19 @@
 import React from 'react';
 import PrintIcon from '@mui/icons-material/Print';
-import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
+import useStyle from '../renderer/cellRendererStyle';
+
 const ButtonPrint = (props) => {
+  const sx = useStyle();
+
   const btnClickedHandler = (e) => {
     e.stopPropagation();
     console.log(props.data);
   };
   return (
-    <IconButton onClick={btnClickedHandler} color="primary" aria-label="print">
-      <PrintIcon fontSize={'small'} />
-    </IconButton>
+    <Button variant="contained" sx={sx.cellButton} onClick={btnClickedHandler} aria-label="Print invoice">
+      <PrintIcon sx={sx.cellButtonIcon} />
+    </Button>
   );
 };
 
