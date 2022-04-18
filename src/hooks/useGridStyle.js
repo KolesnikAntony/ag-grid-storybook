@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 export const useGridStyle = () => {
   const containerStyle = useMemo(() => ({
     flexGrow: 1,
-    width: '100%',
+    height: '50rem',
     display: 'flex',
     flexDirection: 'column',
     borderRadius: '1.4rem',

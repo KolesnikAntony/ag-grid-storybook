@@ -16,7 +16,7 @@
         // or write CSS selectors to make customisations beyond what the parameters support
         color: white;
         
-        &-cell {}
+        // &-cell {}
 
         &-active {
           background-color: #f1f1f1;
@@ -29,9 +29,12 @@
         }
       }
 
-      // &-root-wrapper {
-      //   border-radius: 4px;
-      // }
+      &-root-wrapper {
+        border-width: 0;
+        border-top-width: .1rem;
+        // border-radius: 1.4rem;
+        min-height: 50rem;
+      }
     }
 
     .customHeaderMenuButton {
