@@ -3,6 +3,6 @@ export const createInvoiceColumns = [
   { field: 'code', displayName: 'Code' },
   { field: 'ref_code', displayName: 'Reference' },
   { field: 'name', displayName: 'Description' },
-  { field: 'quantity', displayName: 'Quantity' },
+  { field: 'quantity', displayName: 'Quantity', editable: true },
   { field: 'unit_mt', displayName: 'Price' },
 ];

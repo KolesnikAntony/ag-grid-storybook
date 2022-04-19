@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { useColumnDefs } from '../../hooks/useColumnDefs';
 import { useDefaultColDef } from '../../hooks/useDefaultColDef';
@@ -10,11 +10,16 @@ const CreateInvoiceGrid = ({colDef}) => {
     const defaultColDef = useDefaultColDef(colDef);
     const rowData = STATES.createInvoiceState;
 
+    const onCellValueChanged = useCallback((e) => {
+        console.log(e)
+    }, [])
+
     return (
         <AgGridReact 
             columnDefs={columnDefs}
             defaultColDef={defaultColDef}
             rowData={rowData}
+            onCellValueChanged={onCellValueChanged}
         />
     )
 };
