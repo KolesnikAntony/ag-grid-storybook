@@ -1,6 +1,6 @@
 import React, { useCallback, useContext } from 'react';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import useStyle from '../renderer/cellRendererStyle';
 import { GridContext } from '../../context/GridApiContext';
 
@@ -19,9 +19,9 @@ const ButtonRemove = ({ data }) => {
   );
 
   return (
-    <Button variant="contained" sx={sx.cellButton} onClick={btnClickedHandler} aria-label="Print invoice">
+    <IconButton sx={sx.cellIconButton} onClick={btnClickedHandler} aria-label="Print invoice">
       <DeleteOutlineIcon sx={sx.cellButtonIcon} />
-    </Button>
+    </IconButton>
   );
 };
 

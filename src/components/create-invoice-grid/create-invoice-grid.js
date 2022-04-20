@@ -6,7 +6,7 @@ import { GRID_TYPES } from '../../constants/grid-types';
 import { STATES } from '../../api';
 import { GridApiContext } from '../../context/GridApiContext';
 import { Typography } from '@mui/material';
-import { useGridStyle } from '../../hooks/useGridStyle';
+// import { useGridStyle } from '../../hooks/useGridStyle';
 import Box from '@mui/material/Box';
 import './create-invoice-ag-grid-style.scss';
 
@@ -98,6 +98,9 @@ const CreateInvoiceGrid = ({ colDef }) => {
             onGridReady={onGridReady}
             domLayout={'autoHeight'}
             rowSelection={'multiple'}
+            rowDragManaged={true}
+            rowDragEntireRow={true}
+            rowDragMultiRow={true}
           />
         </Box>
         <Typography sx={{ textAlign: 'right', marginTop: '2.5rem' }}>Due amount : {total} CHF</Typography>
