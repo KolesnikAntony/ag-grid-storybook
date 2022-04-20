@@ -9,6 +9,7 @@ import { Typography } from '@mui/material';
 // import { useGridStyle } from '../../hooks/useGridStyle';
 import Box from '@mui/material/Box';
 import './create-invoice-ag-grid-style.scss';
+// import regeneratorRuntime from "regenerator-runtime";
 
 const CreateInvoiceGrid = ({ colDef }) => {
   const [gridApi, setGridApi] = useState(null);
@@ -16,7 +17,8 @@ const CreateInvoiceGrid = ({ colDef }) => {
   const defaultColDef = useDefaultColDef(colDef);
   const [rowData, setRowData] = useState(STATES.createInvoiceState);
   const [total, setTotal] = useState(null);
-  const [buffer, setBuffer] = useState([]);
+  // const [buffer, setBuffer] = useState([]);
+  // const [clipboard, setClipboard] = useState([]);
 
   //SUM START<=====================>
   useEffect(() => {
@@ -50,39 +52,79 @@ const CreateInvoiceGrid = ({ colDef }) => {
         ...el,
         id: Math.ceil(Math.random() * 1001),
       }));
-      setBuffer(copiedState);
+      // setBuffer(copiedState);
+      // navigator.permissions.query({ name: "clipboard-write" }).then((result) => {
+      //   if (result.state == "granted" || result.state == "prompt") {
+      //     alert("Write access ranted!");
+      //   }
+      // });
+      navigator.clipboard.writeText(JSON.stringify(copiedState));
     } else {
-      setBuffer(null);
-      alert('No selected rows');
+      // setBuffer(null);
+      // setTimeout(() => navigator.clipboard.writeText(''));
     }
   }, [gridApi]);
 
-  const handlePast = useCallback(() => {
-    if (buffer) {
-      const newState = [...buffer, ...rowData];
-      setRowData(newState);
-    } else {
-      alert('Buffer is empty');
-    }
-    setBuffer(null);
-  }, [buffer, rowData]);
+  const handlePaste = useCallback(() => {
+    // const readClipboard = async () => {
+    //   const clipBoard = await navigator.clipboard.readText()
+    //   console.log('clipBoard', clipBoard)
+    // }
+    // readClipboard().catch(console.error)
+
+    navigator.clipboard.readText().then((obj) => {
+      console.log('obj', obj)
+      if (obj) {
+        let newState;
+        try {
+
+          let clipboard = JSON.parse(obj);
+
+          if (clipboard.length) {
+            newState = [...clipboard, ...rowData];
+            setRowData(newState);
+            
+            // setTimeout(() => navigator.clipboard.writeText('').then(() => alert('Clipboard is not empty')));
+          }
+        } catch(e) {}
+        // setClipboard(JSON.parse(obj));
+        // setBuffer(clipboard);
+  
+        // console.log('clipboard', clipboard)
+        // console.log('buffer', buffer)
+  
+        // if (buffer.length) {
+        //   newState = [...buffer, ...rowData];
+        //   setRowData(newState);
+        //   alert('Buffer is not empty');
+        // } 
+        
+        // setBuffer([]);
+        // setClipboard([]);
+        
+      } else {
+        alert('Buffer and clipboard is empty');
+      }
+    });
+    // navigator.clipboard.readText().then((obj) => console.log(JSON.parse(obj)));    
+  }, [rowData]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
       let charCode = String.fromCharCode(event.which).toLowerCase();
-      if ((event.ctrlKey || event.metaKey) && charCode === 'c') {
+      if (!event.shiftKey && (event.ctrlKey || event.metaKey) && charCode === 'c') {
         event.preventDefault();
         handleCopy();
-      } else if ((event.ctrlKey || event.metaKey) && charCode === 'v') {
+      } else if (!event.shiftKey && (event.ctrlKey || event.metaKey) && charCode === 'v') {
         event.preventDefault();
-        handlePast();
+        handlePaste();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [handleCopy, handlePast]);
+  }, [handleCopy, handlePaste]);
 
   //COPY PASTE ================END
 
