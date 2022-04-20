@@ -8,13 +8,13 @@ import { GridApiContext } from '../../context/GridApiContext';
 import { Typography } from '@mui/material';
 import { useGridStyle } from '../../hooks/useGridStyle';
 import Box from '@mui/material/Box';
+import './create-invoice-ag-grid-style.scss';
 
 const CreateInvoiceGrid = ({ colDef }) => {
   const [gridApi, setGridApi] = useState(null);
   const columnDefs = useColumnDefs(GRID_TYPES.createInvoice);
   const defaultColDef = useDefaultColDef(colDef);
   const [rowData, setRowData] = useState(STATES.createInvoiceState);
-
   const [total, setTotal] = useState(null);
 
   //SUM START<=====================>
@@ -38,7 +38,6 @@ const CreateInvoiceGrid = ({ colDef }) => {
       });
     }
   }, []);
-
   //SUM END<=====================>
 
   //FUNCTION THAN SET GRID API WHEN GRID IS READY
@@ -48,16 +47,19 @@ const CreateInvoiceGrid = ({ colDef }) => {
 
   return (
     <GridApiContext value={gridApi}>
-      <Box sx={{ height: 600 }}>
-        <AgGridReact
-          columnDefs={columnDefs}
-          defaultColDef={defaultColDef}
-          rowData={rowData}
-          onCellValueChanged={onCellValueChanged}
-          onGridReady={onGridReady}
-        />
+      <Box sx={{ backgroundColor: 'white' }}>
+        <Box>
+          <AgGridReact
+            columnDefs={columnDefs}
+            defaultColDef={defaultColDef}
+            rowData={rowData}
+            onCellValueChanged={onCellValueChanged}
+            onGridReady={onGridReady}
+            domLayout={'autoHeight'}
+          />
+        </Box>
+        <Typography sx={{ textAlign: 'right', marginTop: '2.5rem' }}>Due amount : {total} CHF</Typography>
       </Box>
-      <Typography variant={'h3'}>Total: {total}</Typography>
     </GridApiContext>
   );
 };
