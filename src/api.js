@@ -544,6 +544,7 @@ export const createInvoiceState = [
     quantity_restrictions: 'L-<:-1-1-P-07',
     authorization: '9999',
     version: '01.08.00_BR_UVG',
+    id: '41r13e1',
   },
   {
     tariff_type: '001',
@@ -584,6 +585,7 @@ export const createInvoiceState = [
     quantity_restrictions: 'L-<:-1-1-P-07',
     authorization: '9999',
     version: '01.08.00_BR_UVG',
+    id: '41r11e1',
   },
   {
     tariff_type: '402',
@@ -597,6 +599,7 @@ export const createInvoiceState = [
     external_factor: '1',
     vat_rate: '2.5',
     obligation: '1',
+    id: '413553e1',
   },
   {
     tariff_type: '999',
@@ -610,6 +613,7 @@ export const createInvoiceState = [
     external_factor: '1',
     vat_rate: '3.7',
     obligation: '1',
+    id: '41r1341311e1',
   },
 ];
 

@@ -16,25 +16,22 @@ const CreateInvoiceGrid = ({ colDef }) => {
   const defaultColDef = useDefaultColDef(colDef);
   const [rowData, setRowData] = useState(STATES.createInvoiceState);
   const [total, setTotal] = useState(null);
+  const [buffer, setBuffer] = useState([]);
 
   //SUM START<=====================>
   useEffect(() => {
-    if (gridApi) {
-      let rowData = [];
-      gridApi.forEachNode((node) => rowData.push(node.data));
-      const pricesTotal = rowData
-        .map((row) => +row['unit_mt'] * +row['quantity'] || 0)
-        .reduce((sum, value) => sum + value);
-      setTotal(pricesTotal);
-    }
-  }, [gridApi, rowData]);
+    const pricesTotal = rowData
+      .map((row) => +row['unit_mt'] * +row['quantity'] || 0)
+      .reduce((sum, value) => sum + value);
+    setTotal(pricesTotal);
+  }, [rowData]);
 
   const onCellValueChanged = useCallback((params) => {
     const { data, newValue, column } = params;
 
     if (column.colId === 'quantity') {
       setRowData((prev) => {
-        return prev.map((el) => (data.code === el.code ? { ...el, quantity: newValue } : el));
+        return prev.map((el) => (data.id === el.id ? { ...el, quantity: newValue } : el));
       });
     }
   }, []);
@@ -44,6 +41,48 @@ const CreateInvoiceGrid = ({ colDef }) => {
   const onGridReady = useCallback((params) => {
     setGridApi(params.api);
   }, []);
+
+  //COPY PASTE
+  const handleCopy = useCallback(() => {
+    const selectedRow = gridApi?.getSelectedRows();
+    if (selectedRow.length) {
+      const copiedState = selectedRow.map((el) => ({
+        ...el,
+        id: Math.ceil(Math.random() * 1001),
+      }));
+      setBuffer(copiedState);
+    } else {
+      setBuffer(null);
+      alert('No selected rows');
+    }
+  }, [gridApi]);
+
+  const handlePast = useCallback(() => {
+    if (buffer) {
+      const newState = [...buffer, ...rowData];
+      setRowData(newState);
+    } else {
+      alert('Buffer is empty');
+    }
+    setBuffer(null);
+  }, [buffer, rowData]);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      let charCode = String.fromCharCode(event.which).toLowerCase();
+      if ((event.ctrlKey || event.metaKey) && charCode === 'c') {
+        event.preventDefault();
+        handleCopy();
+      } else if ((event.ctrlKey || event.metaKey) && charCode === 'v') {
+        event.preventDefault();
+        handlePast();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleCopy, handlePast]);
 
   return (
     <GridApiContext value={gridApi}>
@@ -56,6 +95,7 @@ const CreateInvoiceGrid = ({ colDef }) => {
             onCellValueChanged={onCellValueChanged}
             onGridReady={onGridReady}
             domLayout={'autoHeight'}
+            rowSelection={'multiple'}
           />
         </Box>
         <Typography sx={{ textAlign: 'right', marginTop: '2.5rem' }}>Due amount : {total} CHF</Typography>
