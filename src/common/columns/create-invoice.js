@@ -4,6 +4,7 @@ const buttonColumnWidth = HELPERS.convertRemToPx(1.8);
 import ButtonView from '../../components/buttons/button-view';
 import ButtonSend from '../../components/buttons/button-send';
 import ButtonPrint from '../../components/buttons/button-print';
+import ButtonRemove from "../../components/buttons/button-remove";
 
 export const createInvoiceColumns = [
   { field: 'tariff_type', displayName: 'Rate' },
@@ -32,7 +33,7 @@ export const createInvoiceColumns = [
     field: 'btn-print',
     displayName: ' ',
     maxWidth: buttonColumnWidth,
-    cellRendererFramework: ButtonPrint,
+    cellRendererFramework: ButtonRemove,
     resizable: false,
     suppressMenu: true,
   },

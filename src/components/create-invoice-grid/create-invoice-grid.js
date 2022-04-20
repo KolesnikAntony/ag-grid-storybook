@@ -20,9 +20,9 @@ const CreateInvoiceGrid = ({ colDef }) => {
 
   //SUM START<=====================>
   useEffect(() => {
-    const pricesTotal = rowData
-      .map((row) => +row['unit_mt'] * +row['quantity'] || 0)
-      .reduce((sum, value) => sum + value);
+    const pricesTotal = rowData.length
+      ? rowData.map((row) => +row['unit_mt'] * +row['quantity'] || 0).reduce((sum, value) => sum + value)
+      : 0;
     setTotal(pricesTotal);
   }, [rowData]);
 
@@ -42,7 +42,7 @@ const CreateInvoiceGrid = ({ colDef }) => {
     setGridApi(params.api);
   }, []);
 
-  //COPY PASTE
+  //COPY PASTE ================START
   const handleCopy = useCallback(() => {
     const selectedRow = gridApi?.getSelectedRows();
     if (selectedRow.length) {
@@ -84,8 +84,10 @@ const CreateInvoiceGrid = ({ colDef }) => {
     };
   }, [handleCopy, handlePast]);
 
+  //COPY PASTE ================END
+
   return (
-    <GridApiContext value={gridApi}>
+    <GridApiContext value={{ gridApi, setRowData }}>
       <Box sx={{ backgroundColor: 'white' }}>
         <Box>
           <AgGridReact
