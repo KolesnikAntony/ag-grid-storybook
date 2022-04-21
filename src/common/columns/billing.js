@@ -9,55 +9,9 @@ import cellRendererDue from '../../components/renderer/cellRendererDue';
 import cellRendererStatus from '../../components/renderer/cellRendererStatus';
 import cellRendererDispatch from '../../components/renderer/cellRendererDispatch';
 import cellRendererCopy from '../../components/renderer/cellRendererCopy';
+import { FILTER_TYPES } from './../../constants/filter-types';
 
 const buttonColumnWidth = HELPERS.convertRemToPx(4.8);
-
-const FILTER_TYPES = {
-  filterNumber: (field) => ({
-    field,
-    cellRendererFramework: cellRenderer,
-    filter: 'agNumberColumnFilter',
-    filterParams: {
-      buttons: ['reset', 'apply'],
-      suppressAndOrCondition: true,
-    },
-  }),
-  filterText: (field, cellRender, isKeyCreator = false) => ({
-    field,
-    cellRendererFramework: cellRender,
-    keyCreator: (params) => {
-      return isKeyCreator ? params.value.name : params.value;
-    },
-  }),
-  filterDate: (field, cellRenderer, separator = '.') => ({
-    field,
-    cellRendererFramework: cellRenderer,
-    filter: 'agDateColumnFilter',
-    filterParams: {
-      buttons: ['reset', 'apply'],
-      suppressAndOrCondition: true,
-      comparator: function (filterLocalDateAtMidnight, cellValue) {
-        var dateAsString = cellValue;
-        if (dateAsString == null) return -1;
-        var dateParts = dateAsString.split(separator);
-        var cellDate = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]));
-
-        if (filterLocalDateAtMidnight.getTime() === cellDate.getTime()) {
-          return 0;
-        }
-
-        if (cellDate < filterLocalDateAtMidnight) {
-          return -1;
-        }
-
-        if (cellDate > filterLocalDateAtMidnight) {
-          return 1;
-        }
-      },
-      browserDatePicker: true,
-    },
-  }),
-};
 
 export const billingColumns = [
   { ...FILTER_TYPES.filterNumber('uid'), maxWidth: 60 },
