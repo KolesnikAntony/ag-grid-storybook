@@ -48,13 +48,17 @@ const CreateInvoiceGrid = ({ colDef }) => {
   //COPY PASTE ================START
   const handleCopy = useCallback(() => {
     const selectedRow = gridApi ? gridApi.getSelectedRows() : [];
-    if (selectedRow.length) {
+    const selectionText = window.getSelection().toString();
+    if (selectedRow.length && !selectionText) {
       navigator.clipboard.writeText(JSON.stringify(selectedRow));
+    } else {
+      navigator.clipboard.writeText(selectionText);
     }
   }, [gridApi]);
 
   const handlePaste = useCallback(() => {
     navigator.clipboard.readText().then((string) => {
+      console.log(/^[+-]?\d+(\.\d+)?$/.test(string));
       if (HELPERS.checkJSON(string)) {
         const clipboard = JSON.parse(string);
         const data = clipboard.map((el) => ({ ...el, id: HELPERS.getRandomId() }));
