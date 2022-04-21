@@ -3,12 +3,24 @@ import ButtonIcon from '../../components/buttons/button-icon';
 import InfoIcon from '@mui/icons-material/Info';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import ButtonRemove from "../../components/buttons/button-remove";
+import ButtonRemove from '../../components/buttons/button-remove';
 
 const buttonColumnWidth = HELPERS.convertRemToPx(1.8);
-const ButtonIconInfo = () => <ButtonIcon><InfoIcon /></ButtonIcon>;
-const ButtonIconEdit = () => <ButtonIcon><EditIcon /></ButtonIcon>;
-const ButtonIconRemove = () => <ButtonIcon><DeleteOutlineIcon /></ButtonIcon>;
+const ButtonIconInfo = () => (
+  <ButtonIcon>
+    <InfoIcon />
+  </ButtonIcon>
+);
+const ButtonIconEdit = () => (
+  <ButtonIcon>
+    <EditIcon />
+  </ButtonIcon>
+);
+const ButtonIconRemove = () => (
+  <ButtonIcon>
+    <DeleteOutlineIcon />
+  </ButtonIcon>
+);
 
 export const createInvoiceColumns = [
   { field: 'tariff_type', displayName: 'Rate' },

@@ -9,6 +9,7 @@ import { Typography } from '@mui/material';
 // import { useGridStyle } from '../../hooks/useGridStyle';
 import Box from '@mui/material/Box';
 import './create-invoice-ag-grid-style.scss';
+import { HELPERS } from '../../helpers/helpers';
 // import regeneratorRuntime from "regenerator-runtime";
 
 const CreateInvoiceGrid = ({ colDef }) => {
@@ -46,67 +47,25 @@ const CreateInvoiceGrid = ({ colDef }) => {
 
   //COPY PASTE ================START
   const handleCopy = useCallback(() => {
-    const selectedRow = gridApi?.getSelectedRows();
+    const selectedRow = gridApi ? gridApi.getSelectedRows() : [];
     if (selectedRow.length) {
-      const copiedState = selectedRow.map((el) => ({
-        ...el,
-        id: Math.ceil(Math.random() * 1001),
-      }));
-      // setBuffer(copiedState);
-      // navigator.permissions.query({ name: "clipboard-write" }).then((result) => {
-      //   if (result.state == "granted" || result.state == "prompt") {
-      //     alert("Write access ranted!");
-      //   }
-      // });
-      navigator.clipboard.writeText(JSON.stringify(copiedState));
-    } else {
-      // setBuffer(null);
-      // setTimeout(() => navigator.clipboard.writeText(''));
+      navigator.clipboard.writeText(JSON.stringify(selectedRow));
     }
   }, [gridApi]);
 
   const handlePaste = useCallback(() => {
-    // const readClipboard = async () => {
-    //   const clipBoard = await navigator.clipboard.readText()
-    //   console.log('clipBoard', clipBoard)
-    // }
-    // readClipboard().catch(console.error)
-
-    navigator.clipboard.readText().then((obj) => {
-      console.log('obj', obj)
-      if (obj) {
-        let newState;
-        try {
-
-          let clipboard = JSON.parse(obj);
-
-          if (clipboard.length) {
-            newState = [...clipboard, ...rowData];
-            setRowData(newState);
-            
-            // setTimeout(() => navigator.clipboard.writeText('').then(() => alert('Clipboard is not empty')));
-          }
-        } catch(e) {}
-        // setClipboard(JSON.parse(obj));
-        // setBuffer(clipboard);
-  
-        // console.log('clipboard', clipboard)
-        // console.log('buffer', buffer)
-  
-        // if (buffer.length) {
-        //   newState = [...buffer, ...rowData];
-        //   setRowData(newState);
-        //   alert('Buffer is not empty');
-        // } 
-        
-        // setBuffer([]);
-        // setClipboard([]);
-        
+    navigator.clipboard.readText().then((string) => {
+      if (HELPERS.checkJSON(string)) {
+        const clipboard = JSON.parse(string);
+        const data = clipboard.map((el) => ({ ...el, id: HELPERS.getRandomId() }));
+        setRowData([...data, ...rowData]);
+        console.log('json');
       } else {
-        alert('Buffer and clipboard is empty');
+        console.log(' ne json');
+        const activeTextarea = document.activeElement;
+        activeTextarea.value = string;
       }
     });
-    // navigator.clipboard.readText().then((obj) => console.log(JSON.parse(obj)));    
   }, [rowData]);
 
   useEffect(() => {
@@ -131,6 +90,7 @@ const CreateInvoiceGrid = ({ colDef }) => {
   return (
     <GridApiContext value={{ gridApi, setRowData }}>
       <Box sx={{ backgroundColor: 'white' }}>
+        <input type="text" />
         <Box>
           <AgGridReact
             columnDefs={columnDefs}
