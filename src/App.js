@@ -7,7 +7,6 @@ import { NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-d
 import Box from '@mui/material/Box';
 // import GeneralGrid from './components/grid/grid';
 import GeneralGrid from './components/general-grid/general-grid';
-import CasesToInvoiceGrid from './components/cases-to-invoice-grid/cases-to-invoice-grid';
 import CreateInvoiceGrid from './components/create-invoice-grid/create-invoice-grid';
 import { GRID_TYPES } from './constants/grid-types';
 import Button from '@mui/material/Button';
