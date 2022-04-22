@@ -23,15 +23,15 @@ const ButtonIconRemove = () => (
 );
 
 export const createInvoiceColumns = [
-  { field: 'tariff_type', displayName: 'Rate' },
-  { field: 'code', displayName: 'Code' },
-  { field: 'ref_code', displayName: 'Reference' },
-  { field: 'name', displayName: 'Description' },
-  { field: 'quantity', displayName: 'Quantity', editable: true },
-  { field: 'unit_mt', displayName: 'Price' },
+  { field: 'tariff_type', headerName: 'Rate' },
+  { field: 'code', headerName: 'Code' },
+  { field: 'ref_code', headerName: 'Reference' },
+  { field: 'name', headerName: 'Description' },
+  { field: 'quantity', headerName: 'Quantity', editable: true },
+  { field: 'unit_mt', headerName: 'Price' },
   {
     field: 'btn-info',
-    displayName: ' ',
+    headerName: ' ',
     maxWidth: buttonColumnWidth,
     cellRendererFramework: ButtonIconInfo,
     resizable: false,
@@ -39,7 +39,7 @@ export const createInvoiceColumns = [
   },
   {
     field: 'btn-send',
-    displayName: ' ',
+    headerName: ' ',
     maxWidth: buttonColumnWidth,
     cellRendererFramework: ButtonIconEdit,
     resizable: false,
@@ -47,7 +47,7 @@ export const createInvoiceColumns = [
   },
   {
     field: 'btn-remove',
-    displayName: ' ',
+    headerName: ' ',
     maxWidth: buttonColumnWidth,
     cellRendererFramework: ButtonRemove,
     resizable: false,

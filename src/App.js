@@ -94,7 +94,17 @@ const App = () => {
             />
           }
         />
-        <Route path="/transactions" element={<GeneralGrid type={GRID_TYPES.transactions} {...gridProperties} />} />
+        <Route
+          path="/transactions"
+          element={
+            <GeneralGrid
+              rowData={STATES.transactionsState}
+              columns={casesToInvoiceColumns}
+              type={GRID_TYPES.transactions}
+              {...gridProperties}
+            />
+          }
+        />
       </Routes>
     </Box>
   );

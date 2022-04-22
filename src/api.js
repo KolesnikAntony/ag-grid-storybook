@@ -643,6 +643,32 @@ export let casesToInvoiceState = (() => {
   return casesToInvoiceDataArray;
 })();
 
+export let transactionsState = (() => {
+  let transactionsDataArray = [];
+
+  for (let i = 0; i < 10; i++) {
+    transactionsDataArray.push({
+      uid: 231,
+      operation: 'credit',
+      method: 'Bank transaction',
+      reference_number: {
+        value: '000000024238000000000006021',
+        error: true,
+      },
+      amount: 103.05,
+      value_date: '21.04.2022',
+      debitor: {
+        value: 'Arcosana AG',
+        next_value: 'Tribsch',
+      },
+      patient: 'Mary',
+      allocation: 'multiple_allocations',
+    });
+  }
+
+  return transactionsDataArray;
+})();
+
 export const STATES = {
   empty: [],
   default: defaultState(),
@@ -653,4 +679,5 @@ export const STATES = {
   billingState,
   createInvoiceState,
   casesToInvoiceState,
+  transactionsState,
 };

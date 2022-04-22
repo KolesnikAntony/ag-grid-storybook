@@ -6,15 +6,15 @@ import cellRendererServicesToInvoice from '../../components/renderer/cellRendere
 
 export const casesToInvoiceColumns = [
   { ...FILTER_TYPES.filterNumber('uid') },
-  { ...FILTER_TYPES.filterNumber('case_number'), displayName: 'Case number' },
+  { ...FILTER_TYPES.filterNumber('case_number'), headerName: 'Case number' },
   { ...FILTER_TYPES.filterText('title', cellRenderer) },
-  { ...FILTER_TYPES.filterDate('last_service_date', cellRenderer), displayName: 'Last service date' },
+  { ...FILTER_TYPES.filterDate('last_service_date', cellRenderer), headerName: 'Last service date' },
   { ...FILTER_TYPES.filterText('patient', cellRenderer) },
   { ...FILTER_TYPES.filterText('guarantor', cellRendererGuarantor, true) },
   { ...FILTER_TYPES.filterText('provider', cellRenderer) },
   {
     ...FILTER_TYPES.filterText('services_to_invoice', cellRendererServicesToInvoice, true),
-    displayName: 'Services to invoice',
+    headerName: 'Services to invoice',
     filterParams: {
       values: [
         'Medical consultation',
@@ -27,7 +27,7 @@ export const casesToInvoiceColumns = [
   { ...FILTER_TYPES.filterNumber('amount') },
   {
     field: 'create_invoice',
-    displayName: ' ',
+    headerName: ' ',
     cellRendererFramework: ButtonCreateInvoice,
     resizable: false,
     suppressMenu: true,
