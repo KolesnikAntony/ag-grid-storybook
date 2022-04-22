@@ -76,8 +76,8 @@ const App = () => {
           path="/billing/*"
           element={
             <GeneralGrid
-              rowData={STATES.billingState}
-              columns={billingColumns}
+              // rowData={STATES.billingState}
+              // columns={billingColumns}
               type={GRID_TYPES.billing}
               {...gridProperties}
             />
@@ -87,8 +87,8 @@ const App = () => {
           path="/case"
           element={
             <GeneralGrid
-              rowData={STATES.casesToInvoiceState}
-              columns={casesToInvoiceColumns}
+              // rowData={STATES.casesToInvoiceState}
+              // columns={casesToInvoiceColumns}
               type={GRID_TYPES.casesToInvoice}
               {...gridProperties}
             />
@@ -98,8 +98,8 @@ const App = () => {
           path="/transactions"
           element={
             <GeneralGrid
-              rowData={STATES.transactionsState}
-              columns={casesToInvoiceColumns}
+              // rowData={STATES.transactionsState}
+              // columns={casesToInvoiceColumns}
               type={GRID_TYPES.transactions}
               {...gridProperties}
             />

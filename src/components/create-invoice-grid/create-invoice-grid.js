@@ -58,7 +58,7 @@ const CreateInvoiceGrid = ({ colDef }) => {
 
   const handlePaste = useCallback(() => {
     navigator.clipboard.readText().then((string) => {
-      console.log(/^[+-]?\d+(\.\d+)?$/.test(string));
+      // console.log(/^[+-]?\d+(\.\d+)?$/.test(string));
       if (HELPERS.checkJSON(string)) {
         const clipboard = JSON.parse(string);
         const data = clipboard.map((el) => ({ ...el, id: HELPERS.getRandomId() }));

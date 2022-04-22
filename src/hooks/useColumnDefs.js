@@ -12,7 +12,7 @@ export const useColumnDefs = (type) => {
       return [billingColumns, STATES.billingState];
     }
     if (type === GRID_TYPES.transactions) {
-      return [transactionsColumns, []];
+      return [transactionsColumns, STATES.transactionsState];
     }
     if (type === GRID_TYPES.casesToInvoice) {
       return [casesToInvoiceColumns, STATES.casesToInvoiceState];
