@@ -14,6 +14,9 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 // import { STATES } from './api';
 import useStyle from './AppStyle';
+import { billingColumns } from './common/columns/billing';
+import { STATES } from './api';
+import { casesToInvoiceColumns } from './common/columns/cases-to-invoice';
 
 const App = () => {
   const sx = useStyle();
@@ -70,8 +73,28 @@ const App = () => {
       </Box>
       <Routes>
         <Route path="/" element={<CreateInvoiceGrid type={GRID_TYPES.createInvoice} {...gridProperties} />} />
-        <Route path="/billing/*" element={<GeneralGrid type={GRID_TYPES.billing} {...gridProperties} />} />
-        <Route path="/case" element={<CasesToInvoiceGrid type={GRID_TYPES.casesToInvoice} {...gridProperties} />} />
+        <Route
+          path="/billing/*"
+          element={
+            <GeneralGrid
+              rowData={STATES.billingState}
+              columns={billingColumns}
+              type={GRID_TYPES.billing}
+              {...gridProperties}
+            />
+          }
+        />
+        <Route
+          path="/case"
+          element={
+            <GeneralGrid
+              rowData={STATES.casesToInvoiceState}
+              columns={casesToInvoiceColumns}
+              type={GRID_TYPES.casesToInvoice}
+              {...gridProperties}
+            />
+          }
+        />
         <Route path="/transactions" element={<GeneralGrid type={GRID_TYPES.transactions} {...gridProperties} />} />
       </Routes>
     </Box>

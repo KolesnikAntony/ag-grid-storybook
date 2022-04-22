@@ -11,19 +11,12 @@ import { useEmptyErrorView } from '../../hooks/useEmptyErrorView';
 import HeaderControls from './header-controls/header-controls';
 import { GridApiContext } from '../../context/GridApiContext';
 import CustomHeader from './custom-header/custom-header';
-import { billingState, casesToInvoiceState } from '../../api';
 
 const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, rowSelection }) => {
   //GRID API
   const [gridApi, setGridApi] = useState(null);
   //DEFAULT COLUMNS OF GRID
-  const columnDefs = useColumnDefs(type);
-
-  console.log(type)
-  //FILTERING
-  // const rowData = useGetData(location.pathname);
-  // const rowData = useMemo(() => state, [state]);
-  const rowData = useMemo(() => billingState, []);
+  const [columnDefs, rowData] = useColumnDefs(type);
 
   //GLOBAL STYLE OF GRID AND GRID WRAPPER
   const { containerStyle, gridStyle } = useGridStyle();
@@ -37,6 +30,7 @@ const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, row
   //FUNCTION THAN SET GRID API WHEN GRID IS READY
   const onGridReady = useCallback((params) => {
     setGridApi(params.api);
+    console.log('ready');
   }, []);
 
   // //SET LOADING VIEW
@@ -57,11 +51,12 @@ const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, row
         <HeaderControls type={type} />
         <div style={gridStyle} className="ag-theme-alpine">
           <AgGridReact
+            key={type}
             rowStyle={rowStyle}
             getRowStyle={HELPERS.getRowStyle}
+            rowData={rowData}
             columnDefs={columnDefs}
             defaultColDef={defaultColDef}
-            rowData={rowData}
             onGridReady={onGridReady}
             pagination={pagination}
             paginationPageSize={rowCount}

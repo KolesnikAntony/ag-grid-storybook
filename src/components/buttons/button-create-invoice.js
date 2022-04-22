@@ -11,7 +11,7 @@ const ButtonCreateInvoice = ({ children, ariaLabel = '' }) => {
   };
 
   return (
-    <Button variant='contained' onClick={btnClickedHandler} aria-label={ariaLabel}>
+    <Button variant="contained" onClick={btnClickedHandler} aria-label={ariaLabel}>
       Create invoice
     </Button>
   );

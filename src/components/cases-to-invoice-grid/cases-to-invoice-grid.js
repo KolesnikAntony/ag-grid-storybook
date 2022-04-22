@@ -51,40 +51,38 @@ const CreateInvoiceGrid = ({ colDef }) => {
     // readClipboard().catch(console.error)
 
     navigator.clipboard.readText().then((obj) => {
-      console.log('obj', obj)
+      console.log('obj', obj);
       if (obj) {
         let newState;
         try {
-
           let clipboard = JSON.parse(obj);
 
           if (clipboard.length) {
             newState = [...clipboard, ...rowData];
             setRowData(newState);
-            
+
             // setTimeout(() => navigator.clipboard.writeText('').then(() => alert('Clipboard is not empty')));
           }
-        } catch(e) {}
+        } catch (e) {}
         // setClipboard(JSON.parse(obj));
         // setBuffer(clipboard);
-  
+
         // console.log('clipboard', clipboard)
         // console.log('buffer', buffer)
-  
+
         // if (buffer.length) {
         //   newState = [...buffer, ...rowData];
         //   setRowData(newState);
         //   alert('Buffer is not empty');
-        // } 
-        
+        // }
+
         // setBuffer([]);
         // setClipboard([]);
-        
       } else {
         alert('Buffer and clipboard is empty');
       }
     });
-    // navigator.clipboard.readText().then((obj) => console.log(JSON.parse(obj)));    
+    // navigator.clipboard.readText().then((obj) => console.log(JSON.parse(obj)));
   }, [rowData]);
 
   useEffect(() => {
@@ -109,17 +107,17 @@ const CreateInvoiceGrid = ({ colDef }) => {
   return (
     <GridApiContext value={{ gridApi, setRowData }}>
       <Box sx={{ backgroundColor: 'white' }}>
-          <AgGridReact
-            columnDefs={columnDefs}
-            defaultColDef={defaultColDef}
-            rowData={rowData}
-            onGridReady={onGridReady}
-            domLayout={'autoHeight'}
-            rowSelection={'multiple'}
-            rowDragManaged={true}
-            rowDragEntireRow={true}
-            rowDragMultiRow={true}
-          />
+        <AgGridReact
+          columnDefs={columnDefs}
+          defaultColDef={defaultColDef}
+          rowData={rowData}
+          onGridReady={onGridReady}
+          domLayout={'autoHeight'}
+          rowSelection={'multiple'}
+          rowDragManaged={true}
+          rowDragEntireRow={true}
+          rowDragMultiRow={true}
+        />
       </Box>
     </GridApiContext>
   );

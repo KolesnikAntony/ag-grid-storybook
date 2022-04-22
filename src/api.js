@@ -621,25 +621,23 @@ export let casesToInvoiceState = (() => {
   let casesToInvoiceDataArray = [];
 
   for (let i = 0; i < 10; i++) {
-    casesToInvoiceDataArray.push(
-      {
-        uid: 231,
-        number: 489348039480283082098390803,
-        title: 'Max',
-        last_service_date: '21.04.2022',
-        patient: 'Mary',
-        guarantor: {
-          name: 'Agrisano Krankenkasse',
-          type: 'TP', // TP, TG
-        },
-        provider: 'Dr. Tardieu',
-        services_to_invoice: {
-          name: 'medical', // non_medical, external, non_external, absence
-          counter: 6,
-        },
-        amount: 30,
+    casesToInvoiceDataArray.push({
+      uid: 231,
+      number: 489348039480283082098390803,
+      title: 'Max',
+      last_service_date: '21.04.2022',
+      patient: 'Mary',
+      guarantor: {
+        name: 'Agrisano Krankenkasse',
+        type: 'TP', // TP, TG
       },
-    );
+      provider: 'Dr. Tardieu',
+      services_to_invoice: {
+        name: 'medical', // non_medical, external, non_external, absence
+        counter: 6,
+      },
+      amount: 30,
+    });
   }
 
   return casesToInvoiceDataArray;
