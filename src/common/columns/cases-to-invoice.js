@@ -1,37 +1,35 @@
+import { FILTER_TYPES } from './../../constants/filter-types';
+import cellRenderer from '../../components/renderer/cellRenderer';
+import ButtonCreateInvoice from '../../components/buttons/button-create-invoice';
+import cellRendererGuarantor from '../../components/renderer/cellRendererGuarantor';
+import cellRendererServicesToInvoice from '../../components/renderer/cellRendererServicesToInvoice';
+
 export const casesToInvoiceColumns = [
+  { ...FILTER_TYPES.filterNumber('uid') },
+  { ...FILTER_TYPES.filterNumber('case_number'), headerName: 'Case number' },
+  { ...FILTER_TYPES.filterText('title', cellRenderer) },
+  { ...FILTER_TYPES.filterDate('last_service_date', cellRenderer), headerName: 'Last service date' },
+  { ...FILTER_TYPES.filterText('patient', cellRenderer) },
+  { ...FILTER_TYPES.filterText('guarantor', cellRendererGuarantor, true) },
+  { ...FILTER_TYPES.filterText('provider', cellRenderer) },
   {
-    field: 'id',
-    filter: 'agNumberColumnFilter',
-    filterParams: { buttons: ['reset', 'apply'], suppressAndOrCondition: true },
-  },
-  { field: 'make' },
-  { field: 'model' },
-  { field: 'price' },
-  {
-    field: 'date',
-    filter: 'agDateColumnFilter',
+    ...FILTER_TYPES.filterText('services_to_invoice', cellRendererServicesToInvoice, true),
+    headerName: 'Services to invoice',
     filterParams: {
-      buttons: ['reset', 'apply'],
-      suppressAndOrCondition: true,
-      comparator: function (filterLocalDateAtMidnight, cellValue) {
-        var dateAsString = cellValue;
-        if (dateAsString == null) return -1;
-        var dateParts = dateAsString.split('/');
-        var cellDate = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]));
-
-        if (filterLocalDateAtMidnight.getTime() === cellDate.getTime()) {
-          return 0;
-        }
-
-        if (cellDate < filterLocalDateAtMidnight) {
-          return -1;
-        }
-
-        if (cellDate > filterLocalDateAtMidnight) {
-          return 1;
-        }
-      },
-      browserDatePicker: true,
+      values: [
+        'Medical consultation',
+        'Non-medical consultation ',
+        'Medical external visit',
+        'Consultation in the absence of the patient',
+      ],
     },
+  },
+  { ...FILTER_TYPES.filterNumber('amount') },
+  {
+    field: 'create_invoice',
+    headerName: ' ',
+    cellRendererFramework: ButtonCreateInvoice,
+    resizable: false,
+    suppressMenu: true,
   },
 ];

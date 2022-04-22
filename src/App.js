@@ -7,24 +7,28 @@ import { NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-d
 import Box from '@mui/material/Box';
 // import GeneralGrid from './components/grid/grid';
 import GeneralGrid from './components/general-grid/general-grid';
+import CreateInvoiceGrid from './components/create-invoice-grid/create-invoice-grid';
 import { GRID_TYPES } from './constants/grid-types';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 // import { STATES } from './api';
 import useStyle from './AppStyle';
+import { billingColumns } from './common/columns/billing';
+import { STATES } from './api';
+import { casesToInvoiceColumns } from './common/columns/cases-to-invoice';
 
 const App = () => {
   const sx = useStyle();
   // const [state] = useState(STATES.default);
 
-  const location = useLocation();
-  const navigate = useNavigate();
+  // const location = useLocation();
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    if (location.pathname === '/') {
-      navigate('/billing');
-    }
-  }, [location, navigate]);
+  // useEffect(() => {
+  //   if (location.pathname === '/') {
+  //     navigate('/billing');
+  //   }
+  // }, [location, navigate]);
 
   // console.log(location);
 
@@ -53,6 +57,9 @@ const App = () => {
       <Box sx={sx.pageTabs}>
         <Stack direction="row" spacing={2}>
           <Button variant={'outlined'} component={NavLink} to="/">
+            Create invoice
+          </Button>
+          <Button variant={'outlined'} component={NavLink} to="/billing">
             Billing
           </Button>
           <Button variant={'outlined'} component={NavLink} to="/case">
@@ -64,9 +71,40 @@ const App = () => {
         </Stack>
       </Box>
       <Routes>
-        <Route path="/billing/*" element={<GeneralGrid type={GRID_TYPES.billing} {...gridProperties} />} />
-        <Route path="/case" element={<GeneralGrid type={GRID_TYPES.casesToInvoice} {...gridProperties} />} />
-        <Route path="/transactions" element={<GeneralGrid type={GRID_TYPES.transactions} {...gridProperties} />} />
+        <Route path="/" element={<CreateInvoiceGrid type={GRID_TYPES.createInvoice} {...gridProperties} />} />
+        <Route
+          path="/billing/*"
+          element={
+            <GeneralGrid
+              // rowData={STATES.billingState}
+              // columns={billingColumns}
+              type={GRID_TYPES.billing}
+              {...gridProperties}
+            />
+          }
+        />
+        <Route
+          path="/case"
+          element={
+            <GeneralGrid
+              // rowData={STATES.casesToInvoiceState}
+              // columns={casesToInvoiceColumns}
+              type={GRID_TYPES.casesToInvoice}
+              {...gridProperties}
+            />
+          }
+        />
+        <Route
+          path="/transactions"
+          element={
+            <GeneralGrid
+              // rowData={STATES.transactionsState}
+              // columns={casesToInvoiceColumns}
+              type={GRID_TYPES.transactions}
+              {...gridProperties}
+            />
+          }
+        />
       </Routes>
     </Box>
   );

@@ -22,10 +22,20 @@ export default (props) => {
           <Chip sx={sx.chipStatus} style={{ backgroundColor: '#C9FF78' }} icon={<CheckIcon />} label={`${paid}`} />
         </When>
         <When condition={value.name === 'unpaid'}>
-          <Chip sx={sx.chipStatus} style={{ backgroundColor: '#F5F5F7' }} icon={<CircleOutlinedIcon />} label={value.name} />
+          <Chip
+            sx={sx.chipStatus}
+            style={{ backgroundColor: '#F5F5F7' }}
+            icon={<CircleOutlinedIcon />}
+            label={value.name}
+          />
         </When>
         <When condition={value.name === 'partially-paid'}>
-          <Chip sx={sx.chipStatus} style={{ backgroundColor: '#F5F5F7' }} icon={<CheckCircleOutlineIcon />} label={value.name} />
+          <Chip
+            sx={sx.chipStatus}
+            style={{ backgroundColor: '#F5F5F7' }}
+            icon={<CheckCircleOutlineIcon />}
+            label={value.name}
+          />
         </When>
         <When condition={value.name === 'cancelled'}>
           <Chip sx={sx.chipStatus} style={{ backgroundColor: '#e74c3c' }} icon={<DeleteIcon />} label={value.name} />

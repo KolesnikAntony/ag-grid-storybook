@@ -66,10 +66,25 @@ const useStyle = () => {
         },
       },
     },
+    // cellButtonText: {
+    //   minWidth: 0,
+    //   padding: 0,
+    // },
     cellButtonIcon: {
       width: '1.5rem',
       height: '1.5rem',
       color: '#bcbccb',
+    },
+    cellIconButton: {
+      padding: 0,
+      '.MuiSvgIcon-root': {
+        color: '#9c9c9c',
+      },
+      '&:hover': {
+        '.MuiSvgIcon-root': {
+          color: '#2399f1',
+        },
+      },
     },
   };
 };
