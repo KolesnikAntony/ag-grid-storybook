@@ -1,0 +1,30 @@
+// @import "~ag-grid-community/src/styles/ag-grid.scss";
+// @import "~ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material-mixin";
+
+.ag {
+  $ag: &;
+
+  font-size: 1.6rem;
+
+//   &-theme-material {
+//     @include ag-theme-material((
+//       alpine-active-color: rgba(0,0,0, 0.1),
+//       foreground-color: #91a8c2,
+//       // background-color: red,
+//     ));
+//   }
+
+    &-header-cell-text {
+        color: #9c9c9c;
+    }
+
+    &-row {
+        &-hover {
+            background-color: aquamarine;
+        }
+
+        &-selected {
+            background-color: aqua;
+        }
+    }
+}

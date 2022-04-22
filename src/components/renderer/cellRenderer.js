@@ -23,7 +23,7 @@ export default (props) => {
   }
 
   return (
-    <Box component="span" sx={{...sx.cell, ...cellSx}}>
+    <Box component="span" sx={{ ...sx.cell, ...cellSx }}>
       {value}
     </Box>
   );

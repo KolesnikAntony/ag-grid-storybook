@@ -370,8 +370,6 @@ export let billingState = (() => {
   return billingDataArray;
 })();
 
-// console.log(billingState);
-
 export const billingTest = [
   {
     uid: 617,
@@ -492,6 +490,185 @@ export const billingTest = [
   },
 ];
 
+export const createInvoiceState = [
+  {
+    tariff_type: '001',
+    code: '00.0010',
+    ref_code: null,
+    name: 'Consultation, première période de 5 min (consultation de base)',
+    quantity: '1',
+    session: '1',
+    date_begin: null,
+    date_end: null,
+    provider_id: null,
+    responsible_id: null,
+    billing_role: 'both',
+    medical_role: 'self_employed',
+    body_location: 'none',
+    treatment: 'ambulatory',
+    unit_mt: '9.57',
+    unit_factor_mt: '0.89',
+    scale_factor_mt: '1',
+    external_factor_mt: '1',
+    amount_mt: null,
+    unit_tt: '8.19',
+    unit_factor_tt: '0.89',
+    scale_factor_tt: '1',
+    external_factor_tt: '1',
+    amount_tt: null,
+    amount: null,
+    vat_rate: '0',
+    obligation: '1',
+    section_code: null,
+    remark: null,
+    service_attributes: null,
+    performance_type: 'H',
+    age_from: null,
+    age_to: null,
+    non_cumulable_with: [
+      '00.0060-L',
+      '00.01.02-K',
+      '00.0110-L',
+      '00.1325-L',
+      '02.0010-L',
+      '02.0020-L',
+      '02.0030-L',
+      '02.0040-L',
+      '02.0050-L',
+      '08.0500-L',
+      '12-G',
+    ],
+    sex: null,
+    group: ['18', '58'],
+    block: null,
+    quantity_restrictions: 'L-<:-1-1-P-07',
+    authorization: '9999',
+    version: '01.08.00_BR_UVG',
+    id: '41r13e1',
+  },
+  {
+    tariff_type: '001',
+    code: '00.0015',
+    name: 'Consultation, première période de 5 min (consultation de base)',
+    quantity: '2',
+    session: '1',
+    date_begin: '2022-06-20',
+    billing_role: 'both',
+    medical_role: 'self_employed',
+    body_location: 'none',
+    treatment: 'ambulatory',
+    unit_mt: '9.57',
+    unit_factor_mt: '0.89',
+    scale_factor_mt: '1',
+    external_factor_mt: '1',
+    unit_tt: '8.19',
+    unit_factor_tt: '0.89',
+    scale_factor_tt: '1',
+    external_factor_tt: '1',
+    vat_rate: '0',
+    obligation: '1',
+    performance_type: 'H',
+    non_cumulable_with: [
+      '00.0060-L',
+      '00.01.02-K',
+      '00.0110-L',
+      '00.1325-L',
+      '02.0010-L',
+      '02.0020-L',
+      '02.0030-L',
+      '02.0040-L',
+      '02.0050-L',
+      '08.0500-L',
+      '12-G',
+    ],
+    group: ['18', '58'],
+    quantity_restrictions: 'L-<:-1-1-P-07',
+    authorization: '9999',
+    version: '01.08.00_BR_UVG',
+    id: '41r11e1',
+  },
+  {
+    tariff_type: '402',
+    code: '7680316440115',
+    name: 'FERRO-GRADUMET cpr dépôt 30 pce',
+    quantity: '1',
+    session: '1',
+    unit: '10.9',
+    unit_factor: '1',
+    scale_factor: '1',
+    external_factor: '1',
+    vat_rate: '2.5',
+    obligation: '1',
+    id: '413553e1',
+  },
+  {
+    tariff_type: '999',
+    code: '1',
+    name: 'My Custom Postion',
+    quantity: '1',
+    session: '1',
+    unit: '2.074',
+    unit_factor: '1',
+    scale_factor: '1',
+    external_factor: '1',
+    vat_rate: '3.7',
+    obligation: '1',
+    id: '41r1341311e1',
+  },
+];
+
+export let casesToInvoiceState = (() => {
+  let casesToInvoiceDataArray = [];
+
+  for (let i = 0; i < 10; i++) {
+    casesToInvoiceDataArray.push({
+      uid: 231,
+      number: 489348039480283082098390803,
+      title: 'Max',
+      last_service_date: '21.04.2022',
+      patient: 'Mary',
+      guarantor: {
+        name: 'Agrisano Krankenkasse',
+        type: 'TP', // TP, TG
+      },
+      provider: 'Dr. Tardieu',
+      services_to_invoice: {
+        name: 'medical', // non_medical, external, non_external, absence
+        counter: 6,
+      },
+      amount: 30,
+    });
+  }
+
+  return casesToInvoiceDataArray;
+})();
+
+export let transactionsState = (() => {
+  let transactionsDataArray = [];
+
+  for (let i = 0; i < 10; i++) {
+    transactionsDataArray.push({
+      uid: 231,
+      operation: 'credit',
+      method: 'Bank transaction',
+      reference_number: {
+        value: '000000024238000000000006021',
+        error: true,
+      },
+      amount: 103.05,
+      value_date: '21.04.2022',
+      debitor: {
+        value: 'Arcosana AG',
+        next_value: 'Tribsch',
+      },
+      patient: 'Mary',
+      allocation: 'multiple_allocations',
+    });
+  }
+
+  return transactionsDataArray;
+})();
+
 export const STATES = {
   empty: [],
   default: defaultState(),
@@ -500,4 +677,7 @@ export const STATES = {
   updated: transformState('isUpdated'),
   error: transformState('isError'),
   billingState,
+  createInvoiceState,
+  casesToInvoiceState,
+  transactionsState,
 };
