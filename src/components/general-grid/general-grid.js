@@ -100,7 +100,7 @@ const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, row
                 //   toolPanel: 'agFiltersToolPanel',
                 // },
               ],
-              defaultToolPanel: 'or-filtering',
+              defaultToolPanel: '',
               // hiddenByDefault: true,
             }}
           />
