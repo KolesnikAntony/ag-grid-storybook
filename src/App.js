@@ -16,19 +16,20 @@ import useStyle from './AppStyle';
 import { billingColumns } from './common/columns/billing';
 import { STATES } from './api';
 import { casesToInvoiceColumns } from './common/columns/cases-to-invoice';
+import Redirect from './hoks/redirect'
 
 const App = () => {
   const sx = useStyle();
   // const [state] = useState(STATES.default);
 
-  // const location = useLocation();
-  // const navigate = useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (location.pathname === '/') {
-  //     navigate('/billing');
-  //   }
-  // }, [location, navigate]);
+  useEffect(() => {
+    if (location.pathname === '/') {
+      navigate('/billing');
+    }
+  }, [location, navigate]);
 
   // console.log(location);
 
@@ -56,7 +57,7 @@ const App = () => {
     <Box sx={sx.page}>
       <Box sx={sx.pageTabs}>
         <Stack direction="row" spacing={2}>
-          <Button variant={'outlined'} component={NavLink} to="/">
+          <Button variant={'outlined'} component={NavLink} to="/create-invoice">
             Create invoice
           </Button>
           <Button variant={'outlined'} component={NavLink} to="/billing">
@@ -71,7 +72,7 @@ const App = () => {
         </Stack>
       </Box>
       <Routes>
-        <Route path="/" element={<CreateInvoiceGrid type={GRID_TYPES.createInvoice} {...gridProperties} />} />
+        <Route path="/create-invoice" element={<CreateInvoiceGrid type={GRID_TYPES.createInvoice} {...gridProperties} />} />
         <Route
           path="/billing/*"
           element={

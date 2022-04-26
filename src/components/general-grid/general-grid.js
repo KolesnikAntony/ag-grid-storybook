@@ -11,6 +11,7 @@ import { useEmptyErrorView } from '../../hooks/useEmptyErrorView';
 import HeaderControls from './header-controls/header-controls';
 import { GridApiContext } from '../../context/GridApiContext';
 import CustomHeader from './custom-header/custom-header';
+import GridToolbarFilter from '../grid-toolbar-filter/grid-toolbar-filter';
 
 const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, rowSelection }) => {
   //GRID API
@@ -42,6 +43,7 @@ const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, row
   const components = useMemo(() => {
     return {
       agColumnHeader: CustomHeader,
+      gridToolbarFilter: GridToolbarFilter,
     };
   }, []);
 
@@ -77,6 +79,30 @@ const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, row
             // suppressCellFocus={true}
             // suppressRowDeselection={true}
             // fullWidthCellRendererFramework={CustomHeader}
+            sideBar={{
+              toolPanels: [
+                {
+                  id: 'or-filtering',
+                  labelDefault: 'OR-filtering',
+                  labelKey: 'or-filtering',
+                  iconKey: 'filter',
+                  toolPanel: 'gridToolbarFilter',
+                  toolPanelParams: {
+                    columnDefs: columnDefs,
+                    contractColumnSelection: false,
+                  },
+                },
+                // {
+                //   id: 'and-filtering',
+                //   labelDefault: 'AND-filtering',
+                //   labelKey: 'and-filtering',
+                //   iconKey: 'filter',
+                //   toolPanel: 'agFiltersToolPanel',
+                // },
+              ],
+              defaultToolPanel: 'or-filtering',
+              // hiddenByDefault: true,
+            }}
           />
         </div>
       </div>

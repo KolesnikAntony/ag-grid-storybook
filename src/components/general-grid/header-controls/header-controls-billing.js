@@ -1,10 +1,21 @@
 import React, { useCallback, useContext, useState } from 'react';
 import { Stack, Tab, Tabs } from '@mui/material';
-import NavigationButton from '../buttons-grid-control/navigation-button';
-import { NavLink } from 'react-router-dom';
+// import NavigationButton from '../buttons-grid-control/navigation-button';
+// import { NavLink } from 'react-router-dom';
 import ExportBtn from '../buttons-grid-control/export-btn';
 import { GridContext } from '../../../context/GridApiContext';
 import { HELPERS } from '../../../helpers/helpers';
+
+const useStyles = () => ({
+  tabsRoot: {
+    minHeight: 'auto',
+    height: '3.2rem',
+  },
+  tabRoot: {
+    minHeight: 'auto',
+    height: '3.2rem',
+  },
+});
 
 const links = [
   { name: 'View all', to: '' },
@@ -13,7 +24,9 @@ const links = [
   { name: 'Invoices with reminders', to: 'reminders' },
   { name: 'Invoices with errors', to: 'errors' },
 ];
+
 const HeaderControlsBilling = () => {
+  const sx = useStyles();
   const [value, setValue] = useState(0);
   const gridApi = useContext(GridContext);
 
@@ -33,9 +46,9 @@ const HeaderControlsBilling = () => {
   );
   return (
     <Stack direction="row">
-      <Tabs value={value} onChange={handleChange} centered>
+      <Tabs value={value} onChange={handleChange} centered sx={sx.tabsRoot}>
         <For each="link" of={links}>
-          <Tab key={link.to} label={link.name} />
+          <Tab key={link.to} label={link.name} sx={sx.tabRoot} />
         </For>
       </Tabs>
       <ExportBtn />

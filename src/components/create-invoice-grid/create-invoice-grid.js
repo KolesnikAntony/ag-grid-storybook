@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, createRef } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { useColumnDefs } from '../../hooks/useColumnDefs';
 import { useDefaultColDef } from '../../hooks/useDefaultColDef';
@@ -91,10 +91,22 @@ const CreateInvoiceGrid = ({ colDef }) => {
 
   //COPY PASTE ================END
 
+  const filterRef = createRef();
+
+  const onFilterTextBoxChanged = useCallback(() => {
+    console.log(gridApi)
+    gridApi.setQuickFilter(filterRef.current.value);
+  }, [gridApi, filterRef]);
+
   return (
     <GridApiContext value={{ gridApi, setRowData }}>
       <Box sx={{ backgroundColor: 'white' }}>
-        <input type="text" />
+        <input
+          type="text"
+          ref={filterRef}
+          placeholder="Filter..."
+          onInput={onFilterTextBoxChanged}
+        />
         <Box>
           <AgGridReact
             columnDefs={columnDefs}
@@ -107,6 +119,7 @@ const CreateInvoiceGrid = ({ colDef }) => {
             rowDragManaged={true}
             rowDragEntireRow={true}
             rowDragMultiRow={true}
+            cacheQuickFilter={true}
           />
         </Box>
         <Typography sx={{ textAlign: 'right', marginTop: '2.5rem' }}>Due amount : {total} CHF</Typography>
