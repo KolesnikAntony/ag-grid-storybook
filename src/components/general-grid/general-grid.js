@@ -82,9 +82,9 @@ const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, row
             sideBar={{
               toolPanels: [
                 {
-                  id: 'or-filtering',
-                  labelDefault: 'OR-filtering',
-                  labelKey: 'or-filtering',
+                  id: 'custom-sidebar',
+                  labelDefault: 'Custom sidebar',
+                  labelKey: 'custom-sidebar',
                   iconKey: 'filter',
                   toolPanel: 'gridToolbarFilter',
                   toolPanelParams: {
