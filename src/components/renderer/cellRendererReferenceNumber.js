@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import WarningIcon from '@mui/icons-material/Warning';
 
 export default (props) => {
-  console.log(props.value)
+  console.log(props.value);
   const sx = useStyle();
   // const col = props.column.colId;
   const value = props?.valueFormatted || props.value;

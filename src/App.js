@@ -16,7 +16,7 @@ import useStyle from './AppStyle';
 import { billingColumns } from './common/columns/billing';
 import { STATES } from './api';
 import { casesToInvoiceColumns } from './common/columns/cases-to-invoice';
-import Redirect from './hoks/redirect'
+import Redirect from './hoks/redirect';
 
 const App = () => {
   const sx = useStyle();
@@ -72,7 +72,10 @@ const App = () => {
         </Stack>
       </Box>
       <Routes>
-        <Route path="/create-invoice" element={<CreateInvoiceGrid type={GRID_TYPES.createInvoice} {...gridProperties} />} />
+        <Route
+          path="/create-invoice"
+          element={<CreateInvoiceGrid type={GRID_TYPES.createInvoice} {...gridProperties} />}
+        />
         <Route
           path="/billing/*"
           element={

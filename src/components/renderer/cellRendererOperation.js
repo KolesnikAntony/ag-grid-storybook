@@ -13,7 +13,11 @@ export default (props) => {
     <Box component="div" sx={sx.cell}>
       <Choose>
         <When condition={value === 'credit'}>
-          <Chip sx={sx.chipGuarantor} style={{ backgroundColor: 'rgba(80,152,68,.15)', color: '#509844' }} label={value} />
+          <Chip
+            sx={sx.chipGuarantor}
+            style={{ backgroundColor: 'rgba(80,152,68,.15)', color: '#509844' }}
+            label={value}
+          />
         </When>
       </Choose>
     </Box>

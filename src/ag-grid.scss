@@ -3,40 +3,38 @@
 
 .ag {
   $ag: &;
-
   &-theme-alpine {
     @include ag-theme-alpine((
       alpine-active-color: rgba(0,0,0, 0.1),
       foreground-color: #91a8c2,
       // background-color: red,
     ));
+    .ag-tool-panel-wrapper .ag-react-container {
+      width: 100%;
+    }
 
     #{$ag} {
       &-header {
         // or write CSS selectors to make customisations beyond what the parameters support
         color: white;
-        
-        // &-cell {}
 
+        // &-cell {}
         &-active {
           background-color: #f1f1f1;
         }
       }
-
       &-cell {
         #{$ag}-react-container {
           height: 100%;
         }
       }
-
       &-root-wrapper {
-        border-width: 0;
-        border-top-width: .1rem;
         // border-radius: 1.4rem;
         min-height: 50rem;
+        border-width: 0;
+        border-top-width: 0.1rem;
       }
     }
-
     .customHeaderMenuButton {
       position: absolute;
       top: 0;

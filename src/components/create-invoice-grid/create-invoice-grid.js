@@ -94,19 +94,14 @@ const CreateInvoiceGrid = ({ colDef }) => {
   const filterRef = createRef();
 
   const onFilterTextBoxChanged = useCallback(() => {
-    console.log(gridApi)
+    console.log(gridApi);
     gridApi.setQuickFilter(filterRef.current.value);
   }, [gridApi, filterRef]);
 
   return (
     <GridApiContext value={{ gridApi, setRowData }}>
       <Box sx={{ backgroundColor: 'white' }}>
-        <input
-          type="text"
-          ref={filterRef}
-          placeholder="Filter..."
-          onInput={onFilterTextBoxChanged}
-        />
+        <input type="text" ref={filterRef} placeholder="Filter..." onInput={onFilterTextBoxChanged} />
         <Box>
           <AgGridReact
             columnDefs={columnDefs}
