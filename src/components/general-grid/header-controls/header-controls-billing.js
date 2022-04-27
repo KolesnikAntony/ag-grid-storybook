@@ -5,6 +5,7 @@ import { Stack, Tab, Tabs } from '@mui/material';
 import ExportBtn from '../buttons-grid-control/export-btn';
 import { GridContext } from '../../../context/GridApiContext';
 import { HELPERS } from '../../../helpers/helpers';
+// import {TabContext} from '../../../context/GridTabsContext';
 
 const useStyles = () => ({
   tabsRoot: {
@@ -17,18 +18,11 @@ const useStyles = () => ({
   },
 });
 
-const links = [
-  { name: 'View all', to: '' },
-  { name: 'Invoices to send', to: 'send' },
-  { name: 'Invoices sent', to: 'sent' },
-  { name: 'Invoices with reminders', to: 'reminders' },
-  { name: 'Invoices with errors', to: 'errors' },
-];
-
-const HeaderControlsBilling = () => {
+const HeaderControlsBilling = ({tabs}) => {
   const sx = useStyles();
   const [value, setValue] = useState(0);
   const gridApi = useContext(GridContext);
+  // const tabs = useContext(TabContext);
 
   const handleChange = (_, newValue) => {
     setValue(newValue);
@@ -44,11 +38,15 @@ const HeaderControlsBilling = () => {
     },
     [gridApi]
   );
+
+  const tabList = Object.entries(tabs).map(([key, value]) => value && key).filter((el) => el);
+
   return (
     <Stack direction="row">
       <Tabs value={value} onChange={handleChange} centered sx={sx.tabsRoot}>
-        <For each="link" of={links}>
-          <Tab key={link.to} label={link.name} sx={sx.tabRoot} />
+        <Tab label={'View all'} sx={sx.tabRoot} />
+        <For each="link" of={tabList}>
+          <Tab key={link} label={link} sx={sx.tabRoot} />
         </For>
       </Tabs>
       <ExportBtn />

@@ -35,7 +35,7 @@ const useStyle = () => {
   };
 };
 
-const HeaderControls = ({ type }) => {
+const HeaderControls = ({ tabs, type }) => {
   const sx = useStyle();
   const title = useHeaderTitle(type);
   const handleNewInvoice = useCallback(() => {
@@ -52,7 +52,7 @@ const HeaderControls = ({ type }) => {
       </Box>
       <Choose>
         <When condition={type === GRID_TYPES.billing}>
-          <HeaderControlsBilling />
+          <HeaderControlsBilling tabs={tabs} />
         </When>
         <When condition={type === GRID_TYPES.transactions}>
           <HeaderControlsTrans />

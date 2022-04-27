@@ -10,8 +10,11 @@ import { useLoadingView } from '../../hooks/useLoadingView';
 import { useEmptyErrorView } from '../../hooks/useEmptyErrorView';
 import HeaderControls from './header-controls/header-controls';
 import { GridApiContext } from '../../context/GridApiContext';
+import { GridTabsContext } from '../../context/GridTabsContext';
 import CustomHeader from './custom-header/custom-header';
 import GridToolbarFilter from '../grid-toolbar-filter/grid-toolbar-filter';
+import { useTabsView } from '../../hooks/useTabsView';
+
 
 const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, rowSelection }) => {
   //GRID API
@@ -31,7 +34,7 @@ const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, row
   //FUNCTION THAN SET GRID API WHEN GRID IS READY
   const onGridReady = useCallback((params) => {
     setGridApi(params.api);
-    console.log('ready');
+    // console.log('ready');
   }, []);
 
   // //SET LOADING VIEW
@@ -47,13 +50,15 @@ const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, row
     };
   }, []);
 
+  const [tabs, handleShowTabs] = useTabsView();
+
   return (
     <GridApiContext value={gridApi}>
       <div style={containerStyle}>
-        <HeaderControls type={type} />
+        <HeaderControls tabs={tabs} type={type} />
         <div style={gridStyle} className="ag-theme-alpine">
           <AgGridReact
-            key={type}
+            // key={type}
             rowStyle={rowStyle}
             getRowStyle={HELPERS.getRowStyle}
             rowData={rowData}
@@ -88,8 +93,9 @@ const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, row
                   iconKey: 'filter',
                   toolPanel: 'gridToolbarFilter',
                   toolPanelParams: {
+                    tabs,
+                    handleShowTabs,
                     columnDefs: columnDefs,
-                    contractColumnSelection: false,
                   },
                 },
                 // {

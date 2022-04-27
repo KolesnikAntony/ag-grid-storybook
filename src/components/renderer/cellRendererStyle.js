@@ -30,7 +30,7 @@ const useStyle = () => {
         paddingRight: '.5rem',
         paddingLeft: '.5rem',
       },
-      '&:first-child': {
+      '&:first-of-type': {
         marginRight: '.8rem',
       },
     },
