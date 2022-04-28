@@ -5,22 +5,15 @@ import './ag-grid.scss';
 import 'ag-grid-enterprise';
 import { NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
-// import GeneralGrid from './components/grid-overlayouts/grid-overlayouts';
 import GeneralGrid from './features/general-grid/general-grid';
 import CreateInvoiceGrid from './features/create-invoice-grid/create-invoice-grid';
 import { GRID_TYPES } from './constants/grid-types';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-// import { STATES } from './api';
 import useStyle from './AppStyle';
-import { billingColumns } from './common/columns/billing';
-import { STATES } from './api';
-import { casesToInvoiceColumns } from './common/columns/cases-to-invoice';
-import Redirect from './hoks/redirect';
 
 const App = () => {
   const sx = useStyle();
-  // const [state] = useState(STATES.default);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -30,8 +23,6 @@ const App = () => {
       navigate('/billing');
     }
   }, [location, navigate]);
-
-  // console.log(location);
 
   const error = null;
 
