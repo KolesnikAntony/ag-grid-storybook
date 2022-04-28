@@ -1,4 +1,4 @@
-import cellRenderer from './../components/renderer/cellRenderer';
+import cellRenderer from '../components/grid-cell-rerenderer/cellRenderer';
 
 export const FILTER_TYPES = {
   filterNumber: (field) => ({

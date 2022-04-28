@@ -5,9 +5,9 @@ import './ag-grid.scss';
 import 'ag-grid-enterprise';
 import { NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
-// import GeneralGrid from './components/grid/grid';
-import GeneralGrid from './components/general-grid/general-grid';
-import CreateInvoiceGrid from './components/create-invoice-grid/create-invoice-grid';
+// import GeneralGrid from './components/grid-overlayouts/grid-overlayouts';
+import GeneralGrid from './features/general-grid/general-grid';
+import CreateInvoiceGrid from './features/create-invoice-grid/create-invoice-grid';
 import { GRID_TYPES } from './constants/grid-types';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
@@ -76,39 +76,9 @@ const App = () => {
           path="/create-invoice"
           element={<CreateInvoiceGrid type={GRID_TYPES.createInvoice} {...gridProperties} />}
         />
-        <Route
-          path="/billing/*"
-          element={
-            <GeneralGrid
-              // rowData={STATES.billingState}
-              // columns={billingColumns}
-              type={GRID_TYPES.billing}
-              {...gridProperties}
-            />
-          }
-        />
-        <Route
-          path="/case"
-          element={
-            <GeneralGrid
-              // rowData={STATES.casesToInvoiceState}
-              // columns={casesToInvoiceColumns}
-              type={GRID_TYPES.casesToInvoice}
-              {...gridProperties}
-            />
-          }
-        />
-        <Route
-          path="/transactions"
-          element={
-            <GeneralGrid
-              // rowData={STATES.transactionsState}
-              // columns={casesToInvoiceColumns}
-              type={GRID_TYPES.transactions}
-              {...gridProperties}
-            />
-          }
-        />
+        <Route path="/billing/*" element={<GeneralGrid type={GRID_TYPES.billing} {...gridProperties} />} />
+        <Route path="/case" element={<GeneralGrid type={GRID_TYPES.casesToInvoice} {...gridProperties} />} />
+        <Route path="/transactions" element={<GeneralGrid type={GRID_TYPES.transactions} {...gridProperties} />} />
       </Routes>
     </Box>
   );

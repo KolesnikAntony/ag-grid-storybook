@@ -1,8 +1,8 @@
 import { FILTER_TYPES } from './../../constants/filter-types';
-import cellRenderer from '../../components/renderer/cellRenderer';
+import cellRenderer from '../../components/grid-cell-rerenderer/cellRenderer';
 import ButtonCreateInvoice from '../../components/buttons/button-create-invoice';
-import cellRendererGuarantor from '../../components/renderer/cellRendererGuarantor';
-import cellRendererServicesToInvoice from '../../components/renderer/cellRendererServicesToInvoice';
+import cellRendererGuarantor from '../../components/grid-cell-rerenderer/cellRendererGuarantor';
+import cellRendererServicesToInvoice from '../../components/grid-cell-rerenderer/cellRendererServicesToInvoice';
 
 export const casesToInvoiceColumns = [
   { ...FILTER_TYPES.filterNumber('uid') },

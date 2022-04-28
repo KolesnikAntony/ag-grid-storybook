@@ -1,7 +1,7 @@
 import React from 'react';
 import GridWrapper from '../../../components/grid/billing/billing-wrapper';
 import { GRID_TYPES } from '../../../../constants/grid-types';
-import GeneralGrid from '../../../../components/general-grid/general-grid';
+import GeneralGrid from '../../../../features/general-grid/general-grid';
 
 const { billing, transactions, casesToInvoice } = GRID_TYPES;
 

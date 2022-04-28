@@ -1,9 +1,9 @@
 import { FILTER_TYPES } from './../../constants/filter-types';
-import cellRenderer from '../../components/renderer/cellRenderer';
-import cellRendererOperation from '../../components/renderer/cellRendererOperation';
-import cellRendererReferenceNumber from '../../components/renderer/cellRendererReferenceNumber';
-import cellRendererDebitor from '../../components/renderer/cellRendererDebitor';
-import cellRendererAllocation from '../../components/renderer/cellRendererAllocation';
+import cellRenderer from '../../components/grid-cell-rerenderer/cellRenderer';
+import cellRendererOperation from '../../components/grid-cell-rerenderer/cellRendererOperation';
+import cellRendererReferenceNumber from '../../components/grid-cell-rerenderer/cellRendererReferenceNumber';
+import cellRendererDebitor from '../../components/grid-cell-rerenderer/cellRendererDebitor';
+import cellRendererAllocation from '../../components/grid-cell-rerenderer/cellRendererAllocation';
 import ButtonView from '../../components/buttons/button-view';
 
 export const transactionsColumns = [
