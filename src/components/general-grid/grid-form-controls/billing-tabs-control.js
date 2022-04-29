@@ -4,9 +4,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from '@mui/material/Typography';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { useTabsView } from '../../../../hooks/grid/useTabsView';
+import { useTabsView } from '../../../hooks/grid/useTabsView';
 
-const BillingTabsControls = () => {
+const BillingTabsControl = () => {
   const [tabs, handleShowTabs] = useTabsView();
 
   return (
@@ -29,4 +29,4 @@ const BillingTabsControls = () => {
   );
 };
 
-export default BillingTabsControls;
+export default BillingTabsControl;

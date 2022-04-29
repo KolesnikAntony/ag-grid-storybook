@@ -13,12 +13,12 @@ import {
   Switch,
 } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
-import SelectPlusText from '../custom-tab-controls/select-plus-text';
-import TextControl from '../../grid-form-controls/text-control';
+import SelectPlusText from '../../components/general-grid/grid-toolbar-filter/custom-tab-controls/select-plus-text';
+import TextControl from '../../components/general-grid/grid-form-controls/text-control';
 import SearchIcon from '@mui/icons-material/Search';
-import SelectControls from '../../grid-form-controls/select-controls';
-import { useYupValidationResolver } from '../../../../hooks/common/useValidationResolver';
-import { customTabSchema } from '../../../../features/new-tab-feature/validation';
+import SelectControls from '../../components/general-grid/grid-form-controls/select-controls';
+import { useYupValidationResolver } from '../../hooks/common/useValidationResolver';
+import { customTabSchema } from './validation';
 
 const useStyle = () => ({
   wrapper: {
@@ -32,14 +32,14 @@ const useStyle = () => ({
 
 const customTabOptions = {
   text: [
-    { value: 'equal', text: 'Equal to' },
-    { value: 'less', text: 'Less than' },
-    { value: 'more', text: 'More than' },
+    { value: 'equals', text: 'Equal to' },
+    { value: 'lessThan', text: 'Less than' },
+    { value: 'greaterThan', text: 'More than' },
   ],
   date: [
-    { value: 'exact', text: 'Exact date' },
-    { value: 'after', text: 'After date' },
-    { value: 'before', text: 'Before date' },
+    { value: 'equals', text: 'Exact date' },
+    { value: 'lessThan', text: 'After date' },
+    { value: 'greaterThan', text: 'Before date' },
   ],
 };
 
@@ -47,46 +47,46 @@ const getProperties = (type) => ({
   defaultSelect: customTabOptions[type][0].value,
   options: customTabOptions[type],
   type: type,
-  placeholder: type === 'text' ? '41345' : '',
+  placeholder: type === 'text' || type === 'number' ? '41345' : '',
 });
 
 const doubleFieldFilter = [
   {
     label: 'UID',
-    inputName: 'uid-count',
-    selectName: 'uid-type',
+    inputName: 'uidCount',
+    selectName: 'uidType',
     ...getProperties('text'),
   },
   {
     label: 'Number',
-    inputName: 'number-count',
-    selectName: 'number-type',
+    inputName: 'numberCount',
+    selectName: 'numberType',
     ...getProperties('text'),
   },
   {
     label: 'Created Date',
-    inputName: 'created-date',
-    selectName: 'created-type',
+    inputName: 'createdDate',
+    selectName: 'createdType',
     ...getProperties('date'),
   },
   {
     label: 'Due Date',
-    inputName: 'due-date',
-    selectName: 'due-type',
+    inputName: 'dueDate',
+    selectName: 'dueType',
     ...getProperties('date'),
   },
   {
     label: 'Sent Date',
-    inputName: 'sent-date',
-    selectName: 'sent-type',
+    inputName: 'sentDate',
+    selectName: 'sentType',
     ...getProperties('date'),
   },
 ];
 
 const total = {
   label: 'Total',
-  inputName: 'total-select',
-  selectName: 'total',
+  inputName: 'total',
+  selectName: 'totalSelect',
   ...getProperties('text'),
 };
 
@@ -100,13 +100,86 @@ const selectCommonProps = {
   variant: 'outlined',
 };
 
-const FilterControls = () => {
+const FiltersControlFeatures = () => {
   const sx = useStyle();
   const resolver = useYupValidationResolver(customTabSchema);
-  const { formState, ...methods } = useForm({ resolver, mode: 'all', reValidateMode: 'onSubmit' });
-  const onSubmit = (data) => console.log(data);
-  const { isValid } = formState;
-  // const isError = useMemo(() => !!Object.keys(errors).length, [errors]);
+  const { formState, ...methods } = useForm({ resolver, mode: 'all', reValidateMode: 'onChange' });
+
+  const modelCreator = (data) => ({
+    uid: {
+      filterType: 'number',
+      type: data.uidType,
+      filter: data.count,
+    },
+    number: {
+      filterType: 'number',
+      type: data.numberType,
+      filter: data.numberCount,
+    },
+    client: {
+      filterType: 'text',
+      type: 'startsWith',
+      filter: data.client,
+    },
+    guarantor: {
+      filterType: 'text',
+      type: 'equals',
+      filter: data.guarantor,
+    },
+    provider: {
+      filterType: 'text',
+      type: 'equals',
+      filter: data.provider,
+    },
+    total: {
+      filterType: 'number',
+      type: data.totalSelect,
+      filter: data.total,
+    },
+    creation: {
+      filterType: 'number',
+      type: data.totalSelect,
+      filter: data.total,
+    },
+    status: {
+      filterType: 'text',
+      type: 'equals',
+      filter: data.status,
+    },
+  });
+
+  // case: ""
+  //   client: ""
+  //   createdDate: ""
+  //   createdType: "equals"
+  //   dueDate: ""
+  //   dueType: "equals"
+  //   guarantor: ""
+  //   numberCount: null
+  //   numberType: "equals"
+  //   provider: ""
+  //   sentControl: false
+  //   sentDate: ""
+  //   sentType: "equals"
+  //   status: ""
+  //   tg: false
+  //   title: "fdafa"
+  //   total: null
+  //   totalSelect: "equals"
+  //   tp: false
+  //   uidCount: null
+  //   uidType: "equals"
+
+  const onSubmit = (formData) => {
+    console.log(formData);
+    const { title, ...data } = formData;
+    const model = modelCreator(data);
+    console.log(model, '-----> model');
+  };
+
+  const { errors } = formState;
+  console.log(errors);
+
   return (
     <FormProvider {...methods} formState={formState}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
@@ -118,7 +191,7 @@ const FilterControls = () => {
           </For>
           <Box>
             <FormControlLabel
-              {...methods.register('sent-control')}
+              {...methods.register('sentControl')}
               control={<Switch defaultChecked={false} size="small" />}
               label="Sent"
               labelPlacement="start"
@@ -163,7 +236,7 @@ const FilterControls = () => {
           </SelectControls>
           <SelectPlusText {...total} />
           <Divider sx={{ mb: 2, mt: 2 }} />
-          <Button type="submit" variant="contained" disabled={!isValid}>
+          <Button type="submit" variant="contained">
             Add tab
           </Button>
         </Box>
@@ -172,4 +245,4 @@ const FilterControls = () => {
   );
 };
 
-export default FilterControls;
+export default FiltersControlFeatures;

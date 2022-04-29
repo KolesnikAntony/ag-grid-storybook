@@ -13,7 +13,7 @@ import { GridApiContext } from '../../context/GridApiContext';
 import CustomHeader from '../../components/general-grid/grid-custom-header/custom-header';
 import GridToolbarFilter from '../../components/general-grid/grid-toolbar-filter/grid-toolbar-filter';
 import { StoreProvider } from '../../store/store';
-import FilterControls from '../../components/general-grid/grid-toolbar-filter/toolbar-controls/filter-controls';
+import FiltersControlFeatures from '../new-tab-feature/filters-control-features';
 
 const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, rowSelection }) => {
   //GRID API
@@ -46,7 +46,7 @@ const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, row
     return {
       agColumnHeader: CustomHeader,
       gridToolbarFilter: GridToolbarFilter,
-      customTab: FilterControls,
+      customTab: FiltersControlFeatures,
     };
   }, []);
 

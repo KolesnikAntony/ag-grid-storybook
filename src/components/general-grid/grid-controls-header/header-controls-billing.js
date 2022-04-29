@@ -2,8 +2,7 @@ import React, { useCallback, useContext, useState } from 'react';
 import { Stack, Tab, Tabs } from '@mui/material';
 import ExportBtn from '../grid-control-btns/export-btn';
 import { GridContext } from '../../../context/GridApiContext';
-import { HELPERS } from '../../../helpers/helpers';
-import { SELECTORS } from '../../../selectors/selectors';
+import { useSelector } from '../../../hooks/common/useSelector';
 
 const useStyles = () => ({
   tabsRoot: {
@@ -18,11 +17,10 @@ const useStyles = () => ({
 
 const HeaderControlsBilling = () => {
   const sx = useStyles();
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState('View all');
   const { gridApi } = useContext(GridContext);
 
-  const { useTabsSelector } = SELECTORS;
-  const tabs = useTabsSelector();
+  const { tabs, tabsModel } = useSelector();
 
   const handleChange = (_, newValue) => {
     setValue(newValue);
@@ -31,12 +29,12 @@ const HeaderControlsBilling = () => {
 
   const handleSendFilter = useCallback(
     (tab) => {
-      const model = HELPERS.getFilterModel(tab);
+      const model = tabsModel[tab];
       if (gridApi) {
         gridApi.setFilterModel(model);
       }
     },
-    [gridApi]
+    [gridApi, tabsModel]
   );
 
   const tabList = Object.entries(tabs)
@@ -46,9 +44,9 @@ const HeaderControlsBilling = () => {
   return (
     <Stack direction="row">
       <Tabs value={value} onChange={handleChange} centered sx={sx.tabsRoot}>
-        <Tab label={'View all'} sx={sx.tabRoot} />
+        <Tab label={'View all'} value={'View all'} sx={sx.tabRoot} />
         <For each="link" of={tabList}>
-          <Tab key={link} label={link} sx={sx.tabRoot} />
+          <Tab key={link} value={link} label={link} sx={sx.tabRoot} />
         </For>
       </Tabs>
       <ExportBtn />
