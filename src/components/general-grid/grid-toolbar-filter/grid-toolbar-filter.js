@@ -5,14 +5,15 @@ import BillingTabsControls from './toolbar-controls/billing-tabs-controls';
 import ColumnControls from './toolbar-controls/column-controls';
 import { GridContext } from '../../../context/GridApiContext';
 
-const GridToolbarFilter = ({ columnApi }) => {
+const GridToolbarFilter = ({ columnApi, gridApi }) => {
   const { type } = useContext(GridContext);
+
   return (
     <Box>
       <If condition={type === GRID_TYPES.billing}>
         <BillingTabsControls />
       </If>
-      <ColumnControls columnApi={columnApi} type={type} />
+      <ColumnControls columnApi={columnApi} />
     </Box>
   );
 };
