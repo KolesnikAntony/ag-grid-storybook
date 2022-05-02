@@ -5,4 +5,8 @@ export const filterTabAC = {
     type: ACTIONS.filterTabs.setTabs,
     payload: tabs,
   }),
+  addTab: (tab) => ({
+    type: ACTIONS.filterTabs.addTabs,
+    payload: tab,
+  }),
 };

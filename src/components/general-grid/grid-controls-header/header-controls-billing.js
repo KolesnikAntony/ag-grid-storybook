@@ -20,7 +20,7 @@ const HeaderControlsBilling = () => {
   const [value, setValue] = useState('View all');
   const { gridApi } = useContext(GridContext);
 
-  const { tabs, tabsModel } = useSelector();
+  const { tabs } = useSelector();
 
   const handleChange = (_, newValue) => {
     setValue(newValue);
@@ -29,24 +29,26 @@ const HeaderControlsBilling = () => {
 
   const handleSendFilter = useCallback(
     (tab) => {
-      const model = tabsModel[tab];
+      console.log(tab, '---log tab');
+      const model = tabs.find((el) => el.title === tab)?.model;
+      console.log(tabs, '---tabs');
+      console.log(model, '---model');
       if (gridApi) {
         gridApi.setFilterModel(model);
+        gridApi.onFilterChanged();
       }
     },
-    [gridApi, tabsModel]
+    [gridApi, tabs]
   );
 
-  const tabList = Object.entries(tabs)
-    .map(([key, value]) => value && key)
-    .filter((el) => el);
+  const currentTabs = tabs.filter((el) => el.view);
 
   return (
     <Stack direction="row">
       <Tabs value={value} onChange={handleChange} centered sx={sx.tabsRoot}>
         <Tab label={'View all'} value={'View all'} sx={sx.tabRoot} />
-        <For each="link" of={tabList}>
-          <Tab key={link} value={link} label={link} sx={sx.tabRoot} />
+        <For each="tab" of={currentTabs}>
+          <Tab key={tab.title} value={tab.title} label={tab.title} sx={sx.tabRoot} />
         </For>
       </Tabs>
       <ExportBtn />

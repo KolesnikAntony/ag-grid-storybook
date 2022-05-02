@@ -11,7 +11,7 @@ const SelectControls = ({ title, name, label, defaultValue, children, control, s
       <Controller
         render={({ field }) => (
           <Select {...props} {...field}>
-            {children}{' '}
+            {children}
           </Select>
         )}
         name={name}

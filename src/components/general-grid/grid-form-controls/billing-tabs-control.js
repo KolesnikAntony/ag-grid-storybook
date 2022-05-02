@@ -15,15 +15,16 @@ const BillingTabsControl = () => {
         <Typography>Tabs</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        {Object.keys(tabs).map((key, index) => (
-          <FormControlLabel
-            key={key + index}
-            value={key}
-            control={<Checkbox checked={tabs[key]} onChange={(e) => handleShowTabs(e, key)} />}
-            label={key.toUpperCase()}
-            labelPlacement="start"
-          />
-        ))}
+        {tabs.map((value, index) => {
+          return (
+            <FormControlLabel
+              key={value.title + index}
+              control={<Checkbox checked={value.view} onChange={(e) => handleShowTabs(e, value.title)} />}
+              label={value.title}
+              labelPlacement="start"
+            />
+          );
+        })}
       </AccordionDetails>
     </Accordion>
   );

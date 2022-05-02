@@ -1,17 +1,14 @@
 import React, { createContext, useContext, useReducer } from 'react';
 import { combineReducers } from './combine-reducers';
 import { initialTabFilter, sliceTabFilter } from '../features/new-tab-feature/slices/filter-tab-slice';
-import { initialTabModels, sliceTabModels } from '../features/new-tab-feature/slices/filter-model-slice';
 
 const StoreContext = createContext({});
 
 const initialState = {
   sliceTabFilter: initialTabFilter,
-  sliceTabModel: initialTabModels,
 };
 const reducers = {
   sliceTabFilter,
-  sliceTabModel: sliceTabModels,
 };
 
 const rootReducer = combineReducers(reducers);

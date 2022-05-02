@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import {
   Box,
   Button,
@@ -19,6 +19,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import SelectControls from '../../components/general-grid/grid-form-controls/select-controls';
 import { useYupValidationResolver } from '../../hooks/common/useValidationResolver';
 import { customTabSchema } from './validation';
+import { GridContext } from '../../context/GridApiContext';
+import { useDispatch } from '../../store/store';
+import { filterTabAC } from './action-creators/filter-tab-action-creaters';
 
 const useStyle = () => ({
   wrapper: {
@@ -38,8 +41,8 @@ const customTabOptions = {
   ],
   date: [
     { value: 'equals', text: 'Exact date' },
-    { value: 'lessThan', text: 'After date' },
-    { value: 'greaterThan', text: 'Before date' },
+    { value: 'greaterThan', text: 'After date' },
+    { value: 'lessThan', text: 'Before date' },
   ],
 };
 
@@ -47,52 +50,65 @@ const getProperties = (type) => ({
   defaultSelect: customTabOptions[type][0].value,
   options: customTabOptions[type],
   type: type,
-  placeholder: type === 'text' || type === 'number' ? '41345' : '',
+  placeholder: type === 'text' ? '41345' : '',
 });
 
 const doubleFieldFilter = [
   {
     label: 'UID',
-    inputName: 'uidCount',
-    selectName: 'uidType',
+    inputName: 'uid.filter',
+    selectName: 'uid.type',
     ...getProperties('text'),
   },
   {
     label: 'Number',
-    inputName: 'numberCount',
-    selectName: 'numberType',
+    inputName: 'number.filter',
+    selectName: 'number.type',
     ...getProperties('text'),
   },
   {
     label: 'Created Date',
-    inputName: 'createdDate',
-    selectName: 'createdType',
+    inputName: 'created.dateFrom',
+    selectName: 'created.type',
     ...getProperties('date'),
   },
   {
     label: 'Due Date',
-    inputName: 'dueDate',
-    selectName: 'dueType',
+    inputName: 'due.dateFrom',
+    selectName: 'due.type',
     ...getProperties('date'),
   },
   {
     label: 'Sent Date',
-    inputName: 'sentDate',
-    selectName: 'sentType',
+    inputName: 'sent.dateFrom',
+    selectName: 'sent.type',
     ...getProperties('date'),
   },
 ];
 
 const total = {
   label: 'Total',
-  inputName: 'total',
-  selectName: 'totalSelect',
+  inputName: 'total.filter',
+  selectName: 'total.type',
   ...getProperties('text'),
 };
 
 const guarantors = ['Vasilii', 'Andrey', 'Nilolay', 'Marina'];
 const cases = ['One', 'Two', 'Else', 'Lalalend'];
-const statuses = ['paid', 'unpaid', 'pending'];
+
+const statuses = [
+  'paid',
+  'unpaid',
+  'partially-paid',
+  'cancelled',
+  'draft',
+  'normal-status',
+  '1st-reminder',
+  '2nd-reminder',
+  '3rd-reminder',
+  'formal-notice',
+  'pursuit',
+];
 const selectCommonProps = {
   defaultValue: '',
   displayEmpty: true,
@@ -105,80 +121,31 @@ const FiltersControlFeatures = () => {
   const resolver = useYupValidationResolver(customTabSchema);
   const { formState, ...methods } = useForm({ resolver, mode: 'all', reValidateMode: 'onChange' });
 
-  const modelCreator = (data) => ({
-    uid: {
-      filterType: 'number',
-      type: data.uidType,
-      filter: data.count,
-    },
-    number: {
-      filterType: 'number',
-      type: data.numberType,
-      filter: data.numberCount,
-    },
-    client: {
-      filterType: 'text',
-      type: 'startsWith',
-      filter: data.client,
-    },
-    guarantor: {
-      filterType: 'text',
-      type: 'equals',
-      filter: data.guarantor,
-    },
-    provider: {
-      filterType: 'text',
-      type: 'equals',
-      filter: data.provider,
-    },
-    total: {
-      filterType: 'number',
-      type: data.totalSelect,
-      filter: data.total,
-    },
-    creation: {
-      filterType: 'number',
-      type: data.totalSelect,
-      filter: data.total,
-    },
-    status: {
-      filterType: 'text',
-      type: 'equals',
-      filter: data.status,
-    },
-  });
+  const dispatch = useDispatch();
+  const { gridApi } = useContext(GridContext);
 
-  // case: ""
-  //   client: ""
-  //   createdDate: ""
-  //   createdType: "equals"
-  //   dueDate: ""
-  //   dueType: "equals"
-  //   guarantor: ""
-  //   numberCount: null
-  //   numberType: "equals"
-  //   provider: ""
-  //   sentControl: false
-  //   sentDate: ""
-  //   sentType: "equals"
-  //   status: ""
-  //   tg: false
-  //   title: "fdafa"
-  //   total: null
-  //   totalSelect: "equals"
-  //   tp: false
-  //   uidCount: null
-  //   uidType: "equals"
+  const handleModelCreator = (data) => {
+    const keys = Object.keys(data);
+    keys.forEach((key) => {
+      const filterInstance = gridApi.getFilterInstance(key);
+      filterInstance?.setModel(data[key]);
+    });
+    return gridApi.getFilterModel();
+  };
 
   const onSubmit = (formData) => {
-    console.log(formData);
     const { title, ...data } = formData;
-    const model = modelCreator(data);
-    console.log(model, '-----> model');
+    const model = handleModelCreator(data);
+    const tab = {
+      title,
+      model,
+      view: true,
+    };
+    dispatch(filterTabAC.addTab(tab));
   };
 
   const { errors } = formState;
-  console.log(errors);
+  // console.log(errors);
 
   return (
     <FormProvider {...methods} formState={formState}>
@@ -198,7 +165,13 @@ const FiltersControlFeatures = () => {
             />
           </Box>
           <Divider sx={{ mb: 2, mt: 2 }} />
-          <TextControl sx={sx.search} title="Client" name={'client'} placeholder={'Search'} icon={<SearchIcon />} />
+          <TextControl
+            sx={sx.search}
+            title="Client"
+            name={'client.filter'}
+            placeholder={'Search'}
+            icon={<SearchIcon />}
+          />
           <SelectControls title="Guarantor" name={'guarantor'} control={methods.control} {...selectCommonProps}>
             <MenuItem value={''}>Select</MenuItem>
             <For of={guarantors} each="guarantor">
@@ -216,7 +189,7 @@ const FiltersControlFeatures = () => {
               </Stack>
             </FormGroup>
           </FormControl>
-          <SelectControls title="Case" name={'case'} control={methods.control} {...selectCommonProps}>
+          <SelectControls title="Case" name={'case.filter'} control={methods.control} {...selectCommonProps}>
             <MenuItem value={''}>Select</MenuItem>
             <For of={cases} each="value">
               <MenuItem key={value} value={value}>
@@ -224,16 +197,16 @@ const FiltersControlFeatures = () => {
               </MenuItem>
             </For>
           </SelectControls>
-          <TextControl sx={sx.search} title="Provider" name={'provider'} placeholder={'Search'} />
+          <TextControl sx={sx.search} title="Provider" name={'provider.filter'} placeholder={'Search'} />
           <Divider sx={{ mb: 2, mt: 2 }} />
-          <SelectControls title="Status" name={'status'} control={methods.control} {...selectCommonProps}>
-            <MenuItem value={''}>Select</MenuItem>
-            <For of={statuses} each="status">
-              <MenuItem key={status} value={status}>
-                {status}
-              </MenuItem>
-            </For>
-          </SelectControls>
+          {/*<SelectControls title="Status" name={'status.values.0'} control={methods.control} {...selectCommonProps}>*/}
+          {/*  <MenuItem value={''}>Select</MenuItem>*/}
+          {/*  <For of={statuses} each="status">*/}
+          {/*    <MenuItem key={status} value={status}>*/}
+          {/*      {status}*/}
+          {/*    </MenuItem>*/}
+          {/*  </For>*/}
+          {/*</SelectControls>*/}
           <SelectPlusText {...total} />
           <Divider sx={{ mb: 2, mt: 2 }} />
           <Button type="submit" variant="contained">

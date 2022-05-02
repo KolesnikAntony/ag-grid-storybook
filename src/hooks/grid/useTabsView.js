@@ -9,21 +9,27 @@ export const useTabsView = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // const localItem = localStorage.getItem('tabsViews');
-    // if (localItem) {
-    //   const state = JSON.parse(localItem);
-    //   dispatch(filterTabAC.setTabs(state));
-    // }
+    const localItem = localStorage.getItem('tabsViews');
+    if (localItem) {
+      const state = JSON.parse(localItem);
+      dispatch(filterTabAC.setTabs(state));
+    }
   }, [dispatch]);
 
   useEffect(() => {
-    // Object.keys(tabs).length && localStorage.setItem('tabsViews', JSON.stringify(tabs));
+    tabs.length && localStorage.setItem('tabsViews', JSON.stringify(tabs));
   }, [tabs]);
 
   const handleShowTabs = useCallback(
-    (e, col) => {
-      const state = { ...tabs, [col]: e.target.checked };
-      dispatch(filterTabAC.setTabs(state));
+    (e, title) => {
+      const newTabs = tabs.map((el) => {
+        if (el.title === title) {
+          return { ...el, view: e.target.checked };
+        }
+        return el;
+      });
+
+      dispatch(filterTabAC.setTabs(newTabs));
     },
     [dispatch, tabs]
   );
