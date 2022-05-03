@@ -109,12 +109,17 @@ const statuses = [
   'formal-notice',
   'pursuit',
 ];
-const selectCommonProps = {
-  defaultValue: '',
+
+const renderValue = (selected) => {
+  return selected?.map((option) => option).join(', ') || 'Select some options';
+};
+
+const selectCommonProps = (defaultValue = '') => ({
+  defaultValue,
   displayEmpty: true,
   inputProps: { 'aria-label': 'Without label' },
   variant: 'outlined',
-};
+});
 
 const FiltersControlFeatures = () => {
   const sx = useStyle();
@@ -128,7 +133,11 @@ const FiltersControlFeatures = () => {
     const keys = Object.keys(data);
     keys.forEach((key) => {
       const filterInstance = gridApi.getFilterInstance(key);
-      filterInstance?.setModel(data[key]);
+      if (key === 'status') {
+        !!data[key].values.length && filterInstance?.setModel(data[key]);
+      } else {
+        filterInstance?.setModel(data[key]);
+      }
     });
     return gridApi.getFilterModel();
   };
@@ -142,6 +151,8 @@ const FiltersControlFeatures = () => {
       view: true,
     };
     dispatch(filterTabAC.addTab(tab));
+    methods.reset();
+    // gridApi.setSideBarVisible(false)
   };
 
   const { errors } = formState;
@@ -172,14 +183,19 @@ const FiltersControlFeatures = () => {
             placeholder={'Search'}
             icon={<SearchIcon />}
           />
-          <SelectControls title="Guarantor" name={'guarantor'} control={methods.control} {...selectCommonProps}>
-            <MenuItem value={''}>Select</MenuItem>
-            <For of={guarantors} each="guarantor">
-              <MenuItem key={guarantor} value={guarantor}>
-                {guarantor}
-              </MenuItem>
-            </For>
-          </SelectControls>
+          {/*<SelectControls*/}
+          {/*  title="Guarantor"*/}
+          {/*  multiple*/}
+          {/*  name={'guarantor.values'}*/}
+          {/*  control={methods.control}*/}
+          {/*  {...selectCommonProps([])}>*/}
+          {/*  <MenuItem value={''}>Select</MenuItem>*/}
+          {/*  <For of={guarantors} each="guarantor">*/}
+          {/*    <MenuItem key={guarantor} value={guarantor}>*/}
+          {/*      {guarantor}*/}
+          {/*    </MenuItem>*/}
+          {/*  </For>*/}
+          {/*</SelectControls>*/}
           <FormControl>
             <FormLabel>Refund type</FormLabel>
             <FormGroup>
@@ -189,7 +205,12 @@ const FiltersControlFeatures = () => {
               </Stack>
             </FormGroup>
           </FormControl>
-          <SelectControls title="Case" name={'case.filter'} control={methods.control} {...selectCommonProps}>
+          <SelectControls
+            title="Case"
+            multiple={false}
+            name={'case.filter'}
+            control={methods.control}
+            {...selectCommonProps()}>
             <MenuItem value={''}>Select</MenuItem>
             <For of={cases} each="value">
               <MenuItem key={value} value={value}>
@@ -199,15 +220,20 @@ const FiltersControlFeatures = () => {
           </SelectControls>
           <TextControl sx={sx.search} title="Provider" name={'provider.filter'} placeholder={'Search'} />
           <Divider sx={{ mb: 2, mt: 2 }} />
-          {/*<SelectControls title="Status" name={'status.values.0'} control={methods.control} {...selectCommonProps}>*/}
-          {/*  <MenuItem value={''}>Select</MenuItem>*/}
-          {/*  <For of={statuses} each="status">*/}
-          {/*    <MenuItem key={status} value={status}>*/}
-          {/*      {status}*/}
-          {/*    </MenuItem>*/}
-          {/*  </For>*/}
-          {/*</SelectControls>*/}
-          <SelectPlusText {...total} />
+          <SelectControls
+            title="Status"
+            name={'status.values'}
+            multiple
+            {...selectCommonProps([])}
+            defaultValue={[]}
+            control={methods.control}>
+            <For of={statuses} each="status">
+              <MenuItem key={status} value={status}>
+                {status}
+              </MenuItem>
+            </For>
+          </SelectControls>
+          {/*<SelectPlusText {...total} />*/}
           <Divider sx={{ mb: 2, mt: 2 }} />
           <Button type="submit" variant="contained">
             Add tab

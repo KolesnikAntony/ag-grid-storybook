@@ -2,13 +2,13 @@ import { ACTIONS } from '../../../constants/actions';
 
 const sendModel = {
   dispatch: {
-    values: ['not-sent'],
+    values: ['sent'],
   },
 };
 
 const sentModel = {
-  status: {
-    values: ['1st-reminder', '2nd-reminder', '3rd-reminder', 'formal-notice', 'pursuit'],
+  dispatch: {
+    values: ['not-sent'],
   },
 };
 
