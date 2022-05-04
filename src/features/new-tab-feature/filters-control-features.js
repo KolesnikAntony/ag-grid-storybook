@@ -1,18 +1,18 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext } from 'react';
 import {
   Box,
   Button,
-  Checkbox,
   Divider,
   FormControl,
   FormControlLabel,
-  FormGroup,
   FormLabel,
   MenuItem,
+  Radio,
+  RadioGroup,
   Stack,
   Switch,
 } from '@mui/material';
-import { FormProvider, useForm } from 'react-hook-form';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 import SelectPlusText from '../../components/general-grid/grid-toolbar-filter/custom-tab-controls/select-plus-text';
 import TextControl from '../../components/general-grid/grid-form-controls/text-control';
 import SearchIcon from '@mui/icons-material/Search';
@@ -67,9 +67,9 @@ const doubleFieldFilter = [
     ...getProperties('text'),
   },
   {
-    label: 'Created Date',
-    inputName: 'created.dateFrom',
-    selectName: 'created.type',
+    label: 'Creation Date',
+    inputName: 'creation.dateFrom',
+    selectName: 'creation.type',
     ...getProperties('date'),
   },
   {
@@ -93,7 +93,12 @@ const total = {
   ...getProperties('text'),
 };
 
-const guarantors = ['Vasilii', 'Andrey', 'Nilolay', 'Marina'];
+const guarantors = [
+  "Office de l'assurance...",
+  'Office de Katarina...',
+  'Office de population...',
+  'Office de Anton...',
+];
 const cases = ['One', 'Two', 'Else', 'Lalalend'];
 
 const statuses = [
@@ -110,9 +115,7 @@ const statuses = [
   'pursuit',
 ];
 
-const renderValue = (selected) => {
-  return selected?.map((option) => option).join(', ') || 'Select some options';
-};
+const typeValues = ['all', 'tg', 'tp'];
 
 const selectCommonProps = (defaultValue = '') => ({
   defaultValue,
@@ -124,22 +127,26 @@ const selectCommonProps = (defaultValue = '') => ({
 const FiltersControlFeatures = () => {
   const sx = useStyle();
   const resolver = useYupValidationResolver(customTabSchema);
-  const { formState, ...methods } = useForm({ resolver, mode: 'all', reValidateMode: 'onChange' });
+  const { formState, ...methods } = useForm({ resolver, mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
   const dispatch = useDispatch();
   const { gridApi } = useContext(GridContext);
 
   const handleModelCreator = (data) => {
-    const keys = Object.keys(data);
-    keys.forEach((key) => {
-      const filterInstance = gridApi.getFilterInstance(key);
-      if (key === 'status') {
-        !!data[key].values.length && filterInstance?.setModel(data[key]);
-      } else {
-        filterInstance?.setModel(data[key]);
-      }
-    });
-    return gridApi.getFilterModel();
+    const { title, ...rest } = data;
+    return {
+      ...rest,
+      status: rest.status.values.length ? rest.status.values : { values: null },
+      guarantor: { ...rest.guarantor, values: rest.guarantor.values.length ? rest.guarantor.values : null },
+      client: { type: 'contains', filter: rest.client.filter },
+      provider: { type: 'contains', filter: rest.provider.filter },
+    };
+  };
+
+  const handleApply = () => {
+    const data = methods.getValues();
+    const model = handleModelCreator(data);
+    gridApi.setFilterModel(model);
   };
 
   const onSubmit = (formData) => {
@@ -150,13 +157,9 @@ const FiltersControlFeatures = () => {
       model,
       view: true,
     };
-    dispatch(filterTabAC.addTab(tab));
     methods.reset();
-    // gridApi.setSideBarVisible(false)
+    dispatch(filterTabAC.addTab(tab));
   };
-
-  const { errors } = formState;
-  // console.log(errors);
 
   return (
     <FormProvider {...methods} formState={formState}>
@@ -183,28 +186,50 @@ const FiltersControlFeatures = () => {
             placeholder={'Search'}
             icon={<SearchIcon />}
           />
-          {/*<SelectControls*/}
-          {/*  title="Guarantor"*/}
-          {/*  multiple*/}
-          {/*  name={'guarantor.values'}*/}
-          {/*  control={methods.control}*/}
-          {/*  {...selectCommonProps([])}>*/}
-          {/*  <MenuItem value={''}>Select</MenuItem>*/}
-          {/*  <For of={guarantors} each="guarantor">*/}
-          {/*    <MenuItem key={guarantor} value={guarantor}>*/}
-          {/*      {guarantor}*/}
-          {/*    </MenuItem>*/}
-          {/*  </For>*/}
-          {/*</SelectControls>*/}
+          <SelectControls
+            title="Guarantor"
+            multiple
+            name={'guarantor.values'}
+            control={methods.control}
+            {...selectCommonProps([])}>
+            {/*<MenuItem value={''}>Select</MenuItem>*/}
+            <For of={guarantors} each="guarantor">
+              <MenuItem key={guarantor} value={guarantor}>
+                {guarantor}
+              </MenuItem>
+            </For>
+          </SelectControls>
           <FormControl>
-            <FormLabel>Refund type</FormLabel>
-            <FormGroup>
-              <Stack direction="row">
-                <FormControlLabel {...methods.register('tp')} control={<Checkbox />} label="TP" />
-                <FormControlLabel {...methods.register('tg')} control={<Checkbox />} label="TG" />
-              </Stack>
-            </FormGroup>
+            <FormLabel id="guarantor">Refund type</FormLabel>
+            <Controller
+              control={methods.control}
+              defaultValue={'all'}
+              name={'guarantor.type'}
+              render={({ field }) => (
+                <RadioGroup aria-labelledby="guarantor" {...field}>
+                  <Stack direction="row">
+                    <For of={typeValues} each="typeVal">
+                      <FormControlLabel
+                        key={typeVal}
+                        value={typeVal}
+                        control={<Radio />}
+                        label={typeVal.toUpperCase()}
+                      />
+                    </For>
+                  </Stack>
+                </RadioGroup>
+              )}
+            />
           </FormControl>
+          {/*<FormControl>*/}
+          {/*  <FormLabel>Refund type</FormLabel>*/}
+          {/*  <FormGroup>*/}
+          {/*    <Stack direction="row">*/}
+          {/*      <FormControlLabel {...methods.register('tp')} control={<Checkbox />} label="TP" />*/}
+          {/*      <FormControlLabel {...methods.register('tg')} control={<Checkbox />} label="TG" />*/}
+          {/*    </Stack>*/}
+          {/*  </FormGroup>*/}
+          {/*</FormControl>*/}
           <SelectControls
             title="Case"
             multiple={false}
@@ -233,10 +258,13 @@ const FiltersControlFeatures = () => {
               </MenuItem>
             </For>
           </SelectControls>
-          {/*<SelectPlusText {...total} />*/}
+          <SelectPlusText {...total} />
           <Divider sx={{ mb: 2, mt: 2 }} />
           <Button type="submit" variant="contained">
             Add tab
+          </Button>
+          <Button onClick={handleApply} variant="contained">
+            Apply filter
           </Button>
         </Box>
       </form>

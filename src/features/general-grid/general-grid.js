@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { GRID_TYPES } from '../../constants/grid-types';
 import { useColumnDefs } from '../../hooks/grid/useColumnDefs';
@@ -14,6 +14,7 @@ import CustomHeader from '../../components/general-grid/grid-custom-header/custo
 import GridToolbarFilter from '../../components/general-grid/grid-toolbar-filter/grid-toolbar-filter';
 import { StoreProvider } from '../../store/store';
 import FiltersControlFeatures from '../new-tab-feature/filters-control-features';
+import GuarantorFilter from '../../components/general-grid/grid-filters/guarantor-filter';
 
 const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, rowSelection }) => {
   //GRID API
@@ -33,6 +34,7 @@ const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, row
   //FUNCTION THAN SET GRID API WHEN GRID IS READY
   const onGridReady = useCallback((params) => {
     setGridApi(params.api);
+    params.api.getFilterInstance('guarantor');
   }, []);
 
   // //SET LOADING VIEW
@@ -47,6 +49,7 @@ const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, row
       agColumnHeader: CustomHeader,
       gridToolbarFilter: GridToolbarFilter,
       customTab: FiltersControlFeatures,
+      guarantorFilter: GuarantorFilter,
     };
   }, []);
 

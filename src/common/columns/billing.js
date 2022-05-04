@@ -9,7 +9,8 @@ import cellRendererDue from '../../components/grid-cell-rerenderer/cellRendererD
 import cellRendererStatus from '../../components/grid-cell-rerenderer/cellRendererStatus';
 import cellRendererDispatch from '../../components/grid-cell-rerenderer/cellRendererDispatch';
 import cellRendererCopy from '../../components/grid-cell-rerenderer/cellRendererCopy';
-import { FILTER_TYPES } from './../../constants/filter-types';
+import React from 'react';
+import { FILTER_TYPES } from '../../constants/filter-types';
 
 const buttonColumnWidth = HELPERS.convertRemToPx(4.8);
 
@@ -17,12 +18,21 @@ export const billingColumns = [
   { ...FILTER_TYPES.filterNumber('uid'), maxWidth: 60 },
   { ...FILTER_TYPES.filterNumber('number') },
   { ...FILTER_TYPES.filterText('client', cellRendererClient, true) },
-  { ...FILTER_TYPES.filterText('guarantor', cellRendererGuarantor, true), minWidth: 180 },
   { ...FILTER_TYPES.filterText('provider', cellRenderer) },
   { ...FILTER_TYPES.filterNumber('total'), maxWidth: 80 },
   { ...FILTER_TYPES.filterNumber('open'), maxWidth: 80 },
   { ...FILTER_TYPES.filterDate('creation', cellRenderer) },
   { ...FILTER_TYPES.filterDate('due', cellRendererDue), minWidth: 130 },
+  // { ...FILTER_TYPES.filterText('guarantor', cellRendererGuarantor, true), minWidth: 180 },
+  {
+    field: 'guarantor',
+    cellRendererFramework: cellRendererGuarantor,
+    filter: 'guarantorFilter',
+    filterParams: {
+      values: ["Office de l'assurance...", 'Office de Katarina...', 'Office de population...', 'Office de Anton...'],
+      typeValues: ['all', 'tg', 'tp'],
+    },
+  },
   {
     field: 'status',
     cellRendererFramework: cellRendererStatus,

@@ -7,9 +7,8 @@ import TextControl from '../../grid-form-controls/text-control';
 import Stack from '@mui/material/Stack';
 
 const SelectPlusText = ({ selectName, inputName, defaultSelect, options, label, type, placeholder }) => {
-  const { register, control } = useFormContext();
+  const { control } = useFormContext();
   const ph = useMemo(() => (type === 'text' ? placeholder : ''), [type, placeholder]);
-
   return (
     <Box>
       <Typography>{label}</Typography>
