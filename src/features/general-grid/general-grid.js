@@ -15,6 +15,8 @@ import GridToolbarFilter from '../../components/general-grid/grid-toolbar-filter
 import { StoreProvider } from '../../store/store';
 import FiltersControlFeatures from '../new-tab-feature/filters-control-features';
 import GuarantorFilter from '../../components/general-grid/grid-filters/guarantor-filter';
+import GridSelectedControls from '../../components/general-grid/grid-selected-controls/grid-selected-controls';
+import { Collapse } from '@mui/material';
 
 const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, rowSelection }) => {
   //GRID API
@@ -53,11 +55,21 @@ const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, row
     };
   }, []);
 
+  const [count, setRowCount] = useState(0);
+
+  const onSelectionChanged = (event) => {
+    const count = event.api.getSelectedNodes().length;
+    setRowCount(count);
+  };
+
   return (
     <GridApiContext value={{ gridApi, type }}>
       <StoreProvider>
         <div style={containerStyle}>
           <HeaderControls />
+          <Collapse in={count}>
+            <GridSelectedControls rowCount={count} />
+          </Collapse>
           <div style={gridStyle} className="ag-theme-alpine">
             <AgGridReact
               key={type}
@@ -67,6 +79,7 @@ const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, row
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
               onGridReady={onGridReady}
+              onSelectionChanged={onSelectionChanged}
               pagination={pagination}
               paginationPageSize={rowCount}
               noRowsOverlayComponentFramework={noRowsOverlayComponent}
