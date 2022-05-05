@@ -29,10 +29,7 @@ const HeaderControlsBilling = () => {
 
   const handleSendFilter = useCallback(
     (tab) => {
-      console.log(tab, '---log tab');
       const model = tabs.find((el) => el.title === tab)?.model;
-      console.log(tabs, '---tabs');
-      console.log(model, '---model');
       if (gridApi) {
         gridApi.setFilterModel(model);
         gridApi.onFilterChanged();

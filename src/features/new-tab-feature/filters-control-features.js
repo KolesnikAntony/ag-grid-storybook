@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import {
   Box,
   Button,
@@ -141,12 +141,19 @@ const FiltersControlFeatures = () => {
       client: { type: 'contains', filter: rest.client.filter },
       provider: { type: 'contains', filter: rest.provider.filter },
     };
+    // const properties = Object.entries(rest).map(el => el.r(':', '='))
   };
 
   const handleApply = () => {
     const data = methods.getValues();
     const model = handleModelCreator(data);
     gridApi.setFilterModel(model);
+  };
+
+  const uuidv4 = () => {
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
+      (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16)
+    );
   };
 
   const onSubmit = (formData) => {
@@ -156,15 +163,24 @@ const FiltersControlFeatures = () => {
       title,
       model,
       view: true,
+      id: uuidv4(),
     };
     methods.reset();
     dispatch(filterTabAC.addTab(tab));
   };
 
+  const onReset = useCallback(() => {
+    methods.reset();
+    gridApi.setFilterModel();
+  }, [gridApi, methods]);
+
   return (
     <FormProvider {...methods} formState={formState}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <Box sx={sx.wrapper}>
+          <Button onClick={onReset} variant="contained">
+            Reset filter
+          </Button>
           <TextControl sx={sx.search} title="Title" name={'title'} placeholder={'Name'} />
           <Divider sx={{ mb: 2, mt: 2 }} />
           <For each="el" of={doubleFieldFilter}>

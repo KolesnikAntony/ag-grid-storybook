@@ -30,21 +30,25 @@ export const initialTabFilter = {
       title: 'Invoices to send',
       view: true,
       model: sendModel,
+      id: 1,
     },
     {
       title: 'Invoices sent',
       view: true,
       model: sentModel,
+      id: 2,
     },
     {
       title: 'Invoices with reminders',
       view: true,
       model: reminderModel,
+      id: 3,
     },
     {
       title: 'Invoices with errors',
       view: true,
       model: errorModel,
+      id: 4,
     },
   ],
 };
@@ -55,6 +59,8 @@ export const sliceTabFilter = (state, action) => {
       return { ...state, tabs: action.payload };
     case ACTIONS.filterTabs.addTabs:
       return { ...state, tabs: [...state.tabs, action.payload] };
+    case ACTIONS.filterTabs.removeTab:
+      return { ...state, tabs: state.tabs.filter((el) => el.id !== action.payload) };
     default:
       throw new Error('No action');
   }

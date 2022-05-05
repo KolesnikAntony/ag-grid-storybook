@@ -1,11 +1,10 @@
-import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import { Checkbox, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack } from '@mui/material';
 import Box from '@mui/material/Box';
 
 export default forwardRef((props, ref) => {
   const { filterChangedCallback, values, typeValues, api } = props;
   const [type, setType] = useState('all');
-
   const namesValue = useMemo(() => values, [values]);
   const nameCheck = namesValue.map(() => true);
   const [checked, setChecked] = useState(nameCheck);
@@ -14,13 +13,10 @@ export default forwardRef((props, ref) => {
     return namesValue.filter((el, index) => checked[index]);
   }, [checked, namesValue]);
 
-  const onUpdate = useRef(true);
-
   useImperativeHandle(ref, () => {
     return {
       myMethod(model) {
         // does something
-        onUpdate.current = false;
         this.setModel(model);
       },
       doesFilterPass(params) {
@@ -67,23 +63,20 @@ export default forwardRef((props, ref) => {
   });
 
   useEffect(() => {
-    onUpdate.current && filterChangedCallback();
+    filterChangedCallback();
   }, [type, checked, filterChangedCallback]);
 
   const handleChange = useCallback((e) => {
-    onUpdate.current = true;
     setType(e.target.value);
   }, []);
 
   const handleChangeChild = (index) => {
     return (event) => {
-      onUpdate.current = true;
       setChecked((prev) => prev.map((el, idx) => (idx === index ? event.target.checked : el)));
     };
   };
 
   const handleChangeParent = (event) => {
-    onUpdate.current = true;
     setChecked((prev) => prev.map(() => event.target.checked));
   };
 

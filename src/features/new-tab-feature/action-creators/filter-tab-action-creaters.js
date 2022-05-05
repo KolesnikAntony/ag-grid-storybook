@@ -9,4 +9,8 @@ export const filterTabAC = {
     type: ACTIONS.filterTabs.addTabs,
     payload: tab,
   }),
+  removeTab: (id) => ({
+    type: ACTIONS.filterTabs.removeTab,
+    payload: id,
+  }),
 };
