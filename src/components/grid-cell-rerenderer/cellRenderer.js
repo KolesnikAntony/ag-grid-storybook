@@ -10,13 +10,13 @@ export default (props) => {
   let cellSx;
   if (col === 'number') {
     cellSx = {
-      fontWeight: 600,
-      color: '#2399f1',
+      // fontWeight: 600,
+      // color: '#2399f1',
     };
-  } else if (col === 'total' || col === 'open') {
+  } else if (col === 'total' || col === 'paid' || col === 'open') {
     cellSx = {
-      fontWeight: 600,
-      color: '#000',
+      // fontWeight: 600,
+      // color: '#000',
     };
   } else {
     cellSx = {};

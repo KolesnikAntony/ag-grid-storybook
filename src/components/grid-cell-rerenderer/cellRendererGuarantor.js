@@ -11,9 +11,9 @@ export default (props) => {
 
   let chipColor;
   if (value.type === 'TP') {
-    chipColor = 'rgba(80, 152, 68, .15)';
+    chipColor = 'rgba(210, 250, 204, 1)';
   } else if (value.type === 'TG') {
-    chipColor = 'rgba(255, 176, 19, .15)';
+    chipColor = 'rgba(250, 222, 152, 1)';
   }
 
   return (

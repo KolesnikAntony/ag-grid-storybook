@@ -15,17 +15,22 @@ import { FILTER_TYPES } from '../../constants/filter-types';
 const buttonColumnWidth = HELPERS.convertRemToPx(4.8);
 
 export const billingColumns = [
-  { ...FILTER_TYPES.filterNumber('uid'), maxWidth: 60 },
-  { ...FILTER_TYPES.filterNumber('number') },
-  { ...FILTER_TYPES.filterText('client', cellRendererClient, true) },
-  { ...FILTER_TYPES.filterText('provider', cellRenderer) },
-  { ...FILTER_TYPES.filterNumber('total'), maxWidth: 80 },
-  { ...FILTER_TYPES.filterNumber('open'), maxWidth: 80 },
-  { ...FILTER_TYPES.filterDate('creation', cellRenderer) },
-  { ...FILTER_TYPES.filterDate('due', cellRendererDue), minWidth: 130 },
-  // { ...FILTER_TYPES.filterText('guarantor', cellRendererGuarantor, true), minWidth: 180 },
+  {
+    field: 'checkbox',
+    headerCheckboxSelection: true,
+    headerCheckboxSelectionFilteredOnly: true,
+    checkboxSelection: true,
+    suppressMenu: true,
+    resizable: false,
+    maxWidth: 48,
+  },
+  // { ...FILTER_TYPES.filterNumber('uid'), maxWidth: 60 },
+  { ...FILTER_TYPES.filterNumber('number'), headerName: 'No.' },
+  { ...FILTER_TYPES.filterDate('creation', cellRenderer), headerName: 'Created' },
+  { ...FILTER_TYPES.filterText('client', cellRendererClient, true), headerName: 'Customer' },
   {
     field: 'guarantor',
+    headerName: 'Debtor',
     cellRendererFramework: cellRendererGuarantor,
     filter: 'guarantorFilter',
     filterParams: {
@@ -33,6 +38,10 @@ export const billingColumns = [
       typeValues: ['all', 'tg', 'tp'],
     },
   },
+  { ...FILTER_TYPES.filterText('provider', cellRenderer) },
+  { ...FILTER_TYPES.filterNumber('total'), maxWidth: 80 },
+  { ...FILTER_TYPES.filterNumber('paid'), maxWidth: 80 },
+  { ...FILTER_TYPES.filterNumber('open'), maxWidth: 80 },
   {
     field: 'status',
     cellRendererFramework: cellRendererStatus,
@@ -57,8 +66,10 @@ export const billingColumns = [
     },
     minWidth: 130,
   },
+  { ...FILTER_TYPES.filterDate('due', cellRendererDue), minWidth: 130 },
+  // { ...FILTER_TYPES.filterText('guarantor', cellRendererGuarantor, true), minWidth: 180 },
   {
-    field: 'dispatch',
+    field: 'sent',
     cellRendererFramework: cellRendererDispatch,
     filterParams: {
       values: ['sent', 'not-sent', 'error', 'flagged', 'not-flagged'],
@@ -78,6 +89,7 @@ export const billingColumns = [
   },
   {
     field: 'btn-view',
+    headerName: '',
     maxWidth: buttonColumnWidth,
     cellRendererFramework: ButtonView,
     resizable: false,
@@ -85,6 +97,7 @@ export const billingColumns = [
   },
   {
     field: 'btn-send',
+    headerName: '',
     maxWidth: buttonColumnWidth,
     cellRendererFramework: ButtonSend,
     resizable: false,
@@ -92,18 +105,10 @@ export const billingColumns = [
   },
   {
     field: 'btn-print',
+    headerName: '',
     maxWidth: buttonColumnWidth,
     cellRendererFramework: ButtonPrint,
     resizable: false,
     suppressMenu: true,
-  },
-  {
-    field: 'checkbox',
-    headerCheckboxSelection: true,
-    headerCheckboxSelectionFilteredOnly: true,
-    checkboxSelection: true,
-    suppressMenu: true,
-    resizable: false,
-    maxWidth: 48,
   },
 ];

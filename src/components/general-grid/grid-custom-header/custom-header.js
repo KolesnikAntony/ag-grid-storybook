@@ -110,8 +110,8 @@ export default (props) => {
   return (
     <Fragment>
       {menu}
-      <Choose>
-        {/* <When condition={column.colId === 'dispatch'}></When> */}
+      <div className="customHeaderLabel">{props.displayName}</div>
+      {/* <Choose>
         <When condition={column.colId === 'btn-view'}>
           <Box />
         </When>
@@ -128,7 +128,7 @@ export default (props) => {
         <Otherwise>
           <div className="customHeaderLabel">{props.displayName}</div>
         </Otherwise>
-      </Choose>
+      </Choose> */}
       {sort}
     </Fragment>
   );
