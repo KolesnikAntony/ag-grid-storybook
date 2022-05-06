@@ -132,7 +132,7 @@ export let billingState = (() => {
           name: 'Office de Anton...',
           type: 'TP',
         },
-        provider: 'Dr. Tardieu',
+        provider: 'Dr. Anton',
         total: 29.4,
         open: 29.4,
         creation: '12.11.2021',

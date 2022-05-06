@@ -1,7 +1,7 @@
 import React from 'react';
 import PrintIcon from '@mui/icons-material/Print';
 import Button from '@mui/material/Button';
-import useStyle from '../renderer/cellRendererStyle';
+import useStyle from '../grid-cell-rerenderer/cellRendererStyle';
 
 const ButtonPrint = (props) => {
   const sx = useStyle();
