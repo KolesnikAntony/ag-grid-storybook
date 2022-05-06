@@ -2,27 +2,46 @@ import { HELPERS } from '../../helpers/helpers';
 import ButtonView from '../../components/buttons/button-view';
 import ButtonSend from '../../components/buttons/button-send';
 import ButtonPrint from '../../components/buttons/button-print';
-import cellRenderer from '../../components/renderer/cellRenderer';
-import cellRendererClient from '../../components/renderer/cellRendererClient';
-import cellRendererGuarantor from '../../components/renderer/cellRendererGuarantor';
-import cellRendererDue from '../../components/renderer/cellRendererDue';
-import cellRendererStatus from '../../components/renderer/cellRendererStatus';
-import cellRendererDispatch from '../../components/renderer/cellRendererDispatch';
-import cellRendererCopy from '../../components/renderer/cellRendererCopy';
-import { FILTER_TYPES } from './../../constants/filter-types';
+import cellRenderer from '../../components/grid-cell-rerenderer/cellRenderer';
+import cellRendererClient from '../../components/grid-cell-rerenderer/cellRendererClient';
+import cellRendererGuarantor from '../../components/grid-cell-rerenderer/cellRendererGuarantor';
+import cellRendererDue from '../../components/grid-cell-rerenderer/cellRendererDue';
+import cellRendererStatus from '../../components/grid-cell-rerenderer/cellRendererStatus';
+import cellRendererDispatch from '../../components/grid-cell-rerenderer/cellRendererDispatch';
+import cellRendererCopy from '../../components/grid-cell-rerenderer/cellRendererCopy';
+import React from 'react';
+import { FILTER_TYPES } from '../../constants/filter-types';
 
 const buttonColumnWidth = HELPERS.convertRemToPx(4.8);
 
 export const billingColumns = [
-  { ...FILTER_TYPES.filterNumber('uid'), maxWidth: 60 },
-  { ...FILTER_TYPES.filterNumber('number') },
-  { ...FILTER_TYPES.filterText('client', cellRendererClient, true) },
-  { ...FILTER_TYPES.filterText('guarantor', cellRendererGuarantor, true), minWidth: 180 },
+  {
+    field: 'checkbox',
+    headerCheckboxSelection: true,
+    headerCheckboxSelectionFilteredOnly: true,
+    checkboxSelection: true,
+    suppressMenu: true,
+    resizable: false,
+    maxWidth: 48,
+  },
+  // { ...FILTER_TYPES.filterNumber('uid'), maxWidth: 60 },
+  { ...FILTER_TYPES.filterNumber('number'), headerName: 'No.' },
+  { ...FILTER_TYPES.filterDate('creation', cellRenderer), headerName: 'Created' },
+  { ...FILTER_TYPES.filterText('client', cellRendererClient, true), headerName: 'Customer' },
+  {
+    field: 'guarantor',
+    headerName: 'Debtor',
+    cellRendererFramework: cellRendererGuarantor,
+    filter: 'guarantorFilter',
+    filterParams: {
+      values: ["Office de l'assurance...", 'Office de Katarina...', 'Office de population...', 'Office de Anton...'],
+      typeValues: ['all', 'tg', 'tp'],
+    },
+  },
   { ...FILTER_TYPES.filterText('provider', cellRenderer) },
   { ...FILTER_TYPES.filterNumber('total'), maxWidth: 80 },
+  { ...FILTER_TYPES.filterNumber('paid'), maxWidth: 80 },
   { ...FILTER_TYPES.filterNumber('open'), maxWidth: 80 },
-  { ...FILTER_TYPES.filterDate('creation', cellRenderer) },
-  { ...FILTER_TYPES.filterDate('due', cellRendererDue), minWidth: 130 },
   {
     field: 'status',
     cellRendererFramework: cellRendererStatus,
@@ -47,8 +66,10 @@ export const billingColumns = [
     },
     minWidth: 130,
   },
+  { ...FILTER_TYPES.filterDate('due', cellRendererDue), minWidth: 130 },
+  // { ...FILTER_TYPES.filterText('guarantor', cellRendererGuarantor, true), minWidth: 180 },
   {
-    field: 'dispatch',
+    field: 'sent',
     cellRendererFramework: cellRendererDispatch,
     filterParams: {
       values: ['sent', 'not-sent', 'error', 'flagged', 'not-flagged'],
@@ -68,6 +89,7 @@ export const billingColumns = [
   },
   {
     field: 'btn-view',
+    headerName: '',
     maxWidth: buttonColumnWidth,
     cellRendererFramework: ButtonView,
     resizable: false,
@@ -75,6 +97,7 @@ export const billingColumns = [
   },
   {
     field: 'btn-send',
+    headerName: '',
     maxWidth: buttonColumnWidth,
     cellRendererFramework: ButtonSend,
     resizable: false,
@@ -82,18 +105,10 @@ export const billingColumns = [
   },
   {
     field: 'btn-print',
+    headerName: '',
     maxWidth: buttonColumnWidth,
     cellRendererFramework: ButtonPrint,
     resizable: false,
     suppressMenu: true,
-  },
-  {
-    field: 'checkbox',
-    headerCheckboxSelection: true,
-    headerCheckboxSelectionFilteredOnly: true,
-    checkboxSelection: true,
-    suppressMenu: true,
-    resizable: false,
-    maxWidth: 48,
   },
 ];

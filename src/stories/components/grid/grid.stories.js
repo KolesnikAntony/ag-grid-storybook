@@ -1,5 +1,5 @@
 import React from 'react';
-import Grid from '../../../components/grid/grid';
+import Grid from '../../../components/grid-overlayouts/grid';
 import { STATES } from '../../../api';
 
 export default {

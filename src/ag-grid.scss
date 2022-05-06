@@ -3,40 +3,68 @@
 
 .ag {
   $ag: &;
-
   &-theme-alpine {
     @include ag-theme-alpine((
-      alpine-active-color: rgba(0,0,0, 0.1),
-      foreground-color: #91a8c2,
       // background-color: red,
+      alpine-active-color: rgba(0,0,0, 0.1),
+      foreground-color: rgba(0, 56, 93, 1),
+      odd-row-background-color: rgba(0, 56, 93, 0.03),
+      border-color: rgba(0, 56, 93, 0.1),
+      secondary-border-color: rgba(0, 56, 93, 0.1),
+      row-border-color: rgba(0, 56, 93, 0.1),
+      cell-horizontal-border: solid rgba(0, 56, 93, 0.1),
     ));
 
     #{$ag} {
       &-header {
-        // or write CSS selectors to make customisations beyond what the parameters support
+        background-color: rgba(0, 56, 93, 0.05);
         color: white;
-        
+
+        &-row {
+          height: 4rem;
+        }
+
         // &-cell {}
 
         &-active {
-          background-color: #f1f1f1;
+          background-color: rgba(0, 56, 93, 0.1);
+        }
+      }
+      
+      &-row {
+        height: 3.2rem;
+
+        &-hover {
+          background-color: rgba(0, 56, 93, 0.1);
         }
       }
 
       &-cell {
+        line-height: 3.2rem;
+        padding-right: 1.6rem;
+        padding-left: 1.6rem;
+
         #{$ag}-react-container {
           height: 100%;
+          display: flex;
+          align-items: center;
         }
       }
 
       &-root-wrapper {
-        border-width: 0;
-        border-top-width: .1rem;
         // border-radius: 1.4rem;
         min-height: 50rem;
+        border-width: 0;
+        border-top-width: 0.1rem;
+      }
+
+      &-tool-panel-wrapper #{$ag}-react-container {
+        width: 100%;
       }
     }
-
+    .customHeaderLabel {
+      color: rgba(0, 56, 93, 0.8);
+    }
     .customHeaderMenuButton {
       position: absolute;
       top: 0;
@@ -44,6 +72,7 @@
       bottom: 0;
       left: 0;
       opacity: 0;
+      border: 1px solid rgba(0, 56, 93, 0.1);
     }
   }
 }

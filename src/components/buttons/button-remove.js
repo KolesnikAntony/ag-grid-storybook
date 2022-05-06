@@ -1,7 +1,7 @@
 import React, { useCallback, useContext } from 'react';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import IconButton from '@mui/material/IconButton';
-import useStyle from '../renderer/cellRendererStyle';
+import useStyle from '../grid-cell-rerenderer/cellRendererStyle';
 import { GridContext } from '../../context/GridApiContext';
 
 const ButtonRemove = ({ data }) => {

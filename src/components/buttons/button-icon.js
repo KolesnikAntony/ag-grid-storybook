@@ -1,6 +1,6 @@
 import React from 'react';
 import IconButton from '@mui/material/IconButton';
-import useStyle from '../renderer/cellRendererStyle';
+import useStyle from '../grid-cell-rerenderer/cellRendererStyle';
 
 const ButtonPrint = ({ children, ariaLabel = '' }) => {
   const sx = useStyle();

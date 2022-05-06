@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
-import useStyle from '../renderer/cellRendererStyle';
+import useStyle from '../grid-cell-rerenderer/cellRendererStyle';
 
 const ButtonSend = ({ data, ...rest }) => {
   const sx = useStyle();

@@ -52,5 +52,9 @@ export const createInvoiceColumns = [
     cellRendererFramework: ButtonRemove,
     resizable: false,
     suppressMenu: true,
+    // this is needed to avoid toString=[object,object] result with objects
+    // getQuickFilterText: function (params) {
+    //   return getMedalString(params.value);
+    // },
   },
 ];
