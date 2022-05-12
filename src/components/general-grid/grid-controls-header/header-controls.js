@@ -46,8 +46,13 @@ const HeaderControls = () => {
   }, []);
 
   const openFilterHandler = useCallback(() => {
-    gridApi.openToolPanel('custom-tab');
-  } , [gridApi])
+    const openedTools = gridApi.getOpenedToolPanel();
+    if (openedTools === 'custom-tab') {
+      gridApi.closeToolPanel();
+    } else {
+      gridApi.openToolPanel('custom-tab');
+    }
+  }, [gridApi]);
 
   return (
     <Box sx={sx.wrapper}>
