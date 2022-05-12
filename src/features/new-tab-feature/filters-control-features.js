@@ -1,18 +1,6 @@
 import React, { useCallback, useContext } from 'react';
-import {
-  Box,
-  Button,
-  Divider,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  MenuItem,
-  Radio,
-  RadioGroup,
-  Stack,
-  Switch,
-} from '@mui/material';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { Box, Button, Divider, Stack, TextField, Typography } from '@mui/material';
+import { FormProvider, useForm } from 'react-hook-form';
 import SelectPlusText from '../../components/general-grid/grid-toolbar-filter/custom-tab-controls/select-plus-text';
 import TextControl from '../../components/general-grid/grid-form-controls/text-control';
 import SearchIcon from '@mui/icons-material/Search';
@@ -46,77 +34,6 @@ const customTabOptions = {
   ],
 };
 
-const getProperties = (type) => ({
-  defaultSelect: customTabOptions[type][0].value,
-  options: customTabOptions[type],
-  type: type,
-  placeholder: type === 'text' ? '41345' : '',
-});
-
-const doubleFieldFilter = [
-  {
-    label: 'UID',
-    inputName: 'uid.filter',
-    selectName: 'uid.type',
-    ...getProperties('text'),
-  },
-  {
-    label: 'Number',
-    inputName: 'number.filter',
-    selectName: 'number.type',
-    ...getProperties('text'),
-  },
-  {
-    label: 'Creation Date',
-    inputName: 'creation.dateFrom',
-    selectName: 'creation.type',
-    ...getProperties('date'),
-  },
-  {
-    label: 'Due Date',
-    inputName: 'due.dateFrom',
-    selectName: 'due.type',
-    ...getProperties('date'),
-  },
-  {
-    label: 'Sent Date',
-    inputName: 'sent.dateFrom',
-    selectName: 'sent.type',
-    ...getProperties('date'),
-  },
-];
-
-const total = {
-  label: 'Total',
-  inputName: 'total.filter',
-  selectName: 'total.type',
-  ...getProperties('text'),
-};
-
-const guarantors = [
-  "Office de l'assurance...",
-  'Office de Katarina...',
-  'Office de population...',
-  'Office de Anton...',
-];
-const cases = ['One', 'Two', 'Else', 'Lalalend'];
-
-const statuses = [
-  'paid',
-  'unpaid',
-  'partially-paid',
-  'cancelled',
-  'draft',
-  'normal-status',
-  '1st-reminder',
-  '2nd-reminder',
-  '3rd-reminder',
-  'formal-notice',
-  'pursuit',
-];
-
-const typeValues = ['all', 'tg', 'tp'];
-
 const selectCommonProps = (defaultValue = '') => ({
   defaultValue,
   displayEmpty: true,
@@ -124,7 +41,7 @@ const selectCommonProps = (defaultValue = '') => ({
   variant: 'outlined',
 });
 
-const FiltersControlFeatures = () => {
+const FiltersControlFeatures = ({ columnDefs }) => {
   const sx = useStyle();
   const resolver = useYupValidationResolver(customTabSchema);
   const { formState, ...methods } = useForm({ resolver, mode: 'onSubmit', reValidateMode: 'onSubmit' });
@@ -134,18 +51,21 @@ const FiltersControlFeatures = () => {
 
   const handleModelCreator = (data) => {
     const { title, ...rest } = data;
-    return {
-      ...rest,
-      status: rest.status.values.length ? rest.status.values : { values: null },
-      guarantor: { ...rest.guarantor, values: rest.guarantor.values.length ? rest.guarantor.values : null },
-      client: { type: 'contains', filter: rest.client.filter },
-      provider: { type: 'contains', filter: rest.provider.filter },
-    };
-    // const properties = Object.entries(rest).map(el => el.r(':', '='))
+
+    const cleaned = Object.entries(rest).map(([key, value]) => {
+      if (typeof value.values === 'object' && !value.values.length) {
+        return [key, { ...value, values: null }];
+      }
+
+      return [key, value];
+    });
+
+    return Object.fromEntries(cleaned);
   };
 
   const handleApply = () => {
     const data = methods.getValues();
+    console.log(data);
     const model = handleModelCreator(data);
     gridApi.setFilterModel(model);
   };
@@ -178,65 +98,80 @@ const FiltersControlFeatures = () => {
     <FormProvider {...methods} formState={formState}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <Box sx={sx.wrapper}>
-          <Button onClick={onReset} variant="contained">
-            Reset filter
-          </Button>
-          <TextControl sx={sx.search} title="Title" name={'title'} placeholder={'Name'} />
-          <Divider sx={{ mb: 2, mt: 2 }} />
-          <For each="el" of={doubleFieldFilter}>
-            <SelectPlusText key={el.label} {...el} />
-          </For>
           <Box>
-            <FormControlLabel
-              {...methods.register('sentControl')}
-              control={<Switch defaultChecked={false} size="small" />}
-              label="Sent"
-              labelPlacement="start"
-            />
+            <Typography>Title</Typography>
+            <TextControl sx={sx.search} name={'title'} placeholder={'Enter tab title'} />
           </Box>
-          <Divider sx={{ mb: 2, mt: 2 }} />
-          <TextControl
-            sx={sx.search}
-            title="Client"
-            name={'client.filter'}
-            placeholder={'Search'}
-            icon={<SearchIcon />}
-          />
-          <SelectControls
-            title="Guarantor"
-            multiple
-            name={'guarantor.values'}
-            control={methods.control}
-            {...selectCommonProps([])}>
-            {/*<MenuItem value={''}>Select</MenuItem>*/}
-            <For of={guarantors} each="guarantor">
-              <MenuItem key={guarantor} value={guarantor}>
-                {guarantor}
-              </MenuItem>
+          <Divider sx={{ mb: 1, mt: 1 }} />
+          <If condition={columnDefs.length}>
+            <For of={columnDefs} each="col">
+              <Choose>
+                <When condition={col.filter === 'agNumberColumnFilter'}>
+                  <Box key={col.field}>
+                    <Typography>{col.field}</Typography>
+                    <SelectPlusText
+                      selectName={`${col.field}.type`}
+                      inputName={`${col.field}.filter`}
+                      options={customTabOptions.text}
+                      defaultSelect={customTabOptions.text[0].value}
+                      placeholder={'Enter'}
+                    />
+                  </Box>
+                </When>
+                <When condition={col.filter === 'agDateColumnFilter'}>
+                  <Typography>{col.field}</Typography>
+                  <SelectPlusText
+                    selectName={`${col.field}.type`}
+                    inputName={`${col.field}.dateFrom`}
+                    options={customTabOptions.date}
+                    defaultSelect={customTabOptions.date[0].value}
+                    type={'date'}
+                  />
+                </When>
+                <When condition={col.filter === 'agTextColumnFilter'}>
+                  <Typography>{col.field}</Typography>
+                  <TextField
+                    type="hidden"
+                    sx={{ display: 'none' }}
+                    {...methods.register(`${col.field}.type`)}
+                    value={'contains'}
+                    aria-readonly={true}
+                  />
+                  <TextControl
+                    sx={sx.search}
+                    title={col.field}
+                    name={`${col.field}.filter`}
+                    placeholder={'Search'}
+                    icon={<SearchIcon />}
+                  />
+                </When>
+                <When condition={col.filter === 'agSetColumnFilter'}>
+                  <Typography>{col.field}</Typography>
+                  <SelectControls
+                    multiple
+                    name={`${col.field}.values`}
+                    control={methods.control}
+                    options={col.filterParams.values}
+                    {...selectCommonProps([])}
+                  />
+                </When>
+                <Otherwise>Some data</Otherwise>
+              </Choose>
             </For>
-          </SelectControls>
-          <FormControl>
-            <FormLabel id="guarantor">Refund type</FormLabel>
-            <Controller
-              control={methods.control}
-              defaultValue={'all'}
-              name={'guarantor.type'}
-              render={({ field }) => (
-                <RadioGroup aria-labelledby="guarantor" {...field}>
-                  <Stack direction="row">
-                    <For of={typeValues} each="typeVal">
-                      <FormControlLabel
-                        key={typeVal}
-                        value={typeVal}
-                        control={<Radio />}
-                        label={typeVal.toUpperCase()}
-                      />
-                    </For>
-                  </Stack>
-                </RadioGroup>
-              )}
-            />
-          </FormControl>
+          </If>
+          {/*<For each="el" of={doubleFieldFilter}>*/}
+          {/*  <SelectPlusText key={el.label} {...el} />*/}
+          {/*</For>*/}
+          {/*<Box>*/}
+          {/*  <FormControlLabel*/}
+          {/*    {...methods.register('sentControl')}*/}
+          {/*    control={<Switch defaultChecked={false} size="small" />}*/}
+          {/*    label="Sent"*/}
+          {/*    labelPlacement="start"*/}
+          {/*  />*/}
+          {/*</Box>*/}
+
+          {/*/>*/}
           {/*<FormControl>*/}
           {/*  <FormLabel>Refund type</FormLabel>*/}
           {/*  <FormGroup>*/}
@@ -246,42 +181,18 @@ const FiltersControlFeatures = () => {
           {/*    </Stack>*/}
           {/*  </FormGroup>*/}
           {/*</FormControl>*/}
-          <SelectControls
-            title="Case"
-            multiple={false}
-            name={'case.filter'}
-            control={methods.control}
-            {...selectCommonProps()}>
-            <MenuItem value={''}>Select</MenuItem>
-            <For of={cases} each="value">
-              <MenuItem key={value} value={value}>
-                {value}
-              </MenuItem>
-            </For>
-          </SelectControls>
-          <TextControl sx={sx.search} title="Provider" name={'provider.filter'} placeholder={'Search'} />
-          <Divider sx={{ mb: 2, mt: 2 }} />
-          <SelectControls
-            title="Status"
-            name={'status.values'}
-            multiple
-            {...selectCommonProps([])}
-            defaultValue={[]}
-            control={methods.control}>
-            <For of={statuses} each="status">
-              <MenuItem key={status} value={status}>
-                {status}
-              </MenuItem>
-            </For>
-          </SelectControls>
-          <SelectPlusText {...total} />
-          <Divider sx={{ mb: 2, mt: 2 }} />
-          <Button type="submit" variant="contained">
-            Add tab
-          </Button>
-          <Button onClick={handleApply} variant="contained">
-            Apply filter
-          </Button>
+          {/*</SelectControls>*/}
+          <Stack spacing={2}>
+            <Button type="submit" variant="contained">
+              Add tab
+            </Button>
+            <Button onClick={handleApply} variant="contained">
+              Apply filter
+            </Button>
+            <Button onClick={onReset} variant="contained">
+              Reset filter
+            </Button>
+          </Stack>
         </Box>
       </form>
     </FormProvider>

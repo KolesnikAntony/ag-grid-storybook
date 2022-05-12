@@ -29,6 +29,7 @@
     "babel-jest": "^27.3.1",
     "classnames": "^2.3.1",
     "html-webpack-plugin": "^5.5.0",
+    "miragejs": "^0.1.43",
     "node-scss": "^7.0.3",
     "prettier": "^2.5.1",
     "prop-types": "^15.8.1",

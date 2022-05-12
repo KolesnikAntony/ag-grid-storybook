@@ -1,13 +1,10 @@
 import React from 'react';
-import { FormControl, FormLabel, InputLabel, Select } from '@mui/material';
+import { FormControl, MenuItem, Select } from '@mui/material';
 import { Controller } from 'react-hook-form';
 
-const SelectControls = ({ title, name, label, defaultValue, children, multiple = false, control, sx, ...props }) => {
+const SelectControls = ({ name, label, defaultValue, options = [], multiple = false, control, sx, ...props }) => {
   return (
     <FormControl sx={sx}>
-      <If condition={title}>
-        <FormLabel>{title}</FormLabel>
-      </If>
       <Controller
         render={({ field }) => {
           return (
@@ -18,7 +15,11 @@ const SelectControls = ({ title, name, label, defaultValue, children, multiple =
                 return (multiple ? selected?.map((option) => option).join(', ') : selected) || 'Select some options';
               }}
               {...field}>
-              {children}
+              <For of={options} each="opt">
+                <MenuItem key={opt} value={opt}>
+                  {opt}
+                </MenuItem>
+              </For>
             </Select>
           );
         }}

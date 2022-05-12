@@ -1,3 +1,44 @@
+import axios from 'axios';
+
+const instance = axios.create({
+  baseURL: 'http://localhost:8082/',
+});
+
+const getUrl = (endpoint, params = {}) => {
+  const string = Object.entries(params)
+    .map(([key, value]) => {
+      const { filterType, type } = value;
+      const typeString = `${key}C=${type}`;
+
+      if (filterType === 'number' || filterType === 'text') {
+        return `${key}=${value.filter}&${typeString}`;
+      }
+      if (filterType === 'set') {
+        return value.values.length ? `${key}=${value.values}` : '';
+      }
+      if (filterType === 'date') {
+        return `${key}=${value.dateFrom}&${typeString}`;
+      }
+    })
+    .filter((str) => str)
+    .join('&');
+  return `${endpoint}${string ? '?' + string : ''}`;
+};
+
+export const API = {
+  getBillings: async (params) => {
+    const url = getUrl('billings', params);
+    const response = await instance.get(url);
+    console.log();
+    return response.data.billings;
+  },
+  getCases: async (params) => {
+    const url = getUrl('cases', params);
+    const response = await instance.get(url);
+    return response.data.cases;
+  },
+};
+
 const defaultState = () => {
   let arr = [];
   for (let i = 1; i < 205; i++) {

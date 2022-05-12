@@ -1,12 +1,11 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+import 'ag-grid-enterprise';
 import { GRID_TYPES } from '../../constants/grid-types';
-import { useColumnDefs } from '../../hooks/grid/useColumnDefs';
 import { AgGridReact } from 'ag-grid-react';
 import { HELPERS } from '../../helpers/helpers';
 import { useGridStyle } from '../../hooks/grid/useGridStyle';
 import { useDefaultColDef } from '../../hooks/grid/useDefaultColDef';
-import { useLoadingView } from '../../hooks/grid/useLoadingView';
 import { useEmptyErrorView } from '../../hooks/grid/useEmptyErrorView';
 import HeaderControls from '../../components/general-grid/grid-controls-header/header-controls';
 import { GridApiContext } from '../../context/GridApiContext';
@@ -14,15 +13,16 @@ import CustomHeader from '../../components/general-grid/grid-custom-header/custo
 import GridToolbarFilter from '../../components/general-grid/grid-toolbar-filter/grid-toolbar-filter';
 import { StoreProvider } from '../../store/store';
 import FiltersControlFeatures from '../new-tab-feature/filters-control-features';
-import GuarantorFilter from '../../components/general-grid/grid-filters/guarantor-filter';
 import GridSelectedControls from '../../components/general-grid/grid-selected-controls/grid-selected-controls';
 import { Collapse } from '@mui/material';
+import cellRenderer from '../../components/grid-cell-rerenderer/cellRenderer';
+import GridLoading from '../../components/grid-overlayouts/gridLoading';
 
-const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, rowSelection }) => {
+const GeneralGrid = ({ type, colDef, getServerData, error, rowSelection }) => {
   //GRID API
   const [gridApi, setGridApi] = useState(null);
-  //DEFAULT COLUMNS OF GRID
-  const [columnDefs, rowData] = useColumnDefs(type);
+
+  const [columnDefs, setColumnDefs] = useState([]);
 
   //GLOBAL STYLE OF GRID AND GRID WRAPPER
   const { containerStyle, gridStyle } = useGridStyle();
@@ -33,14 +33,85 @@ const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, row
   //DEFAULT COL DEF
   const defaultColDef = useDefaultColDef(colDef);
 
-  //FUNCTION THAN SET GRID API WHEN GRID IS READY
-  const onGridReady = useCallback((params) => {
-    setGridApi(params.api);
-    params.api.getFilterInstance('guarantor');
+  const getFilter = (type) => {
+    switch (type) {
+      case 'text':
+        return 'agTextColumnFilter';
+      case 'number':
+        return 'agNumberColumnFilter';
+      case 'date':
+        return 'agDateColumnFilter';
+      default:
+        return 'agSetColumnFilter';
+    }
+  };
+
+  const transformer = useCallback((titles) => {
+    return titles
+      .map((value) => {
+        return (
+          value.key !== 'id' && {
+            field: value.key,
+            cellRendererFramework: cellRenderer,
+            keyCreator: (params) => {
+              return params.value.value;
+            },
+            filter: getFilter(value.type),
+            filterParams: {
+              values: value.variation,
+            },
+          }
+        );
+      })
+      .filter((el) => el);
   }, []);
 
+  const getColumnDefs = (array) => {
+    const uniqKeys = [];
+    const fields = [];
+    array.forEach((obj) => {
+      const keys = Object.keys(obj);
+      keys.forEach((key) => {
+        if (uniqKeys.indexOf(key) === -1) {
+          uniqKeys.push(key);
+          fields.push({
+            key,
+            type: obj[key]?.type,
+            variation: obj[key]?.variation,
+          });
+        }
+      });
+    });
+    return transformer(fields);
+  };
+
+  const dataSort = {
+    getRows: (params) => {
+      const { filterModel } = params.request;
+      params.api.showLoadingOverlay();
+      getServerData(filterModel)
+        .then((res) => {
+          if (res.length) {
+            const defs = getColumnDefs(res);
+            setColumnDefs(defs);
+          } else {
+            params.api.showNoRowsOverlay();
+          }
+          params.successCallback(res, res.length);
+        })
+        .catch(() => params.failCallback());
+    },
+  };
+
+  //FUNCTION THAN SET GRID API WHEN GRID IS READY
+  const onGridReady = (params) => {
+    const { api } = params;
+    setGridApi(api);
+    api.setServerSideDatasource(dataSort);
+  };
+
   // //SET LOADING VIEW
-  const loadingOverlayComponent = useLoadingView(gridApi, isLoading);
+  // const loadingOverlayComponent = useLoadingView(gridApi, isLoading);
 
   //SET EMPTY OR ERROR VIEW
   const { noRowsOverlayComponent, noRowsOverlayComponentParams } = useEmptyErrorView(error);
@@ -51,15 +122,14 @@ const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, row
       agColumnHeader: CustomHeader,
       gridToolbarFilter: GridToolbarFilter,
       customTab: FiltersControlFeatures,
-      guarantorFilter: GuarantorFilter,
     };
   }, []);
 
-  const [count, setRowCount] = useState(0);
+  const [count, setCount] = useState(0);
 
   const onSelectionChanged = (event) => {
     const count = event.api.getSelectedNodes().length;
-    setRowCount(count);
+    setCount(count);
   };
 
   return (
@@ -67,34 +137,41 @@ const GeneralGrid = ({ type, colDef, pagination, rowCount, error, isLoading, row
       <StoreProvider>
         <div style={containerStyle}>
           <HeaderControls />
-          <Collapse in={count}>
+          <Collapse in={!!count}>
             <GridSelectedControls rowCount={count} />
           </Collapse>
           <div style={gridStyle} className="ag-theme-alpine">
             <AgGridReact
               key={type}
+              frameworkComponents={components}
+              rowModelType={'serverSide'}
+              serverSideStoreType={'partial'}
+              // rowData={[]}
               rowStyle={rowStyle}
               getRowStyle={HELPERS.getRowStyle}
-              rowData={rowData}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
               onGridReady={onGridReady}
               onSelectionChanged={onSelectionChanged}
-              pagination={pagination}
-              paginationPageSize={rowCount}
+              pagination={true}
+              paginationPageSize={11}
+              rowHeight={42}
               noRowsOverlayComponentFramework={noRowsOverlayComponent}
               noRowsOverlayComponentParams={noRowsOverlayComponentParams}
-              loadingOverlayComponentFramework={loadingOverlayComponent}
+              // loadingCellRendererFramework={false}
+              loadingOverlayComponentFramework={GridLoading}
               rowSelection={rowSelection}
+              ///////////
+              // enableServerSideFilter={true}
+              // serverSideStoreType={'partial'}
               animateRows={true}
-              serverSideSortingAlwaysResets={true}
+              // serverSideSortingAlwaysResets={true}
               rowDragManaged={true}
               rowDragEntireRow={true}
               rowDragMultiRow={true}
               suppressMovableColumns={false}
               suppressMoveWhenRowDragging={true}
               enableGroupEdit={true}
-              frameworkComponents={components}
               suppressRowClickSelection={true}
               sideBar={{
                 toolPanels: [

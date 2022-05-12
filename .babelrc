@@ -8,5 +8,5 @@
       }
     ]
   ],
-  "plugins": ["jsx-control-statements"]
+  "plugins": ["jsx-control-statements", "@babel/transform-runtime"]
 }

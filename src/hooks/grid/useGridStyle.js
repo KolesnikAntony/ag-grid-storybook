@@ -4,7 +4,7 @@ export const useGridStyle = () => {
   const containerStyle = useMemo(
     () => ({
       flexGrow: 1,
-      height: '50rem',
+      height: 'auto',
       display: 'flex',
       flexDirection: 'column',
       borderRadius: '1.4rem',

@@ -1,6 +1,11 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import AppContainer from './AppContainer';
+import { makeServer } from '../mock-server/server';
+
+if (process.env.NODE_ENV === 'development') {
+  makeServer({ environment: 'development' });
+}
 
 class Communicator {
   constructor() {

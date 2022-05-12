@@ -11,6 +11,7 @@ import { GRID_TYPES } from './constants/grid-types';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import useStyle from './AppStyle';
+import { API } from './api';
 
 const App = () => {
   const sx = useStyle();
@@ -67,9 +68,18 @@ const App = () => {
           path="/create-invoice"
           element={<CreateInvoiceGrid type={GRID_TYPES.createInvoice} {...gridProperties} />}
         />
-        <Route path="/billing/*" element={<GeneralGrid type={GRID_TYPES.billing} {...gridProperties} />} />
-        <Route path="/case" element={<GeneralGrid type={GRID_TYPES.casesToInvoice} {...gridProperties} />} />
-        <Route path="/transactions" element={<GeneralGrid type={GRID_TYPES.transactions} {...gridProperties} />} />
+        <Route
+          path="/billing/*"
+          element={<GeneralGrid type={GRID_TYPES.billing} getServerData={API.getBillings} {...gridProperties} />}
+        />
+        <Route
+          path="/case"
+          element={<GeneralGrid type={GRID_TYPES.casesToInvoice} getServerData={API.getCases} {...gridProperties} />}
+        />
+        <Route
+          path="/transactions"
+          element={<GeneralGrid type={GRID_TYPES.transactions} getServerData={API.getCases} {...gridProperties} />}
+        />
       </Routes>
     </Box>
   );
