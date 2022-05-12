@@ -8,6 +8,7 @@ import { GRID_TYPES } from '../../../constants/grid-types';
 import AddButton from '../grid-control-btns/add-button';
 import HeaderControlsTrans from './header-controls-trans';
 import { GridContext } from '../../../context/GridApiContext';
+import Button from '@mui/material/Button';
 
 const useStyle = () => {
   return {
@@ -38,11 +39,15 @@ const useStyle = () => {
 
 const HeaderControls = () => {
   const sx = useStyle();
-  const { type } = useContext(GridContext);
+  const { type, gridApi } = useContext(GridContext);
   const title = useHeaderTitle();
   const handleNewInvoice = useCallback(() => {
     alert('Create new Invoice');
   }, []);
+
+  const openFilterHandler = useCallback(() => {
+    gridApi.openToolPanel('custom-tab');
+  } , [gridApi])
 
   return (
     <Box sx={sx.wrapper}>
@@ -52,6 +57,7 @@ const HeaderControls = () => {
           {title}
         </Typography>
       </Box>
+      <Button onClick={openFilterHandler}>Filter</Button>
       <Choose>
         <When condition={type === GRID_TYPES.billing}>
           <HeaderControlsBilling />

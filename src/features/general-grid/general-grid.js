@@ -187,6 +187,22 @@ const GeneralGrid = ({ type, colDef, getServerData, error, rowSelection }) => {
                     },
                   },
                   {
+                    id: 'columns',
+                    labelDefault: 'Columns',
+                    labelKey: 'columns',
+                    iconKey: 'columns',
+                    toolPanel: 'agColumnsToolPanel',
+                    toolPanelParams: {
+                      suppressRowGroups: true,
+                      suppressValues: true,
+                      suppressPivots: true,
+                      suppressPivotMode: true,
+                      suppressColumnFilter: true,
+                      suppressColumnSelectAll: true,
+                      suppressColumnExpandAll: true,
+                    },
+                  },
+                  {
                     id: 'custom-tab',
                     labelDefault: 'Custom tab',
                     labelKey: 'custom-tab',
