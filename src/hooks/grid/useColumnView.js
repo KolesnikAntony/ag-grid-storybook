@@ -51,6 +51,10 @@ export const useColumnView = (columnApi) => {
     setLocalItems();
   }, [setLocalItems]);
 
+  const handleColumnOrder = useCallback((col) => {
+    setColumn(col);
+  }, []);
+
   const handleShowColumn = useCallback((e, col) => {
     setColumn((prev) => {
       let currentColumn = { ...prev };
@@ -59,5 +63,5 @@ export const useColumnView = (columnApi) => {
     });
   }, []);
 
-  return [column, handleShowColumn];
+  return [column, handleShowColumn, handleColumnOrder];
 };

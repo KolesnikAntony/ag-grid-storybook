@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import 'ag-grid-enterprise';
 import { GRID_TYPES } from '../../constants/grid-types';
@@ -21,7 +21,7 @@ import { billingDemi } from '../../../mock-server/demi';
 
 const GeneralGrid = ({ type, colDef, getServerData, error, rowSelection }) => {
   //GRID API
-  const [gridApi, setGridApi] = useState(null);
+  const refGrid = useRef(null);
 
   const [columnDefs, setColumnDefs] = useState([]);
 
@@ -107,12 +107,8 @@ const GeneralGrid = ({ type, colDef, getServerData, error, rowSelection }) => {
   //FUNCTION THAN SET GRID API WHEN GRID IS READY
   const onGridReady = (params) => {
     const { api } = params;
-    setGridApi(api);
     api.setServerSideDatasource(dataSort);
   };
-
-  // //SET LOADING VIEW
-  // const loadingOverlayComponent = useLoadingView(gridApi, isLoading);
 
   //SET EMPTY OR ERROR VIEW
   const { noRowsOverlayComponent, noRowsOverlayComponentParams } = useEmptyErrorView(error);
@@ -133,8 +129,27 @@ const GeneralGrid = ({ type, colDef, getServerData, error, rowSelection }) => {
     setCount(count);
   };
 
+  //COLUMNS STATE , WORK WITH LOCAL STORAGE
+
+  const handleColumnAction = useCallback((params) => {
+    const columnState = JSON.stringify(params.columnApi.getColumnState());
+    localStorage.setItem('BILLING_COLUMNS_STATE', columnState);
+  }, []);
+
+  useEffect(() => {
+    const setter = () => {
+      const columnState = JSON.parse(localStorage.getItem('BILLING_COLUMNS_STATE'));
+      if (columnState) {
+        const f = refGrid.current?.columnApi.applyColumnState({ state: columnState, applyOrder: true });
+        console.log('fafaf', f);
+      }
+    };
+
+    columnDefs.length && setTimeout(setter, 0);
+  }, [columnDefs]);
+
   return (
-    <GridApiContext value={{ gridApi, type }}>
+    <GridApiContext value={{ gridApi: refGrid.current?.api, type }}>
       <StoreProvider>
         <div style={containerStyle}>
           <HeaderControls />
@@ -143,11 +158,13 @@ const GeneralGrid = ({ type, colDef, getServerData, error, rowSelection }) => {
           </Collapse>
           <div style={gridStyle} className="ag-theme-alpine">
             <AgGridReact
+              ref={refGrid}
               key={type}
               frameworkComponents={components}
               rowModelType={'serverSide'}
               serverSideStoreType={'partial'}
               // rowData={[]}
+              // onFirstDataRendered={onFirstDataRendered}
               rowStyle={rowStyle}
               getRowStyle={HELPERS.getRowStyle}
               columnDefs={columnDefs}
@@ -157,6 +174,8 @@ const GeneralGrid = ({ type, colDef, getServerData, error, rowSelection }) => {
               pagination={true}
               paginationPageSize={11}
               rowHeight={42}
+              onColumnVisible={handleColumnAction}
+              onColumnMoved={handleColumnAction}
               noRowsOverlayComponentFramework={noRowsOverlayComponent}
               noRowsOverlayComponentParams={noRowsOverlayComponentParams}
               // loadingCellRendererFramework={false}
@@ -176,17 +195,17 @@ const GeneralGrid = ({ type, colDef, getServerData, error, rowSelection }) => {
               suppressRowClickSelection={true}
               sideBar={{
                 toolPanels: [
-                  {
-                    id: 'custom-sidebar',
-                    labelDefault: 'Custom sidebar',
-                    labelKey: 'custom-sidebar',
-                    iconKey: 'filter',
-                    toolPanel: 'gridToolbarFilter',
-                    toolPanelParams: {
-                      columnDefs,
-                      gridApi,
-                    },
-                  },
+                  // {
+                  //   id: 'custom-sidebar',
+                  //   labelDefault: 'Custom sidebar',
+                  //   labelKey: 'custom-sidebar',
+                  //   iconKey: 'filter',
+                  //   toolPanel: 'gridToolbarFilter',
+                  //   toolPanelParams: {
+                  //     columnDefs,
+                  //     gridApi: refGrid.current?.api,
+                  //   },
+                  // },
                   {
                     id: 'columns',
                     labelDefault: 'Columns',
@@ -210,10 +229,11 @@ const GeneralGrid = ({ type, colDef, getServerData, error, rowSelection }) => {
                     toolPanel: 'customTab',
                     toolPanelParams: {
                       columnDefs,
-                      gridApi,
+                      gridApi: refGrid.current?.api,
                     },
                   },
                 ],
+
                 defaultToolPanel: '',
               }}
             />
