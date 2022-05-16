@@ -17,6 +17,7 @@ import GridSelectedControls from '../../components/general-grid/grid-selected-co
 import { Collapse } from '@mui/material';
 import cellRenderer from '../../components/grid-cell-rerenderer/cellRenderer';
 import GridLoading from '../../components/grid-overlayouts/gridLoading';
+import { billingDemi } from '../../../mock-server/demi';
 
 const GeneralGrid = ({ type, colDef, getServerData, error, rowSelection }) => {
   //GRID API
@@ -248,6 +249,7 @@ GeneralGrid.defaultProps = {
     resizable: true,
     suppressMenu: false,
   },
+  getServerData: async () => billingDemi(),
 };
 
 export default GeneralGrid;

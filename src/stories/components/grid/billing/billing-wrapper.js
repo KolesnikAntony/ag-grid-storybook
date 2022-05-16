@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import GeneralGrid from '../../../../features/general-grid/general-grid';
 import { GRID_TYPES } from '../../../../constants/grid-types';
 import Redirect from '../../../../hoks/redirect';

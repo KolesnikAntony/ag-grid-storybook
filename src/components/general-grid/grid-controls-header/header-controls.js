@@ -1,6 +1,5 @@
 import React, { useCallback, useContext } from 'react';
 import { Box, Typography } from '@mui/material';
-import PropTypes from 'prop-types';
 import { useHeaderTitle } from '../../../hooks/grid/useHeaderTitle';
 import logo from '../../../assets/images/title-logo.svg?url';
 import HeaderControlsBilling from './header-controls-billing';
@@ -9,6 +8,7 @@ import AddButton from '../grid-control-btns/add-button';
 import HeaderControlsTrans from './header-controls-trans';
 import { GridContext } from '../../../context/GridApiContext';
 import Button from '@mui/material/Button';
+import { useCallToolPanel } from '../../../hooks/grid/useCallToolPanel';
 
 const useStyle = () => {
   return {
@@ -39,20 +39,14 @@ const useStyle = () => {
 
 const HeaderControls = () => {
   const sx = useStyle();
-  const { type, gridApi } = useContext(GridContext);
+  const { type } = useContext(GridContext);
   const title = useHeaderTitle();
   const handleNewInvoice = useCallback(() => {
     alert('Create new Invoice');
   }, []);
 
-  const openFilterHandler = useCallback(() => {
-    const openedTools = gridApi.getOpenedToolPanel();
-    if (openedTools === 'custom-tab') {
-      gridApi.closeToolPanel();
-    } else {
-      gridApi.openToolPanel('custom-tab');
-    }
-  }, [gridApi]);
+  //SIDEBAR TOOLS HANDLER
+  const openFilterHandler = useCallToolPanel('custom-tab');
 
   return (
     <Box sx={sx.wrapper}>
